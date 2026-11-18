@@ -1,0 +1,15 @@
+# Arquivos internos de trabalho (não fazem parte da entrega)
+CLAUDE.md
+current-state.md
+projeto.md
+disciplina/
+entregas/
+specs/
+.claude/
+
+# Cópia compactada do download original (o CSV já está no repositório)
+dados/original/noshow-kaggle.zip
+
+# Python e Jupyter
+__pycache__/
+.ipynb_checkpoints/
