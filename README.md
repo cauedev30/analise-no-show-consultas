@@ -24,6 +24,8 @@ cada 5 agendados falta (**20,2%**).
 
 ## Etapas feitas nesta entrega
 
+O passo a passo completo, com o porquê de cada decisão, está em [docs/processo.md](docs/processo.md).
+
 ### 1. Limpeza: [notebooks/01_limpeza.ipynb](notebooks/01_limpeza.ipynb)
 
 O notebook tem 9 passos. Cada um traz o problema, a decisão, a justificativa, o antes e depois e uma checagem
@@ -84,6 +86,8 @@ hipóteses a validar, não provas de causa):
 ├── notebooks/
 │   ├── 01_limpeza.ipynb                   # limpeza (lê o original, grava a base tratada)
 │   └── 02_exploracao.ipynb                # primeira análise (lê só a base tratada)
+├── docs/
+│   └── processo.md                        # o como e o porquê de cada etapa (método D.E.I.L.A.S)
 └── scripts/
     └── perfil_dataset.py                  # conferência inicial do dataset original
 ```
