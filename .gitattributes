@@ -1,0 +1,3 @@
+# Os CSVs são guardados byte a byte, sem converter quebras de linha:
+# o notebook de limpeza confere o hash do original.
+*.csv -text
