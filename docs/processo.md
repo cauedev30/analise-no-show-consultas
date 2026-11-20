@@ -58,12 +58,21 @@ não sobe mais na faixa de 31 dias ou mais.
 - **Licença:** CC BY-NC-SA 4.0. A base tratada é uma obra derivada e segue a mesma licença.
 - **Volume:** 110.527 consultas e 14 colunas. **Período:** consultas de 2016-04-29 a 2016-06-08; os agendamentos vão de
   2015-11-10 a 2016-06-08.
+- **Como os dados foram obtidos:** baixamos o arquivo do link acima em 2026-11-10. O download é um `.zip` de 2,5 MB com
+  um único CSV, `KaggleV2-May-2016.csv` (10,7 MB), que foi colocado em `dados/original/` sem nenhuma alteração. Não
+  houve coleta própria, raspagem nem junção com outra base: **é a única fonte de dados do projeto**, como dissemos na
+  Entrega 2.
+- **Conferência do original:** os números que descrevem a base (110.527 consultas, 14 colunas, 62.299 pacientes, 81
+  bairros, 22.319 faltas, sem nulos e sem duplicatas) saem do script
+  [`scripts/perfil_dataset.py`](../scripts/perfil_dataset.py), rodado sobre o arquivo original. São os mesmos números
+  da Entrega 2.
 - **Taxa de falta:** 20,2%. O subtítulo do Kaggle diz "30%", mas o número real, medido nos dados, é 20,2%.
 - **Foto do original** (seção "Preparação" do [notebook de limpeza](../notebooks/01_limpeza.ipynb)): sem valores nulos e sem linhas duplicadas. Os problemas estão escondidos nos valores e nos nomes, e é
   isso que a limpeza trata.
 - **Regra de ouro:** o arquivo original **não se altera nunca**. Para provar, o notebook confere o hash SHA-256 do
   original no começo e no fim da limpeza, e os dois são iguais:
-  `9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d`.
+  `9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d`. É o mesmo hash do CSV que está
+  dentro do `.zip` baixado do Kaggle e do arquivo enviado ao professor (conferido em 2026-11-20).
 
 ---
 
@@ -294,6 +303,7 @@ recomendação 1 e se há diferença por dia e por bairro para a recomendação 
 
 ```mermaid
 flowchart LR
+    K["Kaggle<br/>Medical Appointment No Shows<br/>(única fonte)"] --> A
     A["Original<br/>dados/original/KaggleV2-May-2016.csv<br/>(intocado)"] --> B["notebooks/01_limpeza"]
     B --> C["Base tratada<br/>dados/tratados/consultas_tratadas.csv<br/>(única base)"]
     C --> D["notebooks/02_exploracao"]
@@ -302,11 +312,84 @@ flowchart LR
     E --> F
 ```
 
+- O arquivo do **Kaggle** foi baixado e guardado como veio: é o **original**.
 - O **original** só é lido, nunca alterado.
 - O notebook **01** limpa e grava a **base tratada**.
 - O notebook **02** e o **dashboard** leem a **mesma** base tratada. O dashboard não refaz a limpeza nem cria faixas
   próprias: usa as mesmas definições e os mesmos rótulos da seção **E**.
 - A **apresentação** reúne os achados da análise e do dashboard e as recomendações.
+
+---
+
+## Coerência com as entregas ao professor
+
+O projeto final usa **o mesmo material** das entregas já feitas: a mesma fonte, o mesmo arquivo original, a mesma
+limpeza, as mesmas definições e os mesmos números. Esta seção mostra, ponto a ponto, o que cada entrega disse e onde
+isso está no projeto.
+
+### Proposta do tema (2026-11-03, aprovada)
+
+| O que a proposta disse | Como está no projeto |
+|---|---|
+| Tema: redução de faltas em consultas (no-show) em clínicas | O mesmo tema e a mesma pergunta central (seção **D**) |
+| "Cerca de 20% dos pacientes agendados não comparecem" | Medido nos dados: **20,2%** (22.319 de 110.527 no original; 22.314 de 110.521 na base tratada) |
+| Fatores a analisar: tempo de espera, idade, dia da semana e envio de lembrete | Seções 2 (espera), 4 (idade), 5 (dia da semana) e 3 (SMS) do [notebook 02](../notebooks/02_exploracao.ipynb) |
+| Recomendar lembretes direcionados aos grupos de maior risco e overbooking controlado | As duas recomendações da seção **S** |
+| Script de limpeza em Python | [notebook 01](../notebooks/01_limpeza.ipynb) (feito) |
+| Exploração com Pandas e Seaborn | [notebook 02](../notebooks/02_exploracao.ipynb), com Pandas, Matplotlib e Seaborn (feito) |
+| Dashboard interativo com filtros no Power BI | Próxima etapa, sobre a base tratada |
+| Apresentação executiva de 10 a 15 minutos | Próxima etapa, com este documento como roteiro |
+| Dataset: *Medical Appointment No Shows* (Kaggle) | O mesmo, e é o único (seção **I**) |
+
+### Entrega 2: Dados (2026-11-10)
+
+A Entrega 2 descreveu a fonte e o arquivo original. Tudo o que ela afirmou continua valendo:
+
+| O que a Entrega 2 disse | Como está no projeto |
+|---|---|
+| Fonte, autor, licença e link | Os mesmos (seção **I** e README) |
+| "É a única fonte de dados do projeto" | Continua sendo: nenhuma outra base entrou |
+| 110.527 consultas, 62.299 pacientes, 81 bairros | Os mesmos números, tirados do `scripts/perfil_dataset.py` |
+| Consultas de 29/04/2016 a 08/06/2016; agendamentos desde 10/11/2015 | O mesmo período (seção **I**) |
+| Taxa de falta de 20,2% (22.319 das 110.527 consultas) | O mesmo no original. Na base tratada: 22.314 de 110.521, ainda 20,2% |
+| Dicionário das 14 colunas | As mesmas 14 colunas, renomeadas no Passo 1 (a tabela de/para está lá) |
+| Base utilizada: o CSV original, sem alterações, com a limpeza em Python preservando o original | O original fica em `dados/original/`, e o hash prova que não mudou |
+
+A Entrega 2 também listou **7 pontos para a etapa de limpeza**. Cada um foi tratado em um passo do notebook 01:
+
+| Ponto listado na Entrega 2 | Onde foi tratado | O que foi feito |
+|---|---|---|
+| 1 registro com idade negativa (-1) | Passo 3 | Removido |
+| 5 consultas com data anterior à do agendamento | Passo 4 | Removidas |
+| Nomes de coluna com erro de grafia e com hífen | Passo 1 | As 14 colunas foram renomeadas |
+| `Handcap` vai de 0 a 4, e a fonte diz verdadeiro/falso | Passo 6 (e Passo 8) | Mantido de 0 a 4, com a dúvida registrada; criada `tem_deficiencia` (0 ou 1) |
+| `AppointmentDay` só tem a data; a espera será em dias | Passo 2 e Passo 8 | Datas convertidas; `dias_espera` em dias de calendário |
+| `No-show` em Yes/No precisa virar 0/1 | Passo 7 | Criada `faltou` (1 = faltou, 0 = compareceu) |
+| Não há valores nulos nem linhas duplicadas | Preparação e Passo 9 | Conferido no original e de novo na base tratada |
+
+### Entrega 3: dados tratados, limpeza e primeira análise (2026-11-18)
+
+Foi enviado o link deste repositório com o resumo da etapa. Os números do resumo são os deste documento: 110.527 para
+110.521 consultas (6 linhas removidas), taxa de falta de 20,2%, 4,6% no mesmo dia contra 28,5% com antecedência, e
+27,6% com SMS contra 16,7% sem SMS na comparação crua.
+
+### O que mudou de uma entrega para a outra, e por quê
+
+| O que mudou | Por quê |
+|---|---|
+| Consultas: 110.527 (Entrega 2) para 110.521 (Entrega 3 em diante) | A Entrega 2 descreve o arquivo original. A limpeza removeu 6 linhas impossíveis (Passos 3 e 4) |
+| Faltas: 22.319 para 22.314 | As 5 consultas removidas no Passo 4 eram todas faltas. A taxa continua em 20,2% |
+| "Script Python" (proposta e Entrega 2) virou notebook Jupyter | O código é o mesmo Python. O notebook mostra o resultado de cada passo ao lado do código, o que ajuda a explicar a limpeza |
+| "Daniel Viera" (proposta e Entrega 2) passou a "Daniel Vieira" | Erro de digitação nas duas primeiras entregas. O nome correto é Daniel Vieira |
+
+Fora isso, nada mudou: a fonte, o arquivo, as definições e as faixas são os mesmos desde a primeira entrega.
+
+### O que vale para o projeto final
+
+O dashboard e a apresentação partem deste mesmo material. O dashboard lê `dados/tratados/consultas_tratadas.csv`, sem
+refazer a limpeza e sem trazer outra base. Os slides usam os números e as definições deste documento. Se um número
+precisar mudar, ele muda aqui, no README, nos notebooks, no dashboard e nos slides, com o porquê registrado no histórico
+abaixo.
 
 ---
 
@@ -319,3 +402,4 @@ Cada entrega acrescenta uma linha aqui.
 | 2026-11-03 | Proposta do tema enviada ao professor (depois aprovada) |
 | 2026-11-10 | Entrega 2 (fontes e descrição dos dados) enviada, com o dataset conferido |
 | 2026-11-17 e 18 | Entrega 3: limpeza ([`01_limpeza`](../notebooks/01_limpeza.ipynb)), primeira análise ([`02_exploracao`](../notebooks/02_exploracao.ipynb)) e este repositório |
+| 2026-11-20 | Conferência das três entregas contra o repositório: o CSV enviado, o de `dados/original/` e o do `.zip` do Kaggle têm o mesmo hash, e os números batem. Incluída a seção de coerência com as entregas |

@@ -22,6 +22,13 @@ cada 5 agendados falta (**20,2%**).
 - O arquivo original (`dados/original/KaggleV2-May-2016.csv`) **nunca é alterado**: a limpeza só lê esse arquivo e grava o
   resultado em outro lugar (`dados/tratados/`).
 
+**Como os dados foram obtidos.** Baixamos o arquivo do link acima em 2026-11-10: um `.zip` de 2,5 MB com um único CSV,
+`KaggleV2-May-2016.csv` (10,7 MB). Esse CSV foi colocado em `dados/original/` sem nenhuma alteração. Não houve coleta
+própria, raspagem nem junção com outra base: **é a única fonte de dados do projeto**. O SHA-256 do arquivo é
+`9132d3e7d0246617df9041d3764f20ad6f08e7b0d9f0997fa254fc5e52eda27d`, o mesmo do CSV que está dentro do `.zip` baixado e do arquivo enviado ao professor. Os números que
+descrevem o original (110.527 consultas, 62.299 pacientes, 81 bairros, 22.319 faltas) saem de
+`python scripts/perfil_dataset.py dados/original/KaggleV2-May-2016.csv`.
+
 ## Etapas feitas nesta entrega
 
 O passo a passo completo, com o porquê de cada decisão, está em [docs/processo.md](docs/processo.md).
@@ -73,6 +80,21 @@ hipóteses a validar, não provas de causa):
    consultas) é amostra pequena demais para concluir.
 5. **Alguns bairros se destacam, com cautela.** Entre os 54 bairros com 500 consultas ou mais, **SANTOS DUMONT** tem a
    maior taxa (**28,9%**). É uma pista para o dashboard, não uma conclusão.
+
+## As entregas ao professor e este repositório
+
+O projeto final usa **o mesmo material** das entregas já feitas: a mesma fonte, o mesmo arquivo original, a mesma
+limpeza, as mesmas definições e os mesmos números. Nada aqui contradiz um envio anterior.
+
+| Entrega | O que foi enviado | Onde está neste repositório |
+|---|---|---|
+| **Proposta do tema** (2026-11-03, aprovada) | Tema, problema, fatores a analisar (espera, idade, dia da semana e lembrete), entregáveis e o dataset | [O problema](#o-problema), seções 2 a 5 do [notebook 02](notebooks/02_exploracao.ipynb) e seção **S** do [processo](docs/processo.md) |
+| **Entrega 2: Dados** (2026-11-10) | Fonte, autor e licença, descrição da base, dicionário das 14 colunas e os 7 pontos a tratar na limpeza | [Fonte dos dados](#fonte-dos-dados) e os 9 passos do [notebook 01](notebooks/01_limpeza.ipynb), que tratam os 7 pontos um a um |
+| **Entrega 3: dados tratados, limpeza e primeira análise** (2026-11-18) | O link deste repositório e o resumo da etapa | `dados/original/`, `dados/tratados/`, os dois notebooks e o [processo](docs/processo.md) |
+| **Projeto final** (próxima etapa) | Dashboard em Power BI e apresentação executiva | Vão ler a mesma base tratada, com as mesmas faixas e definições |
+
+A conferência ponto a ponto (o que cada entrega disse e onde isso foi cumprido) está na seção
+[Coerência com as entregas ao professor](docs/processo.md#coerência-com-as-entregas-ao-professor) do processo.
 
 ## Estrutura das pastas e como rodar
 
