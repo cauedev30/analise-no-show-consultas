@@ -12,6 +12,10 @@ cada 5 agendados falta (**20,2%**).
 
 **Pergunta central:** quem tem mais chance de faltar e o que a clínica pode fazer para reduzir isso?
 
+**Setor:** Saúde Privada. A base usada indica consultas da rede pública (tem a coluna de Bolsa Família e bairros de
+Vitória, ES) e entra como **aproximação** do comportamento de falta numa clínica. A premissa está explicada na seção
+**D** do [processo](docs/processo.md).
+
 ## Fonte dos dados
 
 - **Base:** *Medical Appointment No Shows*, do Kaggle: https://www.kaggle.com/datasets/joniarroba/noshowappointments

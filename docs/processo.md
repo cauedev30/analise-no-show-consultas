@@ -26,6 +26,12 @@ em cada 5 agendados falta (**20,2%**).
 sem juntar várias fontes). O escopo é enxuto de propósito: limpeza, análise, dashboard e recomendações, sem API, banco
 nem deploy.
 
+**Setor e premissa.** O setor do projeto é **Saúde Privada**, como na proposta aprovada. A base, porém, traz a coluna de
+Bolsa Família e bairros de Vitória (ES), o que indica consultas da **rede pública**. Não existe base pública equivalente
+de clínicas privadas, então usamos esta como **aproximação** do comportamento de falta. A premissa é que os fatores
+ligados à falta (principalmente o tempo de espera) também valem numa clínica privada. Antes de aplicar as recomendações,
+a clínica deve conferir os números com os próprios dados de agendamento.
+
 ---
 
 ## E: Estabeleça métricas
@@ -332,6 +338,7 @@ isso está no projeto.
 | O que a proposta disse | Como está no projeto |
 |---|---|
 | Tema: redução de faltas em consultas (no-show) em clínicas | O mesmo tema e a mesma pergunta central (seção **D**) |
+| Setor: Saúde Privada | O mesmo setor. Os dados indicam rede pública e são usados como aproximação, com a premissa declarada na seção **D** |
 | "Cerca de 20% dos pacientes agendados não comparecem" | Medido nos dados: **20,2%** (22.319 de 110.527 no original; 22.314 de 110.521 na base tratada) |
 | Fatores a analisar: tempo de espera, idade, dia da semana e envio de lembrete | Seções 2 (espera), 4 (idade), 5 (dia da semana) e 3 (SMS) do [notebook 02](../notebooks/02_exploracao.ipynb) |
 | Recomendar lembretes direcionados aos grupos de maior risco e overbooking controlado | As duas recomendações da seção **S** |
@@ -403,3 +410,4 @@ Cada entrega acrescenta uma linha aqui.
 | 2026-11-10 | Entrega 2 (fontes e descrição dos dados) enviada, com o dataset conferido |
 | 2026-11-17 e 18 | Entrega 3: limpeza ([`01_limpeza`](../notebooks/01_limpeza.ipynb)), primeira análise ([`02_exploracao`](../notebooks/02_exploracao.ipynb)) e este repositório |
 | 2026-11-20 | Conferência das três entregas contra o repositório: o CSV enviado, o de `dados/original/` e o do `.zip` do Kaggle têm o mesmo hash, e os números batem. Incluída a seção de coerência com as entregas |
+| 2026-11-20 | Decisão sobre o setor: mantemos Saúde Privada, como na proposta, e declaramos a premissa de que a base (rede pública) é uma aproximação |
