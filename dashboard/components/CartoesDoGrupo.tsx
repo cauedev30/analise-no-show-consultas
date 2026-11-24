@@ -16,19 +16,16 @@ export function CartoesDoGrupo({ painel }: { painel: Painel }) {
       </h2>
       <div className="mt-4 divide-y divide-eixo">
         <Cartao
-          empilhado
           rotulo="Consultas"
           valor={formatarInteiro(grupo.consultas)}
           complemento={`${formatarPct(grupo.pct_consultas)} das consultas`}
         />
         <Cartao
-          empilhado
           rotulo="Taxa de falta"
           valor={formatarPct(grupo.taxa)}
           complemento={`contra ${formatarPct(totais.taxa)} na base inteira`}
         />
         <Cartao
-          empilhado
           rotulo="Das faltas"
           valor={formatarPct(grupo.pct_faltas)}
           complemento={`${formatarInteiro(grupo.faltas)} de ${formatarInteiro(totais.faltas)} faltas`}

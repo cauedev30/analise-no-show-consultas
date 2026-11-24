@@ -3,17 +3,18 @@ interface Props {
   valor: string;
   /** Uma linha menor, abaixo do rótulo (por exemplo, a comparação com a base inteira). */
   complemento?: string;
-  /** Os cartões estão um embaixo do outro (o fio entre eles é horizontal e vem do pai). */
-  empilhado?: boolean;
+  /** O KPI principal: caixa escura (tinta do slide) com o número no amarelo do marca-texto. */
+  destaque?: boolean;
 }
 
-/** Um número grande com o rótulo embaixo. Sem caixa e sem sombra: o fio entre os cartões vem do pai. */
-export function Cartao({ rotulo, valor, complemento, empilhado = false }: Props) {
+/** Um KPI do painel: número grande e rótulo embaixo, dentro de uma caixa. */
+export function Cartao({ rotulo, valor, complemento, destaque = false }: Props) {
+  const secundario = destaque ? "text-fundo/80" : "text-texto-2";
   return (
-    <div className={empilhado ? "py-3 first:pt-0 last:pb-0" : "px-3 sm:px-5 first:pl-0 last:pr-0"}>
-      <p className="text-3xl font-bold sm:text-numero">{valor}</p>
-      <p className="mt-1 text-rotulo text-texto-2">{rotulo}</p>
-      {complemento && <p className="text-rotulo text-texto-2">{complemento}</p>}
+    <div className={"rounded-lg border px-4 py-3 " + (destaque ? "border-texto bg-texto" : "border-grade bg-fundo")}>
+      <p className={"text-3xl font-bold sm:text-numero " + (destaque ? "text-marca" : "text-texto")}>{valor}</p>
+      <p className={"mt-1 text-rotulo " + secundario}>{rotulo}</p>
+      {complemento && <p className={"text-rotulo " + secundario}>{complemento}</p>}
     </div>
   );
 }

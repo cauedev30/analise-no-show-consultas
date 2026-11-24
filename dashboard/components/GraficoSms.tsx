@@ -37,8 +37,8 @@ function useTelaEstreita(): boolean {
 type Serie = "sem" | "com";
 
 const SERIES: { chave: Serie; nome: string; cor: string; campo: "taxaSem" | "taxaCom" }[] = [
-  { chave: "sem", nome: "Sem disparo", cor: COR.azul, campo: "taxaSem" },
-  { chave: "com", nome: "Com disparo", cor: COR.laranja, campo: "taxaCom" },
+  { chave: "sem", nome: "Sem disparo", cor: COR.cinza, campo: "taxaSem" },
+  { chave: "com", nome: "Com disparo", cor: COR.azul, campo: "taxaCom" },
 ];
 
 /** Descrição do gráfico para leitor de tela: os mesmos valores que aparecem escritos. */
@@ -73,7 +73,7 @@ function DicaSms({ ativo, linha }: { ativo?: boolean; linha?: LinhaSms }) {
   );
 }
 
-/** Colunas agrupadas por faixa de espera: sem disparo (azul) e com disparo (laranja). */
+/** Colunas agrupadas por faixa de espera: sem disparo (cinza) e com disparo (azul), como no slide. */
 export function GraficoSms({ linhas, children, className = "" }: Props) {
   const estreita = useTelaEstreita();
   const fonteDoValor = estreita ? 10 : 14;

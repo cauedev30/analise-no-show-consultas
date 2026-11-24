@@ -2,22 +2,25 @@
 
 /*
  * Tokens do dashboard, em um lugar só.
- * Paleta = a dos notebooks 02 e 03 (validada para daltonismo na skill dataviz).
- * O azul é só dos dados: abas, botões e filtros usam a cor do texto.
+ * Paleta = a do slide da apresentação ("agenda de clínica"): tinta azul-marinho, caneta azul nos dados e marca-texto
+ * amarelo só como destaque. A página é cinza-azulada e os cartões são brancos (--color-fundo é a cor do cartão,
+ * que os gráficos usam no contorno dos pontos e nas linhas entre as células do mapa).
  * `static` faz o Tailwind gravar todas as variáveis, mesmo as que o CSS não usa por utilitário
  * (os gráficos leem `var(--color-...)` direto nos atributos SVG).
  */
 @theme static {
-  --color-fundo: #fcfcfb;
-  --color-texto: #0b0b0b;
-  --color-texto-2: #52514e;
-  --color-grade: #e1e0d9;
-  --color-eixo: #c3c2b7;
-  --color-neutro: #f0efec;
+  --color-pagina: #f5f7fa;
+  --color-fundo: #ffffff;
+  --color-texto: #16213a;
+  --color-texto-2: #556178;
+  --color-grade: #dce4f0;
+  --color-eixo: #c8d3e3;
+  --color-neutro: #eef2f8;
 
-  --color-azul: #2a78d6;
-  --color-azul-claro: #86b6ef;
-  --color-laranja: #eb6834;
+  --color-azul: #2649b2;
+  --color-azul-claro: #93a8e0;
+  --color-cinza: #7e889b;
+  --color-marca: #ffe14d;
 
   /* Rampa do mapa de calor (a do notebook 03), do claro ao escuro. Existe um espelho em lib/mapaDeCalor.ts (a
      interpolação em JavaScript que dá a cor de cada célula): ao mudar uma cor aqui, mude lá também. Um teste
@@ -46,15 +49,27 @@
 }
 
 html {
-  background: var(--color-fundo);
+  background: var(--color-pagina);
 }
 
 body {
-  background: var(--color-fundo);
+  background: var(--color-pagina);
   color: var(--color-texto);
   font-family: var(--font-sans);
   font-size: 1rem;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Cartão branco do painel: a caixa de cada gráfico, KPI e bloco. Em `components` para um utilitário poder trocar o
+   padding ou a borda. */
+@layer components {
+  .cartao {
+    background: var(--color-fundo);
+    border: 1px solid var(--color-grade);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    box-shadow: 0 1px 3px rgb(22 33 58 / 0.06);
+  }
 }
 
 /* Foco do teclado sempre visível, na cor do texto (não no azul dos dados). */
