@@ -12,7 +12,7 @@ export function Cartao({ rotulo, valor, complemento, destaque = false }: Props) 
   const secundario = destaque ? "text-fundo/80" : "text-texto-2";
   return (
     <div className={"rounded-lg border px-4 py-3 " + (destaque ? "border-texto bg-texto" : "border-grade bg-fundo")}>
-      <p className={"text-3xl font-bold sm:text-numero " + (destaque ? "text-marca" : "text-texto")}>{valor}</p>
+      <p className={"text-2xl font-bold sm:text-numero " + (destaque ? "text-marca" : "text-texto")}>{valor}</p>
       <p className={"mt-1 text-rotulo " + secundario}>{rotulo}</p>
       {complemento && <p className={"text-rotulo " + secundario}>{complemento}</p>}
     </div>
