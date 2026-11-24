@@ -285,6 +285,8 @@ bairro com 2 consultas aparece com 100% de falta).
 
 ## O que falta fazer, em ordem
 
+O plano completo, tarefa a tarefa, está em [plano-projeto-final.md](plano-projeto-final.md). Em resumo:
+
 | # | Etapa | O que entrega |
 |---|---|---|
 | 1 | Notebook 03 | O cruzamento de espera e idade, com o tamanho e a taxa do grupo de maior risco (o número do slide **S**) |

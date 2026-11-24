@@ -492,4 +492,5 @@ Cada entrega acrescenta uma linha aqui.
 | 2026-11-17 e 18 | Entrega 3: limpeza ([`01_limpeza`](../notebooks/01_limpeza.ipynb)), primeira análise ([`02_exploracao`](../notebooks/02_exploracao.ipynb)) e este repositório |
 | 2026-11-20 | Conferência das três entregas contra o repositório: o CSV enviado, o de `dados/original/` e o do `.zip` do Kaggle têm o mesmo hash, e os números batem. Incluída a seção de coerência com as entregas |
 | 2026-11-20 | Decisão sobre o setor: mantemos Saúde Privada, como na proposta, e declaramos a premissa de que a base (rede pública) é uma aproximação |
+| 2026-11-23 | Plano do projeto final escrito: [plano-projeto-final.md](plano-projeto-final.md), em 5 etapas (notebook 03, números do dashboard, dashboard, documentação e conferência final) |
 | 2026-11-23 | Decisões do projeto final: dashboard em página web (Next.js/React) com os números calculados em Python, no lugar do Power BI; apresentação de 5 a 10 minutos, com slides pelo D.E.I.L.A.S (um por letra) e depois o dashboard; sem aplicação. Incluídos a seção "Projeto final: o que está decidido" e o [guia de estudo](guia-de-estudo.md), com o conteúdo dos slides |

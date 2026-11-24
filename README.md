@@ -114,7 +114,8 @@ A conferência ponto a ponto (o que cada entrega disse e onde isso foi cumprido)
 │   └── 02_exploracao.ipynb                # primeira análise (lê só a base tratada)
 ├── docs/
 │   ├── processo.md                        # o como e o porquê de cada etapa (método D.E.I.L.A.S)
-│   └── guia-de-estudo.md                  # resumo para a equipe estudar e o conteúdo dos slides
+│   ├── guia-de-estudo.md                  # resumo para a equipe estudar e o conteúdo dos slides
+│   └── plano-projeto-final.md             # o que falta fazer, tarefa a tarefa
 └── scripts/
     └── perfil_dataset.py                  # conferência inicial do dataset original
 ```
@@ -134,7 +135,8 @@ Importados como número, o programa pode alterá-los.
 Decididos em 2026-11-23. O detalhe e o roteiro da apresentação estão na seção
 [Projeto final: o que está decidido](docs/processo.md#projeto-final-o-que-está-decidido) do processo. O
 [guia de estudo](docs/guia-de-estudo.md) resume o projeto para a equipe e traz o conteúdo de cada slide, as decisões com
-o porquê e as perguntas que o professor pode fazer.
+o porquê e as perguntas que o professor pode fazer. O [plano](docs/plano-projeto-final.md) lista o que falta, tarefa a
+tarefa.
 
 - **Notebook 03**, cruzando espera e idade para medir o grupo de maior risco.
 - **Dashboard em uma página web** (Next.js/React, publicada no GitHub Pages), sobre a mesma base tratada
