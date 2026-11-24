@@ -61,15 +61,19 @@ Uma página web (Next.js/React) com duas abas, publicada no GitHub Pages.
 
 | | Tarefa | Pronto quando |
 |---|---|---|
-| ☐ | 3.1 Criar o projeto da página | O site é gerado como arquivos estáticos, sem servidor |
-| ☐ | 3.2 Leitura dos dados e a conta dos filtros | Sem filtro, a conta devolve os totais oficiais; os testes passam |
-| ☐ | 3.3 Estrutura da página, as duas abas e o estilo | A página é legível no projetor |
-| ☐ | 3.4 Aba **Visão geral**: 4 filtros, 3 cartões e 4 gráficos | Com os filtros limpos: 110.521 consultas, 22.314 faltas e 20,2% |
-| ☐ | 3.5 Aba **Grupo de risco e SMS**: mapa de calor, grupo de maior risco, SMS e recomendações | Os números batem com o notebook 03 |
-| ☐ | 3.6 Publicação no GitHub Pages | O link público abre e mostra os números certos |
-| ☐ | 3.7 Conferência na tela e os dois prints | Os prints estão no repositório |
+| ☑ | 3.1 Criar o projeto da página | O site é gerado como arquivos estáticos, sem servidor |
+| ☑ | 3.2 Leitura dos dados e a conta dos filtros | Sem filtro, a conta devolve os totais oficiais; os testes passam |
+| ☑ | 3.3 Estrutura da página, as duas abas e o estilo | A página é legível no projetor |
+| ☑ | 3.4 Aba **Visão geral**: 4 filtros, 3 cartões e 4 gráficos | Com os filtros limpos: 110.521 consultas, 22.314 faltas e 20,2% |
+| ☑ | 3.5 Aba **Grupo de risco e SMS**: mapa de calor, grupo de maior risco, SMS e recomendações | Os números batem com o notebook 03 |
+| ☑ | 3.6 Publicação no GitHub Pages | O link público abre e mostra os números certos |
+| ☑ | 3.7 Conferência na tela e os dois prints | Os prints estão no repositório |
 
 **Entrega da etapa:** o link do dashboard e os prints para os slides.
+
+**Publicado em 2026-11-24:** https://cauedev30.github.io/analise-no-show-consultas/ (a cada push que mexe em `dashboard/`,
+o GitHub Actions roda o lint, os testes e o build e publica de novo). Colunas com menos de 100 consultas aparecem em
+azul claro, como amostra pequena (por exemplo, o sábado, com 39 consultas).
 
 ## Etapa 4: documentação
 
