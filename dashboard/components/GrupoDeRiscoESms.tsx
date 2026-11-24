@@ -17,7 +17,7 @@ export function GrupoDeRiscoESms() {
     <div className="flex flex-col gap-6 px-8 pb-6 pt-1">
       <p className="text-rotulo text-texto-2">Esta aba mostra a base inteira; os filtros valem só na Visão geral.</p>
 
-      <section aria-label="Grupo de maior risco" className="grid gap-x-12 gap-y-8 lg:grid-cols-[minmax(0,1fr)_20rem]">
+      <section aria-label="Grupo de maior risco" className="grid grid-cols-[minmax(0,1fr)] gap-x-12 gap-y-8 lg:grid-cols-[minmax(0,1fr)_20rem]">
         <MapaDeCalor painel={painel} />
         <CartoesDoGrupo painel={painel} />
       </section>

@@ -1,9 +1,9 @@
 "use client";
 
-import { Bar, BarChart, LabelList, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { Bar, BarChart, Cell, LabelList, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { COR } from "./cores";
-import { Dica, descreverLinhas, type LinhaDoGrafico } from "./Dica";
-import { formatarPct } from "@/lib/formato";
+import { Dica, descreverLinhas, ehAmostraPequena, type LinhaDoGrafico, type PropsRotulo } from "./Dica";
+import { formatarInteiro, formatarPct } from "@/lib/formato";
 import type { Resumo } from "@/lib/tipos";
 
 interface Props {
@@ -18,23 +18,20 @@ interface Props {
   yMax: number;
   /** O recorte não tem nenhuma consulta. */
   semConsultas: boolean;
+  /** Colunas com menos consultas que isso (e mais que zero) saem em azul claro, como amostra pequena. */
+  minimo: number;
   className?: string;
 }
 
-interface PropsRotulo {
-  x?: number;
-  y?: number;
-  width?: number;
-  index?: number;
-}
-
-export function GraficoColunas({ titulo, categorias, resumos, taxaGeral, yMax, semConsultas, className = "" }: Props) {
+export function GraficoColunas({ titulo, categorias, resumos, taxaGeral, yMax, semConsultas, minimo, className = "" }: Props) {
   const linhas: LinhaDoGrafico[] = categorias.map((nome, i) => ({
     nome,
     taxa: resumos[i].taxa ?? 0,
     consultas: resumos[i].consultas,
     faltas: resumos[i].faltas,
+    pequena: ehAmostraPequena(resumos[i].consultas, minimo),
   }));
+  const temAmostraPequena = linhas.some((l) => l.pequena);
 
   // O valor escrito em cima de cada coluna (taxa zero não tem coluna: o valor sai pelo rótulo do eixo).
   const rotuloDoValor = ({ x = 0, y = 0, width = 0, index = 0 }: PropsRotulo) =>
@@ -82,7 +79,7 @@ export function GraficoColunas({ titulo, categorias, resumos, taxaGeral, yMax, s
   return (
     <figure className={`flex flex-col lg:min-h-0 ${className}`}>
       <figcaption className="flex flex-wrap items-baseline justify-between gap-x-4">
-        <h3 className="text-grafico font-bold">{titulo}</h3>
+        <h2 className="text-grafico font-bold">{titulo}</h2>
         <span className="flex items-center gap-2 text-rotulo text-texto-2">
           <svg width="28" height="4" aria-hidden="true">
             <line x1="0" y1="2" x2="28" y2="2" stroke={COR.texto2} strokeWidth="2" strokeDasharray="6 4" />
@@ -115,6 +112,9 @@ export function GraficoColunas({ titulo, categorias, resumos, taxaGeral, yMax, s
                 />
                 <ReferenceLine y={taxaGeral} stroke={COR.texto2} strokeWidth={1.5} strokeDasharray="6 4" />
                 <Bar dataKey="taxa" fill={COR.azul} radius={[4, 4, 0, 0]} maxBarSize={44} isAnimationActive={false}>
+                  {linhas.map((l) => (
+                    <Cell key={l.nome} fill={l.pequena ? COR.azulClaro : COR.azul} />
+                  ))}
                   <LabelList dataKey="taxa" content={(p) => rotuloDoValor(p as unknown as PropsRotulo)} />
                 </Bar>
               </BarChart>
@@ -122,6 +122,12 @@ export function GraficoColunas({ titulo, categorias, resumos, taxaGeral, yMax, s
           </div>
         )}
       </div>
+      {/* Sempre montada: reserva a linha nos três gráficos (as alturas não diferem) e só tem texto com amostra pequena. */}
+      <p className="min-h-lh whitespace-nowrap text-rotulo text-texto-2">
+        {!semConsultas && temAmostraPequena
+          ? `Coluna clara: menos de ${formatarInteiro(minimo)} consultas (amostra pequena)`
+          : ""}
+      </p>
     </figure>
   );
 }

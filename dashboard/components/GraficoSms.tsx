@@ -3,7 +3,7 @@
 import { useSyncExternalStore } from "react";
 import { Bar, BarChart, LabelList, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { COR } from "./cores";
-import { CaixaDeDica } from "./Dica";
+import { CaixaDeDica, type PropsRotulo } from "./Dica";
 import { formatarInteiro, formatarPct } from "@/lib/formato";
 import type { LinhaSms } from "@/lib/sms";
 
@@ -12,13 +12,6 @@ interface Props {
   /** Texto entre o título e o gráfico. */
   children?: React.ReactNode;
   className?: string;
-}
-
-interface PropsRotulo {
-  x?: number;
-  y?: number;
-  width?: number;
-  index?: number;
 }
 
 const VALOR_MINIMO = 0.001;
@@ -133,7 +126,7 @@ export function GraficoSms({ linhas, children, className = "" }: Props) {
   return (
     <figure className={className}>
       <figcaption className="flex flex-wrap items-baseline gap-x-8">
-        <h3 className="text-grafico font-bold">SMS: a comparação crua engana</h3>
+        <h2 className="text-grafico font-bold">SMS: a comparação crua engana</h2>
         <ul className="flex items-center gap-5 text-rotulo" aria-label="Legenda">
           {SERIES.map((s) => (
             <li key={s.chave} className="flex items-center gap-2">

@@ -11,7 +11,7 @@ import { agrupar, filtrar, rankingBairros, somar } from "@/lib/metricas";
 import type { Filtros as TipoFiltros } from "@/lib/tipos";
 
 // Parâmetros da regra do ranking de bairros (o mínimo na base inteira vem do painel).
-const MINIMO_NO_RECORTE = 100;
+export const MINIMO_NO_RECORTE = 100;
 const BAIRROS_NO_RANKING = 10;
 
 const painel = carregarPainel();
@@ -76,6 +76,7 @@ export function VisaoGeral({ filtros, onChange }: Props) {
             taxaGeral={taxaGeral}
             yMax={dados.yMax}
             semConsultas={semConsultas}
+            minimo={MINIMO_NO_RECORTE}
           />
           <div className="grid gap-x-8 lg:min-h-0 lg:flex-[4] gap-y-6 sm:grid-cols-2">
             <GraficoColunas
@@ -85,6 +86,7 @@ export function VisaoGeral({ filtros, onChange }: Props) {
               taxaGeral={taxaGeral}
               yMax={dados.yMax}
               semConsultas={semConsultas}
+              minimo={MINIMO_NO_RECORTE}
             />
             <GraficoColunas
               titulo="Por dia da semana"
@@ -93,6 +95,7 @@ export function VisaoGeral({ filtros, onChange }: Props) {
               taxaGeral={taxaGeral}
               yMax={dados.yMax}
               semConsultas={semConsultas}
+              minimo={MINIMO_NO_RECORTE}
             />
           </div>
         </div>

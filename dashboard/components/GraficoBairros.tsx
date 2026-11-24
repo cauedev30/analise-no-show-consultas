@@ -22,7 +22,7 @@ export function GraficoBairros({ titulo, bairros, minimoNaBase, minimoNoRecorte,
   return (
     <figure className={`flex flex-col lg:min-h-0 ${className}`}>
       <figcaption>
-        <h3 className="text-grafico font-bold">{titulo}</h3>
+        <h2 className="text-grafico font-bold">{titulo}</h2>
         <p className="text-rotulo text-texto-2">
           Só bairros com {formatarInteiro(minimoNaBase)} consultas ou mais na base e {formatarInteiro(minimoNoRecorte)}{" "}
           ou mais no recorte

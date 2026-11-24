@@ -11,9 +11,9 @@ export function CartoesDoGrupo({ painel }: { painel: Painel }) {
 
   return (
     <div>
-      <h3 className="text-grafico font-bold">
+      <h2 className="text-grafico font-bold">
         Grupo de maior risco: {idades}, com {espera} de espera
-      </h3>
+      </h2>
       <div className="mt-4 divide-y divide-eixo">
         <Cartao
           empilhado

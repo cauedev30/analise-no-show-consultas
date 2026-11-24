@@ -16,14 +16,14 @@ export function Recomendacoes({ painel, className = "" }: Props) {
 
   return (
     <section aria-labelledby="titulo-recomendacoes" className={className}>
-      <h3 id="titulo-recomendacoes" className="text-grafico font-bold">
+      <h2 id="titulo-recomendacoes" className="text-grafico font-bold">
         O que recomendamos
-      </h3>
+      </h2>
 
       <div className="mt-3 grid gap-y-6 md:grid-cols-2 md:divide-x md:divide-eixo">
         <div className="md:pr-8">
           <p className="text-numero font-bold">{formatarPct(grupo.taxa)}</p>
-          <h4 className="mt-1 text-corpo font-bold">Lembrete reforçado para o grupo de maior risco</h4>
+          <h3 className="mt-1 text-corpo font-bold">Lembrete reforçado para o grupo de maior risco</h3>
           <p className="mt-1 text-corpo">
             Quem tem {idadesDoGrupo} e espera {esperaDoGrupo} falta em {formatarPct(grupo.taxa)} das consultas. Reforçar
             o lembrete só para esse grupo (por exemplo, mais de um contato antes da consulta): ele soma{" "}
@@ -32,11 +32,11 @@ export function Recomendacoes({ painel, className = "" }: Props) {
         </div>
         <div className="md:pl-8">
           <p className="text-numero font-bold">{formatarPct(longa.taxa)}</p>
-          <h4 className="mt-1 text-corpo font-bold">Overbooking controlado pelo tempo de espera</h4>
+          <h3 className="mt-1 text-corpo font-bold">Overbooking controlado pelo tempo de espera</h3>
           <p className="mt-1 text-corpo">
             Consultas marcadas com {esperaLonga} de antecedência faltam em {formatarPct(longa.taxa)}: são{" "}
             {formatarPct(longa.pct_consultas)} das consultas e {formatarPct(longa.pct_faltas)} das faltas. Marcar um
-            pouco acima da capacidade só nessas consultas ajuda a aproveitar os horários vagos. A base não tem o horário
+            pouco acima da capacidade só nessas consultas para aproveitar os horários vagos. A base não tem o horário
             da consulta, por isso o critério é a espera.
           </p>
         </div>

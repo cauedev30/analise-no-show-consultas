@@ -25,13 +25,14 @@ export function MapaDeCalor({ painel, className = "" }: Props) {
   return (
     <figure className={className}>
       <figcaption>
-        <h3 id={ID_DO_TITULO} className="text-grafico font-bold">
+        <h2 id={ID_DO_TITULO} className="text-grafico font-bold">
           Taxa de falta por idade e espera
-        </h3>
+        </h2>
         <p className="text-rotulo text-texto-2">Cada célula mostra a taxa de falta e, embaixo, o número de consultas.</p>
       </figcaption>
 
-      <table aria-labelledby={ID_DO_TITULO} className="mt-3 w-full table-fixed border-collapse text-center">
+      <div className="relative mt-3 overflow-x-auto">
+        <table aria-labelledby={ID_DO_TITULO} className="w-full min-w-[34rem] table-fixed border-collapse text-center">
         <colgroup>
           <col className="w-24" />
         </colgroup>
@@ -89,7 +90,8 @@ export function MapaDeCalor({ painel, className = "" }: Props) {
             </tr>
           ))}
         </tbody>
-      </table>
+        </table>
+      </div>
 
       <div className="mt-3 flex flex-wrap items-center gap-x-8 gap-y-2 text-rotulo text-texto-2">
         <div className="flex items-center gap-3">

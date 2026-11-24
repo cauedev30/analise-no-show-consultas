@@ -6,6 +6,21 @@ export interface LinhaDoGrafico {
   taxa: number;
   consultas: number;
   faltas: number;
+  /** A categoria tem poucas consultas (veja `ehAmostraPequena`): a taxa oscila muito. */
+  pequena?: boolean;
+}
+
+/** Os parâmetros que o Recharts passa ao rótulo de valor de cada coluna. */
+export interface PropsRotulo {
+  x?: number;
+  y?: number;
+  width?: number;
+  index?: number;
+}
+
+/** Amostra pequena: tem consultas, mas menos que o mínimo. Categoria sem consultas não conta (ela some do gráfico). */
+export function ehAmostraPequena(consultas: number, minimo: number): boolean {
+  return consultas > 0 && consultas < minimo;
 }
 
 /** A caixa escura das dicas dos gráficos (a aparência é a mesma em todos). */
@@ -22,12 +37,17 @@ export function Dica({ ativo, linha }: { ativo?: boolean; linha?: LinhaDoGrafico
       <p>Taxa de falta: {linha.consultas === 0 ? "—" : formatarPct(linha.taxa)}</p>
       <p>{formatarInteiro(linha.consultas)} consultas</p>
       <p>{formatarInteiro(linha.faltas)} faltas</p>
+      {linha.pequena && <p className="font-bold">amostra pequena</p>}
     </CaixaDeDica>
   );
 }
 
 /** Texto do aria-label do gráfico: os mesmos valores que aparecem escritos. */
 export function descreverLinhas(titulo: string, linhas: LinhaDoGrafico[]): string {
-  const itens = linhas.map((l) => `${l.nome} ${l.consultas === 0 ? "sem consultas" : formatarPct(l.taxa)}`);
+  const itens = linhas.map((l) =>
+    l.consultas === 0
+      ? `${l.nome} sem consultas`
+      : `${l.nome} ${formatarPct(l.taxa)}, ${formatarInteiro(l.consultas)} consultas${l.pequena ? ", amostra pequena" : ""}`,
+  );
   return `${titulo}: ${itens.join(", ")}.`;
 }
