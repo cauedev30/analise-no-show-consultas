@@ -3,6 +3,7 @@
 import { Bar, BarChart, Cell, LabelList, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { COR } from "./cores";
 import { Dica, descreverLinhas, ehAmostraPequena, type LinhaDoGrafico, type PropsRotulo } from "./Dica";
+import { useEntradaDasBarras } from "./entradaDasBarras";
 import { formatarInteiro, formatarPct } from "@/lib/formato";
 import type { Resumo } from "@/lib/tipos";
 
@@ -20,10 +21,23 @@ interface Props {
   semConsultas: boolean;
   /** Colunas com menos consultas que isso (e mais que zero) saem em azul claro, como amostra pequena. */
   minimo: number;
+  /** Quando passa a verdadeiro, as colunas crescem uma vez (a seção acabou de surgir). Depois, filtro não anima. */
+  animarEntrada?: boolean;
   className?: string;
 }
 
-export function GraficoColunas({ titulo, categorias, resumos, taxaGeral, yMax, semConsultas, minimo, className = "" }: Props) {
+export function GraficoColunas({
+  titulo,
+  categorias,
+  resumos,
+  taxaGeral,
+  yMax,
+  semConsultas,
+  minimo,
+  animarEntrada = false,
+  className = "",
+}: Props) {
+  const entrada = useEntradaDasBarras(animarEntrada);
   const linhas: LinhaDoGrafico[] = categorias.map((nome, i) => ({
     nome,
     taxa: resumos[i].taxa ?? 0,
@@ -77,7 +91,7 @@ export function GraficoColunas({ titulo, categorias, resumos, taxaGeral, yMax, s
   };
 
   return (
-    <figure className={`flex flex-col lg:min-h-0 ${className}`}>
+    <figure className={`flex flex-col ${className}`}>
       <figcaption className="flex flex-wrap items-baseline justify-between gap-x-4">
         <h2 className="text-grafico font-bold">{titulo}</h2>
         <span className="flex items-center gap-2 text-rotulo text-texto-2">
@@ -88,7 +102,7 @@ export function GraficoColunas({ titulo, categorias, resumos, taxaGeral, yMax, s
         </span>
       </figcaption>
 
-      <div className="relative mt-1 min-h-52 flex-1 lg:min-h-36">
+      <div className="relative mt-1 min-h-52 flex-1">
         {semConsultas ? (
           <p className="absolute inset-0 flex items-center justify-center text-corpo text-texto-2">
             sem consultas neste recorte
@@ -111,7 +125,7 @@ export function GraficoColunas({ titulo, categorias, resumos, taxaGeral, yMax, s
                   content={(p) => <Dica ativo={p.active} linha={p.payload?.[0]?.payload as LinhaDoGrafico | undefined} />}
                 />
                 <ReferenceLine y={taxaGeral} stroke={COR.texto2} strokeWidth={1.5} strokeDasharray="6 4" />
-                <Bar dataKey="taxa" fill={COR.azul} radius={[4, 4, 0, 0]} maxBarSize={44} isAnimationActive={false}>
+                <Bar dataKey="taxa" fill={COR.azul} radius={[4, 4, 0, 0]} maxBarSize={88} key={entrada.chave} {...entrada.props}>
                   {linhas.map((l) => (
                     <Cell key={l.nome} fill={l.pequena ? COR.azulClaro : COR.azul} />
                   ))}

@@ -3,6 +3,7 @@
 import { Bar, BarChart, LabelList, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { COR } from "./cores";
 import { Dica, descreverLinhas, type LinhaDoGrafico } from "./Dica";
+import { useEntradaDasBarras } from "./entradaDasBarras";
 import { formatarInteiro, formatarPct } from "@/lib/formato";
 
 interface Props {
@@ -13,14 +14,25 @@ interface Props {
   minimoNoRecorte: number;
   /** O recorte não tem nenhuma consulta. */
   semConsultas: boolean;
+  /** Quando passa a verdadeiro, as barras crescem uma vez (a seção acabou de surgir). Depois, filtro não anima. */
+  animarEntrada?: boolean;
   className?: string;
 }
 
-export function GraficoBairros({ titulo, bairros, minimoNaBase, minimoNoRecorte, semConsultas, className = "" }: Props) {
+export function GraficoBairros({
+  titulo,
+  bairros,
+  minimoNaBase,
+  minimoNoRecorte,
+  semConsultas,
+  animarEntrada = false,
+  className = "",
+}: Props) {
+  const entrada = useEntradaDasBarras(animarEntrada);
   const maxima = Math.max(0, ...bairros.map((b) => b.taxa));
 
   return (
-    <figure className={`flex flex-col lg:min-h-0 ${className}`}>
+    <figure className={`flex flex-col ${className}`}>
       <figcaption>
         <h2 className="text-grafico font-bold">{titulo}</h2>
         <p className="text-rotulo text-texto-2">
@@ -29,7 +41,7 @@ export function GraficoBairros({ titulo, bairros, minimoNaBase, minimoNoRecorte,
         </p>
       </figcaption>
 
-      <div className="relative mt-1 min-h-96 flex-1 lg:min-h-64">
+      <div className="relative mt-1 min-h-96 flex-1">
         {semConsultas || bairros.length === 0 ? (
           <p className="absolute inset-0 flex items-center justify-center text-center text-corpo text-texto-2">
             {semConsultas ? "sem consultas neste recorte" : "nenhum bairro atinge o mínimo neste recorte"}
@@ -58,7 +70,7 @@ export function GraficoBairros({ titulo, bairros, minimoNaBase, minimoNoRecorte,
                   isAnimationActive={false}
                   content={(p) => <Dica ativo={p.active} linha={p.payload?.[0]?.payload as LinhaDoGrafico | undefined} />}
                 />
-                <Bar dataKey="taxa" fill={COR.azul} radius={[0, 4, 4, 0]} barSize={20} isAnimationActive={false}>
+                <Bar dataKey="taxa" fill={COR.azul} radius={[0, 4, 4, 0]} barSize={22} key={entrada.chave} {...entrada.props}>
                   <LabelList
                     dataKey="taxa"
                     position="right"

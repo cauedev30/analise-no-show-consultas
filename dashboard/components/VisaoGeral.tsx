@@ -5,6 +5,7 @@ import { Cartao } from "./Cartao";
 import { Filtros } from "./Filtros";
 import { GraficoBairros } from "./GraficoBairros";
 import { GraficoColunas } from "./GraficoColunas";
+import { Revelar } from "./Revelar";
 import { carregarPainel, indicesDosBairrosElegiveis } from "@/lib/dados";
 import { formatarInteiro, formatarPct } from "@/lib/formato";
 import { agrupar, filtrar, rankingBairros, somar } from "@/lib/metricas";
@@ -22,7 +23,7 @@ interface Props {
   onChange: (filtros: TipoFiltros) => void;
 }
 
-/** Aba 1: o recorte escolhido nos filtros, em três números e quatro gráficos. */
+/** Aba 1: o recorte escolhido nos filtros, em três números (na barra fixa) e quatro seções, uma embaixo da outra. */
 export function VisaoGeral({ filtros, onChange }: Props) {
   const { ordem } = painel;
 
@@ -49,9 +50,22 @@ export function VisaoGeral({ filtros, onChange }: Props) {
   const amostraPequena = !semConsultas && resumo.consultas < MINIMO_NO_RECORTE;
   const taxaGeral = painel.totais.taxa;
 
+  // As três colunas na mesma altura: com o `yMax` comum, a altura de uma coluna se compara entre os gráficos.
+  const colunas = [
+    { titulo: "Taxa de falta por faixa de espera", categorias: ordem.faixa_espera, resumos: dados.porEspera },
+    { titulo: "Por faixa de idade", categorias: ordem.faixa_etaria, resumos: dados.porIdade },
+    { titulo: "Por dia da semana", categorias: ordem.dia_semana, resumos: dados.porDia },
+  ];
+
   return (
-    <div className="flex flex-1 flex-col gap-4 px-8 pb-4 pt-3">
-      <section aria-label="Filtros e números do recorte" className="flex flex-wrap items-center justify-between gap-x-8 gap-y-3">
+    <div className="pb-24">
+      {/* Barra fixa: acompanha a rolagem, para um filtro mudado lá embaixo mostrar o efeito na hora. Fica acima das
+          seções no empilhamento, para os menus dos filtros abrirem por cima dos gráficos. */}
+      <section
+        data-barra-fixa
+        aria-label="Filtros e números do recorte"
+        className="sticky top-0 z-30 flex flex-wrap items-center justify-between gap-x-8 gap-y-3 border-b border-grade bg-fundo px-8 pb-1 pt-3"
+      >
         <Filtros ordem={ordem} filtros={filtros} onChange={onChange} />
         <div>
           <div className="flex divide-x divide-eixo">
@@ -66,47 +80,39 @@ export function VisaoGeral({ filtros, onChange }: Props) {
         </div>
       </section>
 
-      <div className="grid flex-1 gap-x-10 lg:min-h-0 gap-y-8 lg:grid-cols-[58fr_42fr]">
-        <div className="flex flex-col gap-5 lg:min-h-0">
-          <GraficoColunas
-            className="lg:flex-[5]"
-            titulo="Taxa de falta por faixa de espera"
-            categorias={ordem.faixa_espera}
-            resumos={dados.porEspera}
-            taxaGeral={taxaGeral}
-            yMax={dados.yMax}
-            semConsultas={semConsultas}
-            minimo={MINIMO_NO_RECORTE}
-          />
-          <div className="grid gap-x-8 lg:min-h-0 lg:flex-[4] gap-y-6 sm:grid-cols-2">
-            <GraficoColunas
-              titulo="Por faixa de idade"
-              categorias={ordem.faixa_etaria}
-              resumos={dados.porIdade}
-              taxaGeral={taxaGeral}
-              yMax={dados.yMax}
-              semConsultas={semConsultas}
-              minimo={MINIMO_NO_RECORTE}
-            />
-            <GraficoColunas
-              titulo="Por dia da semana"
-              categorias={ordem.dia_semana}
-              resumos={dados.porDia}
-              taxaGeral={taxaGeral}
-              yMax={dados.yMax}
-              semConsultas={semConsultas}
-              minimo={MINIMO_NO_RECORTE}
-            />
-          </div>
-        </div>
+      {/* Uma seção por achado, na ordem da fala: o fator principal, o perfil, o que não pesa e a pista. */}
+      <div className="flex flex-col gap-20 px-8 pt-6">
+        {colunas.map((c) => (
+          <Revelar key={c.titulo}>
+            {(entrada) => (
+              <GraficoColunas
+                className="h-[23rem]"
+                titulo={c.titulo}
+                categorias={c.categorias}
+                resumos={c.resumos}
+                taxaGeral={taxaGeral}
+                yMax={dados.yMax}
+                semConsultas={semConsultas}
+                minimo={MINIMO_NO_RECORTE}
+                animarEntrada={entrada.animar}
+              />
+            )}
+          </Revelar>
+        ))}
 
-        <GraficoBairros
-          titulo="Bairros com maior taxa de falta"
-          bairros={dados.ranking}
-          minimoNaBase={painel.minimo_consultas_bairro}
-          minimoNoRecorte={MINIMO_NO_RECORTE}
-          semConsultas={semConsultas}
-        />
+        <Revelar>
+          {(entrada) => (
+            <GraficoBairros
+              className="h-[30rem]"
+              titulo="Bairros com maior taxa de falta"
+              bairros={dados.ranking}
+              minimoNaBase={painel.minimo_consultas_bairro}
+              minimoNoRecorte={MINIMO_NO_RECORTE}
+              semConsultas={semConsultas}
+              animarEntrada={entrada.animar}
+            />
+          )}
+        </Revelar>
       </div>
     </div>
   );
