@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { carregarPainel, indicesDosBairrosElegiveis } from "./dados";
+import { formatarPct } from "./formato";
 import { agrupar, filtrar, rankingBairros, somar } from "./metricas";
 import type { Filtros } from "./tipos";
 
@@ -29,6 +30,12 @@ describe("somar", () => {
     const resumo = somar(filtrar(painel.contagens, filtros));
     expect(resumo.consultas).toBe(38562);
     expect(resumo.faltas).toBe(1792);
+  });
+
+  it("com o filtro 13-17 a taxa arredonda para 26,6%", () => {
+    const filtros = { ...semFiltro, faixaEtaria: [indice(painel.ordem.faixa_etaria, "13-17")] };
+    const resumo = somar(filtrar(painel.contagens, filtros));
+    expect(formatarPct(resumo.taxa)).toBe("26,6%");
   });
 
   it("sem consultas a taxa é nula", () => {

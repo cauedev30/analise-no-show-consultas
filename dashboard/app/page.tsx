@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { Abas, idDaAba, idDoPainel, type Aba } from "@/components/Abas";
+import { SEM_FILTROS } from "@/components/Filtros";
 import { Rodape } from "@/components/Rodape";
+import { VisaoGeral } from "@/components/VisaoGeral";
 import { carregarPainel } from "@/lib/dados";
 import { formatarInteiro } from "@/lib/formato";
 
@@ -19,6 +21,8 @@ const painel = carregarPainel();
 
 export default function Home() {
   const [aba, setAba] = useState(ABAS[0].id);
+  // Os filtros ficam aqui para não se perderem ao trocar de aba.
+  const [filtros, setFiltros] = useState(SEM_FILTROS);
 
   return (
     <>
@@ -44,9 +48,12 @@ export default function Home() {
             aria-labelledby={idDaAba(a.id)}
             className={a.id === aba ? "flex flex-1 flex-col" : "hidden"}
           >
-            <div className="px-8 py-4">
-              <h2 className="text-grafico font-bold">{a.rotulo}</h2>
-            </div>
+            {a.id === aba && a.id === "visao-geral" && <VisaoGeral filtros={filtros} onChange={setFiltros} />}
+            {a.id === aba && a.id === "grupo-de-risco-e-sms" && (
+              <div className="px-8 py-4">
+                <h2 className="text-grafico font-bold">{a.rotulo}</h2>
+              </div>
+            )}
           </div>
         ))}
       </main>
