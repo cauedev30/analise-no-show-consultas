@@ -109,7 +109,9 @@ que cabe numa frase do slide **A**.
 | ☑ | 3C.2 Espera em linha com pontos | A primeira tela ainda mostra o gráfico da espera inteiro |
 | ☑ | 3C.3 Idade em barras de desvio | Filtrando espera "Mesmo dia", todas as barras vão para a esquerda |
 | ☑ | 3C.4 Bairros em pirulito e a saída do gráfico do dia da semana | 3 seções; o filtro do dia da semana continua |
-| ☐ | 3C.5 Publicação, conferência no site e os prints | O site publicado passa na conferência |
+| ☑ | 3C.5 Publicação, conferência no site e os prints | O site publicado passa na conferência |
+
+**Publicado em 2026-11-24**, no mesmo link.
 
 ## Etapa 4: documentação
 
