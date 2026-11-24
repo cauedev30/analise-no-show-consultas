@@ -24,26 +24,22 @@ export default function Home() {
   // Os filtros ficam aqui para não se perderem ao trocar de aba.
   const [filtros, setFiltros] = useState(SEM_FILTROS);
 
-  const ativa = ABAS.find((a) => a.id === aba) ?? ABAS[0];
-
   return (
-    <div className="md:flex">
-      <aside className="bg-texto pb-3 text-white md:sticky md:top-0 md:h-dvh md:w-64 md:shrink-0 md:pb-6">
-        <h1 className="px-6 pb-4 pt-5 text-grafico font-bold md:pb-6 md:pt-6">
-          No-show em consultas: <span className="text-marca md:block">taxa de falta</span>
-        </h1>
-        <Abas abas={ABAS} ativa={aba} onChange={setAba} />
-      </aside>
-
-      <main className="min-w-0 flex-1">
-        <div className="px-6 pt-6 lg:px-8">
-          <h2 className="text-pagina font-bold">{ativa.rotulo}</h2>
-          <p className="mt-1 text-rotulo text-texto-2">
-            Base: Medical Appointment No Shows (Kaggle), {formatarInteiro(painel.totais.consultas)} consultas de {PERIODO}
-            , em {painel.ordem.bairro.length} bairros.
-          </p>
+    <>
+      <header className="px-6 pt-4 lg:px-8">
+        <div className="flex flex-wrap items-end justify-between gap-x-8 border-b border-grade">
+          <h1 className="pb-2 text-pagina font-bold">No-show em consultas: taxa de falta</h1>
+          <div className="-mb-px">
+            <Abas abas={ABAS} ativa={aba} onChange={setAba} />
+          </div>
         </div>
+        <p className="py-2 text-rotulo text-texto-2">
+          Base: Medical Appointment No Shows (Kaggle), {formatarInteiro(painel.totais.consultas)} consultas de {PERIODO}
+          , em {painel.ordem.bairro.length} bairros.
+        </p>
+      </header>
 
+      <main className="flex flex-1 flex-col">
         {ABAS.map((a) => (
           <div
             key={a.id}
@@ -58,6 +54,6 @@ export default function Home() {
           </div>
         ))}
       </main>
-    </div>
+    </>
   );
 }
