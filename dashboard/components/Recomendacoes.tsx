@@ -24,21 +24,21 @@ export function Recomendacoes({ painel, className = "" }: Props) {
       </h2>
       <p className="mt-1 text-corpo">Um agente de disparo de lembretes para reduzir as faltas</p>
 
-      <div className="mt-3 grid gap-y-6 md:grid-cols-3 md:divide-x md:divide-eixo">
-        <div className="md:pr-8">
+      <div className="mt-4 grid gap-4 md:grid-cols-3">
+        <div className="rounded-lg border border-grade bg-pagina p-4">
           <h3 className="text-corpo font-bold">Classifica</h3>
           <p className="mt-1 text-corpo">
             No agendamento, calcula o risco de falta pela espera e pela idade. De {idadesDoGrupo}, com {esperaDoGrupo} de
             espera, a falta é de {formatarPct(grupo.taxa)}.
           </p>
         </div>
-        <div className="md:px-8">
+        <div className="rounded-lg border border-grade bg-pagina p-4">
           <h3 className="text-corpo font-bold">Dispara</h3>
           <p className="mt-1 text-corpo">
             Para quem tem risco alto, manda mais de um lembrete antes da consulta e pede confirmação.
           </p>
         </div>
-        <div className="md:pl-8">
+        <div className="rounded-lg border border-grade bg-pagina p-4">
           <h3 className="text-corpo font-bold">Libera</h3>
           <p className="mt-1 text-corpo">
             Se o paciente cancela ou não confirma, o horário é oferecido a quem está na lista de espera.
@@ -46,15 +46,15 @@ export function Recomendacoes({ painel, className = "" }: Props) {
         </div>
       </div>
 
-      <div className="mt-6 grid gap-y-6 md:grid-cols-2 md:divide-x md:divide-eixo">
-        <div className="md:pr-8">
-          <p className="text-numero font-bold">{formatarPct(grupo.taxa)}</p>
-          <p className="mt-1 text-corpo">
+      <div className="mt-4 grid gap-4 md:grid-cols-2">
+        <div className="rounded-lg border border-texto bg-texto p-4">
+          <p className="text-numero font-bold text-marca">{formatarPct(grupo.taxa)}</p>
+          <p className="mt-1 text-corpo text-fundo">
             é a taxa de falta do grupo de maior risco, que soma {formatarPct(grupo.pct_consultas)} das consultas e{" "}
             {formatarPct(grupo.pct_faltas)} das faltas.
           </p>
         </div>
-        <div className="md:pl-8">
+        <div className="rounded-lg border border-grade bg-pagina p-4">
           <p className="text-numero font-bold">{consultasAMais}</p>
           <p className="mt-1 text-corpo">consultas a mais em seis semanas, se o grupo de risco faltasse como a média.</p>
         </div>

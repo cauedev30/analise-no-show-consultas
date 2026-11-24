@@ -10,11 +10,11 @@ export function CartoesDoGrupo({ painel }: { painel: Painel }) {
   const espera = textoDasFaixas(grupo.faixas_espera, "dias");
 
   return (
-    <div>
+    <div className="cartao flex flex-col">
       <h2 className="text-grafico font-bold">
         Grupo de maior risco: {idades}, com {espera} de espera
       </h2>
-      <div className="mt-4 divide-y divide-eixo">
+      <div className="mt-4 grid flex-1 gap-3 sm:grid-cols-3 lg:auto-rows-fr lg:grid-cols-1">
         <Cartao
           rotulo="Consultas"
           valor={formatarInteiro(grupo.consultas)}
@@ -22,6 +22,7 @@ export function CartoesDoGrupo({ painel }: { painel: Painel }) {
         />
         <Cartao
           rotulo="Taxa de falta"
+          destaque
           valor={formatarPct(grupo.taxa)}
           complemento={`contra ${formatarPct(totais.taxa)} na base inteira`}
         />
