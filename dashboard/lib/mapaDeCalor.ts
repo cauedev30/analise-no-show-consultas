@@ -8,6 +8,11 @@ export const RAMPA = ["#cde2fb", "#9ec5f4", "#6da7ec", "#3987e5", "#256abf", "#1
 /** A cor de texto mais escura da paleta (o token --color-texto). */
 export const TEXTO_ESCURO = "#0b0b0b";
 export const TEXTO_CLARO = "#ffffff";
+/**
+ * O texto escuro dentro das células do mapa é preto puro, não o token --color-texto: com #0b0b0b o pior caso da
+ * rampa dá 4,44:1 (abaixo do mínimo de 4,5:1 da WCAG); com #000000 passa. Vale só para o mapa.
+ */
+export const TEXTO_ESCURO_DO_MAPA = "#000000";
 
 /**
  * Topo da escala de cor, em %. É o mesmo do notebook 03 (vmin=0, vmax=45): um parâmetro de desenho,
@@ -33,16 +38,23 @@ export function corDaEscala(taxa: number, teto: number = TETO_DA_ESCALA): string
   return paraHex(a.map((v, k) => v + (b[k] - v) * frac));
 }
 
-/** Branco ou texto escuro: o que tiver mais contraste com o fundo (luminância relativa, como na regra WCAG). */
-export function corDoTexto(fundo: string): string {
-  const [r, g, b] = canais(fundo).map((v) => {
+function luminancia(hex: string): number {
+  const [r, g, b] = canais(hex).map((v) => {
     const c = v / 255;
     return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
   });
-  const luminancia = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-  const contrasteEscuro = (luminancia + 0.05) / 0.05;
-  const contrasteClaro = 1.05 / (luminancia + 0.05);
-  return contrasteEscuro >= contrasteClaro ? TEXTO_ESCURO : TEXTO_CLARO;
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+/** Contraste entre duas cores hex, de 1 a 21 (a razão de luminância relativa da WCAG). */
+export function contraste(a: string, b: string): number {
+  const [maior, menor] = [luminancia(a), luminancia(b)].sort((x, y) => y - x);
+  return (maior + 0.05) / (menor + 0.05);
+}
+
+/** Branco ou preto: o que tiver mais contraste com o fundo da célula do mapa. */
+export function corDoTexto(fundo: string): string {
+  return contraste(fundo, TEXTO_ESCURO_DO_MAPA) >= contraste(fundo, TEXTO_CLARO) ? TEXTO_ESCURO_DO_MAPA : TEXTO_CLARO;
 }
 
 export interface CelulaDoMapa extends CelulaIdadeEspera {

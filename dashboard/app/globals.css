@@ -19,7 +19,9 @@
   --color-azul-claro: #86b6ef;
   --color-laranja: #eb6834;
 
-  /* Rampa do mapa de calor (a do notebook 03), do claro ao escuro. */
+  /* Rampa do mapa de calor (a do notebook 03), do claro ao escuro. Existe um espelho em lib/mapaDeCalor.ts (a
+     interpolação em JavaScript que dá a cor de cada célula): ao mudar uma cor aqui, mude lá também. Um teste
+     (lib/aba2.test.ts) confere que os dois são iguais. */
   --color-rampa-1: #cde2fb;
   --color-rampa-2: #9ec5f4;
   --color-rampa-3: #6da7ec;

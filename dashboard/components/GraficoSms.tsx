@@ -1,7 +1,9 @@
 "use client";
 
+import { useSyncExternalStore } from "react";
 import { Bar, BarChart, LabelList, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { COR } from "./cores";
+import { CaixaDeDica } from "./Dica";
 import { formatarInteiro, formatarPct } from "@/lib/formato";
 import type { LinhaSms } from "@/lib/sms";
 
@@ -21,6 +23,24 @@ interface PropsRotulo {
 
 const VALOR_MINIMO = 0.001;
 
+// Tela estreita (abaixo do breakpoint sm do Tailwind, 640 px): os rótulos de valor ficam menores e as colunas mais
+// juntas, para "24,4%" e "23,8%" não se encostarem. Em telas largas nada muda.
+const TELA_ESTREITA = "(max-width: 639px)";
+
+function assinarTela(aviso: () => void) {
+  const consulta = window.matchMedia(TELA_ESTREITA);
+  consulta.addEventListener("change", aviso);
+  return () => consulta.removeEventListener("change", aviso);
+}
+
+function useTelaEstreita(): boolean {
+  return useSyncExternalStore(
+    assinarTela,
+    () => window.matchMedia(TELA_ESTREITA).matches,
+    () => false,
+  );
+}
+
 type Serie = "sem" | "com";
 
 const SERIES: { chave: Serie; nome: string; cor: string; campo: "taxaSem" | "taxaCom" }[] = [
@@ -37,10 +57,10 @@ function descrever(linhas: LinhaSms[]): string {
   return `Taxa de falta por faixa de espera, com e sem SMS. ${itens.join("; ")}.`;
 }
 
-function Dica({ ativo, linha }: { ativo?: boolean; linha?: LinhaSms }) {
+function DicaSms({ ativo, linha }: { ativo?: boolean; linha?: LinhaSms }) {
   if (!ativo || !linha) return null;
   return (
-    <div className="rounded bg-texto px-3 py-2 text-rotulo text-fundo">
+    <CaixaDeDica>
       <p className="font-bold">{linha.nome}</p>
       {SERIES.map((s) => {
         const g = linha[s.chave];
@@ -56,12 +76,14 @@ function Dica({ ativo, linha }: { ativo?: boolean; linha?: LinhaSms }) {
           </p>
         );
       })}
-    </div>
+    </CaixaDeDica>
   );
 }
 
 /** Colunas agrupadas por faixa de espera: sem SMS (azul) e com SMS (laranja). */
 export function GraficoSms({ linhas, children, className = "" }: Props) {
+  const estreita = useTelaEstreita();
+  const fonteDoValor = estreita ? 10 : 14;
   // A taxa de um grupo sem consultas é nula. O Recharts não chama o rótulo quando não há valor, então ela vira um
   // valor mínimo (altura invisível) e o rótulo escreve "sem consultas" no lugar da coluna.
   const dados = linhas.map((l) => ({
@@ -76,14 +98,22 @@ export function GraficoSms({ linhas, children, className = "" }: Props) {
     const centro = x + width / 2;
     const estilo = {
       textAnchor: "middle" as const,
-      fontSize: 14,
+      fontSize: fonteDoValor,
       stroke: COR.fundo,
-      strokeWidth: 6,
+      strokeWidth: estreita ? 3 : 6,
       paintOrder: "stroke",
       strokeLinejoin: "round" as const,
     };
     if (grupo.consultas === 0) {
-      // Sem coluna: o texto fica logo acima do eixo, em duas linhas para caber na largura da coluna.
+      // Sem coluna: o texto fica logo acima do eixo. Em tela larga são duas linhas ("sem" e "consultas"); em tela
+      // estreita não cabe, e vira um traço.
+      if (estreita) {
+        return (
+          <text {...estilo} x={centro} y={y - 6} fill={COR.texto2}>
+            —
+          </text>
+        );
+      }
       return (
         <text {...estilo} x={centro} y={y - 24} fill={COR.texto2}>
           <tspan x={centro}>sem</tspan>
@@ -120,8 +150,8 @@ export function GraficoSms({ linhas, children, className = "" }: Props) {
           <BarChart
             data={dados}
             margin={{ top: 28, right: 4, bottom: 0, left: 4 }}
-            barCategoryGap="25%"
-            barGap={8}
+            barCategoryGap={estreita ? "4%" : "25%"}
+            barGap={estreita ? 2 : 8}
             accessibilityLayer={false}
           >
             <XAxis
@@ -129,13 +159,13 @@ export function GraficoSms({ linhas, children, className = "" }: Props) {
               interval={0}
               tickLine={false}
               axisLine={{ stroke: COR.eixo }}
-              tick={{ fontSize: 14, fill: COR.texto2 }}
+              tick={{ fontSize: estreita ? 12 : 14, fill: COR.texto2 }}
             />
             <YAxis hide domain={[0, yMax]} />
             <Tooltip
               cursor={{ fill: COR.neutro }}
               isAnimationActive={false}
-              content={(p) => <Dica ativo={p.active} linha={p.payload?.[0]?.payload as LinhaSms | undefined} />}
+              content={(p) => <DicaSms ativo={p.active} linha={p.payload?.[0]?.payload as LinhaSms | undefined} />}
             />
             {SERIES.map((s) => (
               <Bar

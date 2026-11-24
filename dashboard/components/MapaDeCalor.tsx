@@ -5,6 +5,7 @@ import type { Painel } from "@/lib/tipos";
 // Os marcadores da legenda (parâmetros de desenho da escala, não dados): 4 marcas entre 0 e o teto.
 const MARCAS_DA_LEGENDA = [0, 1, 2, 3].map((i) => (TETO_DA_ESCALA / 3) * i);
 
+const ID_DO_TITULO = "titulo-mapa-de-calor";
 const ESPESSURA_DO_CONTORNO = "3px";
 const LINHA_ENTRE_CELULAS = "2px solid var(--color-fundo)";
 
@@ -24,22 +25,27 @@ export function MapaDeCalor({ painel, className = "" }: Props) {
   return (
     <figure className={className}>
       <figcaption>
-        <h3 className="text-grafico font-bold">Taxa de falta por idade e espera</h3>
+        <h3 id={ID_DO_TITULO} className="text-grafico font-bold">
+          Taxa de falta por idade e espera
+        </h3>
         <p className="text-rotulo text-texto-2">Cada célula mostra a taxa de falta e, embaixo, o número de consultas.</p>
       </figcaption>
 
-      <table className="mt-3 w-full table-fixed border-collapse text-center">
+      <table aria-labelledby={ID_DO_TITULO} className="mt-3 w-full table-fixed border-collapse text-center">
+        <colgroup>
+          <col className="w-24" />
+        </colgroup>
+        <colgroup span={mapa.colunas.length} />
         <thead>
           <tr>
-            <td />
+            <th scope="col" rowSpan={2} className="pb-1 pr-3 text-right align-bottom text-rotulo font-normal text-texto-2">
+              Idade
+            </th>
             <th colSpan={mapa.colunas.length} scope="colgroup" className="pb-1 text-rotulo font-normal text-texto-2">
               Espera entre o agendamento e a consulta
             </th>
           </tr>
           <tr>
-            <th scope="col" className="w-24 pb-1 pr-3 text-right text-rotulo font-normal text-texto-2">
-              Idade
-            </th>
             {mapa.colunas.map((coluna) => (
               <th key={coluna} scope="col" className="pb-1 text-rotulo font-bold">
                 {coluna}
@@ -76,6 +82,7 @@ export function MapaDeCalor({ painel, className = "" }: Props) {
                       {formatarInteiro(celula.consultas)}
                       <span className="sr-only"> consultas</span>
                     </span>
+                    {celula.noGrupo && <span className="sr-only"> (grupo de maior risco)</span>}
                   </td>
                 );
               })}

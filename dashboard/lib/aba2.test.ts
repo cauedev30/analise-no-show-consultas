@@ -12,6 +12,7 @@ import {
   RAMPA,
   TEXTO_CLARO,
   TEXTO_ESCURO,
+  TEXTO_ESCURO_DO_MAPA,
 } from "./mapaDeCalor";
 import { montarLinhasSms } from "./sms";
 
@@ -54,9 +55,9 @@ describe("cor do texto da célula", () => {
     expect(corDoTexto("#256abf")).toBe(TEXTO_CLARO);
   });
 
-  it("fundo claro dá o texto escuro", () => {
-    expect(corDoTexto("#cde2fb")).toBe(TEXTO_ESCURO);
-    expect(corDoTexto("#9ec5f4")).toBe(TEXTO_ESCURO);
+  it("fundo claro dá o texto escuro do mapa (preto)", () => {
+    expect(corDoTexto("#cde2fb")).toBe(TEXTO_ESCURO_DO_MAPA);
+    expect(corDoTexto("#9ec5f4")).toBe(TEXTO_ESCURO_DO_MAPA);
   });
 });
 

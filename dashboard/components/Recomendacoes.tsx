@@ -49,7 +49,7 @@ export function Recomendacoes({ painel, className = "" }: Props) {
         </p>
         <p>
           <span className="font-bold text-texto">Limites:</span> a análise é descritiva (mostra associação, não causa).
-          Os dados são da rede pública de Vitória (ES), usados como aproximação para a clínica. Antes de aplicar, a
+          Os dados indicam rede pública (Vitória, ES) e entram como aproximação para a clínica. Antes de aplicar, a
           clínica deve conferir com os próprios dados, e o overbooking precisa de um limite para não gerar fila.
         </p>
       </div>

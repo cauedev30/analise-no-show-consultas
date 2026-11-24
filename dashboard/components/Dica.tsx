@@ -8,16 +8,21 @@ export interface LinhaDoGrafico {
   faltas: number;
 }
 
+/** A caixa escura das dicas dos gráficos (a aparência é a mesma em todos). */
+export function CaixaDeDica({ children }: { children: React.ReactNode }) {
+  return <div className="rounded bg-texto px-3 py-2 text-rotulo text-fundo">{children}</div>;
+}
+
 /** Dica ao passar o mouse: a taxa e o número de consultas e de faltas da categoria. */
 export function Dica({ ativo, linha }: { ativo?: boolean; linha?: LinhaDoGrafico }) {
   if (!ativo || !linha) return null;
   return (
-    <div className="rounded bg-texto px-3 py-2 text-rotulo text-fundo">
+    <CaixaDeDica>
       <p className="font-bold">{linha.nome}</p>
       <p>Taxa de falta: {linha.consultas === 0 ? "—" : formatarPct(linha.taxa)}</p>
       <p>{formatarInteiro(linha.consultas)} consultas</p>
       <p>{formatarInteiro(linha.faltas)} faltas</p>
-    </div>
+    </CaixaDeDica>
   );
 }
 
