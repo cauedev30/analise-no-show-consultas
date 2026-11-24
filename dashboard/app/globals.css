@@ -67,6 +67,7 @@ body {
  * Surgimento das seções ao rolar (etapa 3B): o componente Revelar troca `data-revelar` de "escondido" para
  * "visivel" quando a seção entra na tela, uma vez só. Fade com subida de 16 px em 0,4 s. Só opacidade e
  * deslocamento: a seção escondida continua para o leitor de tela e para o teclado.
+ * O HTML estático sai com "inicial", que não tem regra aqui: sem JavaScript (ou enquanto ele carrega), tudo aparece.
  */
 @media (prefers-reduced-motion: no-preference) {
   [data-revelar] {

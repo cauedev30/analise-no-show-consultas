@@ -18,13 +18,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" className={atkinson.variable}>
-      <body className="flex min-h-dvh flex-col">
-        {/* Sem JavaScript o observador do Revelar nunca roda: as seções ficam visíveis. */}
-        <noscript>
-          <style>{"[data-revelar]{opacity:1!important;transform:none!important}"}</style>
-        </noscript>
-        {children}
-      </body>
+      <body className="flex min-h-dvh flex-col">{children}</body>
     </html>
   );
 }

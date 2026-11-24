@@ -14,7 +14,9 @@ interface Props {
   minimoNoRecorte: number;
   /** O recorte não tem nenhuma consulta. */
   semConsultas: boolean;
-  /** Quando passa a verdadeiro, as barras crescem uma vez (a seção acabou de surgir). Depois, filtro não anima. */
+  /** Falso enquanto a seção não surgiu: o gráfico fica sem as barras, que entram quando ela aparece. */
+  mostrarBarras?: boolean;
+  /** As barras crescem ao entrar (uma vez). Depois, filtro não anima. */
   animarEntrada?: boolean;
   className?: string;
 }
@@ -25,6 +27,7 @@ export function GraficoBairros({
   minimoNaBase,
   minimoNoRecorte,
   semConsultas,
+  mostrarBarras = true,
   animarEntrada = false,
   className = "",
 }: Props) {
@@ -70,17 +73,19 @@ export function GraficoBairros({
                   isAnimationActive={false}
                   content={(p) => <Dica ativo={p.active} linha={p.payload?.[0]?.payload as LinhaDoGrafico | undefined} />}
                 />
-                <Bar dataKey="taxa" fill={COR.azul} radius={[0, 4, 4, 0]} barSize={22} key={entrada.chave} {...entrada.props}>
-                  <LabelList
-                    dataKey="taxa"
-                    position="right"
-                    offset={6}
-                    fontSize={14}
-                    fontWeight={700}
-                    fill={COR.texto}
-                    formatter={(v: unknown) => formatarPct(Number(v))}
-                  />
-                </Bar>
+                {mostrarBarras && (
+                  <Bar dataKey="taxa" fill={COR.azul} radius={[0, 4, 4, 0]} barSize={22} {...entrada}>
+                    <LabelList
+                      dataKey="taxa"
+                      position="right"
+                      offset={6}
+                      fontSize={14}
+                      fontWeight={700}
+                      fill={COR.texto}
+                      formatter={(v: unknown) => formatarPct(Number(v))}
+                    />
+                  </Bar>
+                )}
               </BarChart>
             </ResponsiveContainer>
           </div>

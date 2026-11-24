@@ -21,7 +21,9 @@ interface Props {
   semConsultas: boolean;
   /** Colunas com menos consultas que isso (e mais que zero) saem em azul claro, como amostra pequena. */
   minimo: number;
-  /** Quando passa a verdadeiro, as colunas crescem uma vez (a seção acabou de surgir). Depois, filtro não anima. */
+  /** Falso enquanto a seção não surgiu: o gráfico fica sem as colunas, que entram quando ela aparece. */
+  mostrarBarras?: boolean;
+  /** As colunas crescem ao entrar (uma vez). Depois, filtro não anima. */
   animarEntrada?: boolean;
   className?: string;
 }
@@ -34,6 +36,7 @@ export function GraficoColunas({
   yMax,
   semConsultas,
   minimo,
+  mostrarBarras = true,
   animarEntrada = false,
   className = "",
 }: Props) {
@@ -125,12 +128,14 @@ export function GraficoColunas({
                   content={(p) => <Dica ativo={p.active} linha={p.payload?.[0]?.payload as LinhaDoGrafico | undefined} />}
                 />
                 <ReferenceLine y={taxaGeral} stroke={COR.texto2} strokeWidth={1.5} strokeDasharray="6 4" />
-                <Bar dataKey="taxa" fill={COR.azul} radius={[4, 4, 0, 0]} maxBarSize={88} key={entrada.chave} {...entrada.props}>
-                  {linhas.map((l) => (
-                    <Cell key={l.nome} fill={l.pequena ? COR.azulClaro : COR.azul} />
-                  ))}
-                  <LabelList dataKey="taxa" content={(p) => rotuloDoValor(p as unknown as PropsRotulo)} />
-                </Bar>
+                {mostrarBarras && (
+                  <Bar dataKey="taxa" fill={COR.azul} radius={[4, 4, 0, 0]} maxBarSize={88} {...entrada}>
+                    {linhas.map((l) => (
+                      <Cell key={l.nome} fill={l.pequena ? COR.azulClaro : COR.azul} />
+                    ))}
+                    <LabelList dataKey="taxa" content={(p) => rotuloDoValor(p as unknown as PropsRotulo)} />
+                  </Bar>
+                )}
               </BarChart>
             </ResponsiveContainer>
           </div>

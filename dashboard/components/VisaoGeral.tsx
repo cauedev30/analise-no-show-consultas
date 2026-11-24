@@ -95,6 +95,7 @@ export function VisaoGeral({ filtros, onChange }: Props) {
                 yMax={dados.yMax}
                 semConsultas={semConsultas}
                 minimo={MINIMO_NO_RECORTE}
+                mostrarBarras={entrada.surgiu}
                 animarEntrada={entrada.animar}
               />
             )}
@@ -110,6 +111,7 @@ export function VisaoGeral({ filtros, onChange }: Props) {
               minimoNaBase={painel.minimo_consultas_bairro}
               minimoNoRecorte={MINIMO_NO_RECORTE}
               semConsultas={semConsultas}
+              mostrarBarras={entrada.surgiu}
               animarEntrada={entrada.animar}
             />
           )}

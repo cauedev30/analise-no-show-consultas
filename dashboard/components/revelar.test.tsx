@@ -3,10 +3,12 @@ import { describe, expect, it } from "vitest";
 import { Revelar, type Entrada } from "./Revelar";
 
 describe("Revelar no HTML estático", () => {
-  it("traz o conteúdo no HTML, marcado como escondido, com a classe recebida", () => {
+  it("traz o conteúdo no HTML, no estado inicial (visível sem JavaScript), com a classe recebida", () => {
     const html = renderToStaticMarkup(<Revelar className="mt-12">Taxa de falta por faixa de espera</Revelar>);
     expect(html).toContain("Taxa de falta por faixa de espera");
-    expect(html).toContain('data-revelar="escondido"');
+    // "inicial" não tem regra no CSS: a página nunca depende do JavaScript para mostrar o conteúdo.
+    expect(html).toContain('data-revelar="inicial"');
+    expect(html).not.toContain("escondido");
     expect(html).toMatch(/<div[^>]*class="mt-12"/);
     // Nada que tire a seção da árvore de acessibilidade.
     expect(html).not.toContain("aria-hidden");
