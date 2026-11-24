@@ -138,22 +138,24 @@ nos slides e no dashboard, porque o canal pensado hoje é o WhatsApp, não o SMS
 
 | | Tarefa | Pronto quando |
 |---|---|---|
-| ☐ | 4.1 `docs/processo.md`: o notebook 03, as recomendações com os números e o dashboard | Nada feito aparece como "próxima etapa" |
-| ☐ | 4.2 `README.md` reescrito para o projeto inteiro, com o link e o print do dashboard | Seguir o "como rodar" do zero funciona |
-| ☐ | 4.3 `docs/guia-de-estudo.md`: o número do slide S, o link e o passo a passo da demonstração | Não sobra nenhum "a fazer" |
-| ☐ | 4.4 Texto de "próximos passos" do notebook 02 | Só o texto muda; nenhum número |
+| ☑ | 4.1 `docs/processo.md`: o notebook 03, as recomendações com os números e o dashboard | Nada feito aparece como "próxima etapa" |
+| ☑ | 4.2 `README.md` reescrito para o projeto inteiro, com o link e o print do dashboard | Seguir o "como rodar" do zero funciona |
+| ☑ | 4.3 `docs/guia-de-estudo.md`: o número do slide S, o link e o passo a passo da demonstração | Não sobra nenhum "a fazer" |
+| ☑ | 4.4 Texto de "próximos passos" do notebook 02 | Só o texto muda; nenhum número |
+
+**Feito em 2026-11-24.** A documentação descreve o projeto inteiro: a solução é o agente de disparo de lembretes, e
+os prints mostram o dashboard atual.
 
 ## Etapa 5: conferência final e envio
 
 | | Tarefa | Pronto quando |
 |---|---|---|
-| ☐ | 5.1 Conferência de coerência | Os números oficiais aparecem iguais no README, no processo, no guia, no dashboard e nos slides |
-| ☐ | 5.2 Execução do zero em uma cópia limpa do repositório | Notebooks, script, testes e dashboard rodam sem erro |
+| ☑ | 5.1 Conferência de coerência | Os números oficiais aparecem iguais no README, no processo, no guia, no dashboard e nos slides |
+| ☑ | 5.2 Execução do zero em uma cópia limpa do repositório | Notebooks, script, testes e dashboard rodam sem erro |
 | ☐ | 5.3 Ensaio da apresentação (slides e dashboard) | Cabe em 5 a 10 minutos |
 | ☐ | 5.4 Envio ao professor | Link do repositório e do dashboard enviados |
 
 ## Os slides
 
-Os slides são montados em paralelo, a partir do [guia de estudo](guia-de-estudo.md): a capa e um slide por letra do
-D.E.I.L.A.S. Os slides 1 a 6 já podem ser feitos. O slide **S** recebe o número da etapa 1, e o dashboard entra na
-apresentação depois da etapa 3.
+Os slides são montados pelo Daniel Vieira a partir do [guia de estudo](guia-de-estudo.md): a capa e um slide por letra
+do D.E.I.L.A.S, e depois o dashboard ao vivo. Os números dos slides foram conferidos com a base tratada em 2026-11-24.
