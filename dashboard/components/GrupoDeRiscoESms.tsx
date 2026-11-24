@@ -5,6 +5,7 @@ import { FraseSms } from "./FraseSms";
 import { GraficoSms } from "./GraficoSms";
 import { MapaDeCalor } from "./MapaDeCalor";
 import { Recomendacoes } from "./Recomendacoes";
+import { Revelar } from "./Revelar";
 import { carregarPainel } from "@/lib/dados";
 import { montarLinhasSms } from "@/lib/sms";
 
@@ -17,18 +18,25 @@ export function GrupoDeRiscoESms() {
     <div className="flex flex-col gap-6 px-8 pb-6 pt-1">
       <p className="text-rotulo text-texto-2">Esta aba mostra a base inteira; os filtros valem só na Visão geral.</p>
 
-      <section aria-label="Grupo de maior risco" className="grid grid-cols-[minmax(0,1fr)] gap-x-12 gap-y-8 lg:grid-cols-[minmax(0,1fr)_20rem]">
-        <MapaDeCalor painel={painel} />
-        <CartoesDoGrupo painel={painel} />
-      </section>
+      {/* As três seções surgem ao entrar na tela (só o fade: na aba 2 nenhum gráfico cresce). */}
+      <Revelar>
+        <section aria-label="Grupo de maior risco" className="grid grid-cols-[minmax(0,1fr)] gap-x-12 gap-y-8 lg:grid-cols-[minmax(0,1fr)_20rem]">
+          <MapaDeCalor painel={painel} />
+          <CartoesDoGrupo painel={painel} />
+        </section>
+      </Revelar>
 
-      <section aria-label="SMS">
-        <GraficoSms linhas={linhasSms}>
-          <FraseSms painel={painel} />
-        </GraficoSms>
-      </section>
+      <Revelar>
+        <section aria-label="SMS">
+          <GraficoSms linhas={linhasSms}>
+            <FraseSms painel={painel} />
+          </GraficoSms>
+        </section>
+      </Revelar>
 
-      <Recomendacoes painel={painel} />
+      <Revelar>
+        <Recomendacoes painel={painel} />
+      </Revelar>
     </div>
   );
 }

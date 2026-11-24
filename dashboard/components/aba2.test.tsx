@@ -2,6 +2,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { CartoesDoGrupo } from "./CartoesDoGrupo";
 import { FraseSms } from "./FraseSms";
+import { GrupoDeRiscoESms } from "./GrupoDeRiscoESms";
 import { MapaDeCalor } from "./MapaDeCalor";
 import { Recomendacoes } from "./Recomendacoes";
 import Home from "@/app/page";
@@ -90,6 +91,19 @@ describe("o que saiu na etapa 3B (rodapé e bloco de ideia e limites)", () => {
     expect(html).not.toContain("CC BY-NC-SA");
     expect(html).not.toContain("<footer");
     expect(html).toContain("Base: Medical Appointment No Shows (Kaggle)");
+  });
+});
+
+describe("aba 2 com o surgimento (etapa 3B)", () => {
+  it("as 3 seções surgem sozinhas e mantêm os títulos; a nota dos filtros fica fora", () => {
+    const html = renderToStaticMarkup(<GrupoDeRiscoESms />);
+    expect(html.match(/data-revelar=/g)).toHaveLength(3);
+    const posicoes = ["Taxa de falta por idade e espera", "SMS: a comparação crua engana", "O que recomendamos"].map((t) =>
+      html.indexOf(t),
+    );
+    expect(posicoes.every((i) => i > -1)).toBe(true);
+    expect([...posicoes].sort((a, b) => a - b)).toEqual(posicoes);
+    expect(html.indexOf("os filtros valem só na Visão geral")).toBeLessThan(html.indexOf("data-revelar="));
   });
 });
 
