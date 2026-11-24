@@ -130,7 +130,9 @@ nos slides e no dashboard, porque o canal pensado hoje é o WhatsApp, não o SMS
 | ☑ | 3D.2 O número novo no `painel.json` | O teste confere 1.083 pela conta das outras chaves |
 | ☑ | 3D.3 "O que recomendamos" vira o agente | Os números vêm do painel, não digitados |
 | ☑ | 3D.4 O SMS vira "disparo de lembrete" na tela | "SMS" só na frase que liga à base; nenhum "overbooking" |
-| ☐ | 3D.5 Publicação, conferência no site e o print da aba 2 | O site publicado passa na conferência |
+| ☑ | 3D.5 Publicação, conferência no site e o print da aba 2 | O site publicado passa na conferência |
+
+**Publicado em 2026-11-24**, no mesmo link.
 
 ## Etapa 4: documentação
 
