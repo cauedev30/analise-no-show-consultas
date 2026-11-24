@@ -95,6 +95,22 @@ e os filtros e os 3 números ficam numa barra presa no topo. **Por quê:** cada 
 tudo; o surgimento só esconde o que está fora da tela. Quem usa "reduzir movimento" no sistema vê tudo direto, sem
 animação.
 
+## Etapa 3C: um tipo de gráfico para cada achado
+
+**O que mudou:** na aba **Visão geral**, a espera virou **linha com pontos**, a idade virou **barras de desvio da taxa
+geral** (para a direita, acima de 20,2%; para a esquerda, abaixo) e os bairros viraram **pirulito**. O gráfico do dia
+da semana saiu; o filtro ficou. **Por quê:** estava tudo em barras, e cada forma agora mostra o tipo do achado (uma
+progressão, quem fica acima ou abaixo da média, um ranking). O dia da semana quase não muda a taxa (19,3% a 21,2%), o
+que cabe numa frase do slide **A**.
+
+| | Tarefa | Pronto quando |
+|---|---|---|
+| ☑ | 3C.1 A conta do desvio da taxa geral | Sem filtro, cada faixa de idade fica a taxa oficial menos 20,2% |
+| ☑ | 3C.2 Espera em linha com pontos | A primeira tela ainda mostra o gráfico da espera inteiro |
+| ☑ | 3C.3 Idade em barras de desvio | Filtrando espera "Mesmo dia", todas as barras vão para a esquerda |
+| ☑ | 3C.4 Bairros em pirulito e a saída do gráfico do dia da semana | 3 seções; o filtro do dia da semana continua |
+| ☐ | 3C.5 Publicação, conferência no site e os prints | O site publicado passa na conferência |
+
 ## Etapa 4: documentação
 
 | | Tarefa | Pronto quando |
