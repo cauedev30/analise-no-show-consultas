@@ -113,6 +113,25 @@ que cabe numa frase do slide **A**.
 
 **Publicado em 2026-11-24**, no mesmo link.
 
+## Etapa 3D: o agente de disparo de lembretes no lugar do overbooking
+
+**O que mudou:** a solução passou a ser uma só, um **agente de disparo de lembretes** que classifica o risco de falta
+no agendamento, dispara mais de um lembrete com pedido de confirmação para quem tem risco alto e libera o horário para
+a lista de espera quando o paciente cancela ou não confirma. O overbooking saiu do notebook 03 e do dashboard. Na tela,
+o "SMS" passou a se chamar **disparo de lembrete**; na base, o disparo registrado é o SMS (coluna `recebeu_sms`). Número
+novo: **1.083** consultas a mais em seis semanas, se o grupo de maior risco faltasse como a média. **Por quê:** o grupo
+preferiu uma solução só, e o enunciado não pede um número de soluções (a proposta citava as ações como exemplos); o
+agente completa o lembrete, confirma a consulta e reaproveita o horário vago. O nome "disparo de lembrete" é o mesmo
+nos slides e no dashboard, porque o canal pensado hoje é o WhatsApp, não o SMS.
+
+| | Tarefa | Pronto quando |
+|---|---|---|
+| ☑ | 3D.1 Notebook 03 com o agente e a conta do 1.083 | O notebook roda do zero e as seções 1 e 2 não mudam |
+| ☑ | 3D.2 O número novo no `painel.json` | O teste confere 1.083 pela conta das outras chaves |
+| ☑ | 3D.3 "O que recomendamos" vira o agente | Os números vêm do painel, não digitados |
+| ☑ | 3D.4 O SMS vira "disparo de lembrete" na tela | "SMS" só na frase que liga à base; nenhum "overbooking" |
+| ☐ | 3D.5 Publicação, conferência no site e o print da aba 2 | O site publicado passa na conferência |
+
 ## Etapa 4: documentação
 
 | | Tarefa | Pronto quando |
