@@ -2,25 +2,24 @@
 
 /*
  * Tokens do dashboard, em um lugar só.
- * Paleta = a do slide da apresentação ("agenda de clínica"): tinta azul-marinho, caneta azul nos dados e marca-texto
- * amarelo só como destaque. A página é cinza-azulada e os cartões são brancos (--color-fundo é a cor do cartão,
- * que os gráficos usam no contorno dos pontos e nas linhas entre as células do mapa).
+ * Direção suíça: fundo neutro, cartões brancos com fio de 1 px (sem sombra, sem canto arredondado), texto quase
+ * preto e um único acento, o azul Klein, nos dados e no KPI principal. --color-fundo é a cor do cartão, que os
+ * gráficos usam no contorno dos pontos e nas linhas entre as células do mapa.
  * `static` faz o Tailwind gravar todas as variáveis, mesmo as que o CSS não usa por utilitário
  * (os gráficos leem `var(--color-...)` direto nos atributos SVG).
  */
 @theme static {
-  --color-folha: #f5f7fa;
+  --color-folha: #f7f7f8;
   --color-fundo: #ffffff;
-  --color-texto: #16213a;
-  --color-texto-2: #556178;
-  --color-grade: #dce4f0;
-  --color-eixo: #c8d3e3;
-  --color-neutro: #eef2f8;
+  --color-texto: #111111;
+  --color-texto-2: #5a5a60;
+  --color-grade: #e4e4e7;
+  --color-eixo: #d1d1d6;
+  --color-neutro: #efeff1;
 
-  --color-azul: #2649b2;
-  --color-azul-claro: #7890d6;
-  --color-cinza: #7e889b;
-  --color-marca: #ffe14d;
+  --color-azul: #002fa7;
+  --color-azul-claro: #6680c8;
+  --color-cinza: #86868c;
 
   /* Rampa do mapa de calor (a do notebook 03), do claro ao escuro. Existe um espelho em lib/mapaDeCalor.ts (a
      interpolação em JavaScript que dá a cor de cada célula): ao mudar uma cor aqui, mude lá também. Um teste
@@ -60,15 +59,13 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Cartão branco do painel: a caixa de cada gráfico, KPI e bloco. Em `components` para um utilitário poder trocar o
-   padding ou a borda. */
+/* Cartão branco do painel: a caixa de cada gráfico, KPI e bloco. Só o fio de 1 px, sem sombra nem canto arredondado.
+   Em `components` para um utilitário poder trocar o padding ou a borda. */
 @layer components {
   .cartao {
     background: var(--color-fundo);
     border: 1px solid var(--color-grade);
-    border-radius: 0.75rem;
     padding: 1.25rem;
-    box-shadow: 0 1px 3px rgb(22 33 58 / 0.06);
   }
 }
 

@@ -6,10 +6,10 @@ import type { CelulaIdadeEspera, Painel } from "./tipos";
 export const RAMPA = ["#cde2fb", "#9ec5f4", "#6da7ec", "#3987e5", "#256abf", "#184f95", "#104281"] as const;
 
 /** A cor de texto mais escura da paleta (o token --color-texto). */
-export const TEXTO_ESCURO = "#16213a";
+export const TEXTO_ESCURO = "#111111";
 export const TEXTO_CLARO = "#ffffff";
 /**
- * O texto escuro dentro das células do mapa é preto puro, não o token --color-texto (#16213a): mesmo com #0b0b0b o pior
+ * O texto escuro dentro das células do mapa é preto puro, não o token --color-texto (#111111): mesmo com #0b0b0b o pior
  * caso da rampa dá 4,44:1 (abaixo do mínimo de 4,5:1 da WCAG); com #000000 passa. Vale só para o mapa.
  */
 export const TEXTO_ESCURO_DO_MAPA = "#000000";

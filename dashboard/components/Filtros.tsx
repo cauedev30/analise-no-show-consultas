@@ -32,7 +32,7 @@ export function Filtros({ ordem, filtros, onChange }: Props) {
         type="button"
         onClick={() => onChange(SEM_FILTROS)}
         disabled={!algumAtivo}
-        className="cursor-pointer rounded-lg px-3 py-2 text-corpo underline underline-offset-4 enabled:hover:bg-neutro disabled:cursor-default disabled:text-texto-2 disabled:no-underline"
+        className="cursor-pointer px-3 py-2 text-corpo underline underline-offset-4 enabled:hover:bg-neutro disabled:cursor-default disabled:text-texto-2 disabled:no-underline"
       >
         Limpar filtros
       </button>
