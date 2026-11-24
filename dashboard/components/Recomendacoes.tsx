@@ -1,4 +1,4 @@
-import { formatarPct } from "@/lib/formato";
+import { formatarInteiro, formatarPct } from "@/lib/formato";
 import { textoDasFaixas } from "@/lib/faixas";
 import type { Painel } from "@/lib/tipos";
 
@@ -7,40 +7,63 @@ interface Props {
   className?: string;
 }
 
-/** O bloco "O que recomendamos": os números que sustentam cada recomendação vêm todos do painel. */
+/**
+ * O bloco "O que recomendamos": o agente de disparo de lembretes (Classifica, Dispara, Libera).
+ * A taxa, as faixas e as consultas a mais vêm todas do painel; o texto não cita o canal do disparo.
+ */
 export function Recomendacoes({ painel, className = "" }: Props) {
-  const { grupo_risco: grupo, espera_longa: longa } = painel;
+  const { grupo_risco: grupo } = painel;
   const idadesDoGrupo = textoDasFaixas(grupo.faixas_etarias, "anos");
   const esperaDoGrupo = textoDasFaixas(grupo.faixas_espera, "dias");
-  const esperaLonga = textoDasFaixas(longa.faixas_espera, "dias");
+  const consultasAMais = formatarInteiro(Math.round(grupo.faltas_acima_da_media));
 
   return (
     <section aria-labelledby="titulo-recomendacoes" className={className}>
       <h2 id="titulo-recomendacoes" className="text-grafico font-bold">
         O que recomendamos
       </h2>
+      <p className="mt-1 text-corpo">Um agente de disparo de lembretes para reduzir as faltas</p>
 
-      <div className="mt-3 grid gap-y-6 md:grid-cols-2 md:divide-x md:divide-eixo">
+      <div className="mt-3 grid gap-y-6 md:grid-cols-3 md:divide-x md:divide-eixo">
         <div className="md:pr-8">
-          <p className="text-numero font-bold">{formatarPct(grupo.taxa)}</p>
-          <h3 className="mt-1 text-corpo font-bold">Lembrete reforçado para o grupo de maior risco</h3>
+          <h3 className="text-corpo font-bold">Classifica</h3>
           <p className="mt-1 text-corpo">
-            Quem tem {idadesDoGrupo} e espera {esperaDoGrupo} falta em {formatarPct(grupo.taxa)} das consultas. Reforçar
-            o lembrete só para esse grupo (por exemplo, mais de um contato antes da consulta): ele soma{" "}
-            {formatarPct(grupo.pct_consultas)} das consultas e {formatarPct(grupo.pct_faltas)} das faltas.
+            No agendamento, calcula o risco de falta pela espera e pela idade. De {idadesDoGrupo}, com {esperaDoGrupo} de
+            espera, a falta é de {formatarPct(grupo.taxa)}.
+          </p>
+        </div>
+        <div className="md:px-8">
+          <h3 className="text-corpo font-bold">Dispara</h3>
+          <p className="mt-1 text-corpo">
+            Para quem tem risco alto, manda mais de um lembrete antes da consulta e pede confirmação.
           </p>
         </div>
         <div className="md:pl-8">
-          <p className="text-numero font-bold">{formatarPct(longa.taxa)}</p>
-          <h3 className="mt-1 text-corpo font-bold">Overbooking controlado pelo tempo de espera</h3>
+          <h3 className="text-corpo font-bold">Libera</h3>
           <p className="mt-1 text-corpo">
-            Consultas marcadas com {esperaLonga} de antecedência faltam em {formatarPct(longa.taxa)}: são{" "}
-            {formatarPct(longa.pct_consultas)} das consultas e {formatarPct(longa.pct_faltas)} das faltas. Marcar um
-            pouco acima da capacidade só nessas consultas para aproveitar os horários vagos. A base não tem o horário
-            da consulta, por isso o critério é a espera.
+            Se o paciente cancela ou não confirma, o horário é oferecido a quem está na lista de espera.
           </p>
         </div>
       </div>
+
+      <div className="mt-6 grid gap-y-6 md:grid-cols-2 md:divide-x md:divide-eixo">
+        <div className="md:pr-8">
+          <p className="text-numero font-bold">{formatarPct(grupo.taxa)}</p>
+          <p className="mt-1 text-corpo">
+            é a taxa de falta do grupo de maior risco, que soma {formatarPct(grupo.pct_consultas)} das consultas e{" "}
+            {formatarPct(grupo.pct_faltas)} das faltas.
+          </p>
+        </div>
+        <div className="md:pl-8">
+          <p className="text-numero font-bold">{consultasAMais}</p>
+          <p className="mt-1 text-corpo">consultas a mais em seis semanas, se o grupo de risco faltasse como a média.</p>
+        </div>
+      </div>
+
+      <p className="mt-6 max-w-5xl text-corpo">
+        Na base, o disparo aparece junto com menos falta, o que ainda é associação. Por isso o agente começa em teste:
+        metade do grupo de risco recebe o reforço, e a outra metade não.
+      </p>
     </section>
   );
 }

@@ -53,6 +53,8 @@ export interface Recorte {
   taxa: number;
   pct_consultas: number;
   pct_faltas: number;
+  /** Faltas do recorte menos as que ele teria com a taxa geral (consultas × taxa geral ÷ 100), em consultas. */
+  faltas_acima_da_media: number;
 }
 
 export interface GrupoSms {
