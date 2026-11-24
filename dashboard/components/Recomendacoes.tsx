@@ -41,18 +41,6 @@ export function Recomendacoes({ painel, className = "" }: Props) {
           </p>
         </div>
       </div>
-
-      <div className="mt-6 space-y-2 border-t border-grade pt-4 text-rotulo text-texto-2">
-        <p>
-          <span className="font-bold text-texto">Ideia de aplicação (não construída):</span> uma calculadora de risco
-          para a recepção. Ela recebe a idade e os dias de espera e mostra a taxa de falta do grupo e a ação recomendada.
-        </p>
-        <p>
-          <span className="font-bold text-texto">Limites:</span> a análise é descritiva (mostra associação, não causa).
-          Os dados indicam rede pública (Vitória, ES) e entram como aproximação para a clínica. Antes de aplicar, a
-          clínica deve conferir com os próprios dados, e o overbooking precisa de um limite para não gerar fila.
-        </p>
-      </div>
     </section>
   );
 }

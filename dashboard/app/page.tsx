@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Abas, idDaAba, idDoPainel, type Aba } from "@/components/Abas";
 import { SEM_FILTROS } from "@/components/Filtros";
 import { GrupoDeRiscoESms } from "@/components/GrupoDeRiscoESms";
-import { Rodape } from "@/components/Rodape";
 import { VisaoGeral } from "@/components/VisaoGeral";
 import { carregarPainel } from "@/lib/dados";
 import { formatarInteiro } from "@/lib/formato";
@@ -55,8 +54,6 @@ export default function Home() {
           </div>
         ))}
       </main>
-
-      <Rodape />
     </>
   );
 }

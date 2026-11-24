@@ -4,6 +4,7 @@ import { CartoesDoGrupo } from "./CartoesDoGrupo";
 import { FraseSms } from "./FraseSms";
 import { MapaDeCalor } from "./MapaDeCalor";
 import { Recomendacoes } from "./Recomendacoes";
+import Home from "@/app/page";
 import { carregarPainel } from "@/lib/dados";
 import { contraste } from "@/lib/mapaDeCalor";
 import type { Painel } from "@/lib/tipos";
@@ -71,6 +72,24 @@ describe("nenhum número digitado: os textos da aba 2 vêm do painel", () => {
     for (const v of ["40,2%", "9,8%", "32,7%", "23,7%", "27,6%", "16,7%", "38,5%", "4,9%", "4,6%", "20,2%", "5.422"]) {
       expect(html).toContain(v);
     }
+  });
+});
+
+describe("o que saiu na etapa 3B (rodapé e bloco de ideia e limites)", () => {
+  it("as recomendações não têm mais a ideia de aplicação nem os limites, e mantêm as duas recomendações", () => {
+    const html = renderToStaticMarkup(<Recomendacoes painel={oficial} />);
+    expect(html).not.toContain("Ideia de aplicação");
+    expect(html).not.toContain("Limites");
+    expect(html).toContain("Lembrete reforçado para o grupo de maior risco");
+    expect(html).toContain("Overbooking controlado pelo tempo de espera");
+  });
+
+  it("a página não tem o rodapé e mantém a linha da base no topo", () => {
+    const html = renderToStaticMarkup(<Home />);
+    expect(html).not.toContain("Código e documentação");
+    expect(html).not.toContain("CC BY-NC-SA");
+    expect(html).not.toContain("<footer");
+    expect(html).toContain("Base: Medical Appointment No Shows (Kaggle)");
   });
 });
 
