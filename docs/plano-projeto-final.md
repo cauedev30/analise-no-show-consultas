@@ -89,7 +89,11 @@ e os filtros e os 3 números ficam numa barra presa no topo. **Por quê:** cada 
 | ☑ | 3B.2 O surgimento das seções | Cada seção surge uma vez ao entrar na tela; com "reduzir movimento", tudo aparece direto |
 | ☑ | 3B.3 Aba **Visão geral** em seções, com a barra fixa | A primeira tela mostra a barra e o gráfico da espera inteiro; filtro não anima |
 | ☑ | 3B.4 Aba **Grupo de risco e SMS** com o surgimento | As 3 seções surgem; layout e números iguais |
-| ☐ | 3B.5 Publicação, conferência no site e os três prints | O site publicado passa na conferência |
+| ☑ | 3B.5 Publicação, conferência no site e os três prints | O site publicado passa na conferência |
+
+**Publicado em 2026-11-24**, no mesmo link. Sem JavaScript (ou enquanto ele carrega, na primeira visita) a página mostra
+tudo; o surgimento só esconde o que está fora da tela. Quem usa "reduzir movimento" no sistema vê tudo direto, sem
+animação.
 
 ## Etapa 4: documentação
 
