@@ -9,7 +9,7 @@
  * (os gráficos leem `var(--color-...)` direto nos atributos SVG).
  */
 @theme static {
-  --color-pagina: #f5f7fa;
+  --color-folha: #f5f7fa;
   --color-fundo: #ffffff;
   --color-texto: #16213a;
   --color-texto-2: #556178;
@@ -49,11 +49,11 @@
 }
 
 html {
-  background: var(--color-pagina);
+  background: var(--color-folha);
 }
 
 body {
-  background: var(--color-pagina);
+  background: var(--color-folha);
   color: var(--color-texto);
   font-family: var(--font-sans);
   font-size: 1rem;
