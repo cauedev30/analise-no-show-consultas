@@ -37,8 +37,7 @@ export default function Home() {
 
       <main className="min-w-0 flex-1">
         <div className="px-6 pt-6 lg:px-8">
-          {/* text-2xl leading-tight = token --text-pagina; a classe text-pagina vira cor (colide com --color-pagina). */}
-          <h2 className="text-2xl leading-tight font-bold">{ativa.rotulo}</h2>
+          <h2 className="text-pagina font-bold">{ativa.rotulo}</h2>
           <p className="mt-1 text-rotulo text-texto-2">
             Base: Medical Appointment No Shows (Kaggle), {formatarInteiro(painel.totais.consultas)} consultas de {PERIODO}
             , em {painel.ordem.bairro.length} bairros.
