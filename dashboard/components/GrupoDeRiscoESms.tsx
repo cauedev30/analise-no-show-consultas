@@ -12,7 +12,7 @@ import { montarLinhasSms } from "@/lib/sms";
 const painel = carregarPainel();
 const linhasSms = montarLinhasSms(painel);
 
-/** Aba 2: a história de cima a baixo (o grupo de maior risco, o SMS e as recomendações), sempre com a base inteira. */
+/** Aba 2: a história de cima a baixo (o grupo de maior risco, o disparo de lembrete e as recomendações), sempre com a base inteira. */
 export function GrupoDeRiscoESms() {
   return (
     <div className="flex flex-col gap-6 px-8 pb-6 pt-1">
@@ -27,7 +27,7 @@ export function GrupoDeRiscoESms() {
       </Revelar>
 
       <Revelar>
-        <section aria-label="SMS">
+        <section aria-label="Disparo de lembrete">
           <GraficoSms linhas={linhasSms}>
             <FraseSms painel={painel} />
           </GraficoSms>

@@ -10,7 +10,7 @@ import { formatarInteiro } from "@/lib/formato";
 
 const ABAS: Aba[] = [
   { id: "visao-geral", rotulo: "Visão geral" },
-  { id: "grupo-de-risco-e-sms", rotulo: "Grupo de risco e SMS" },
+  { id: "grupo-de-risco-e-sms", rotulo: "Grupo de risco e disparo" },
 ];
 
 // Período das consultas da base tratada (conferido em dados/tratados/consultas_tratadas.csv: data_consulta

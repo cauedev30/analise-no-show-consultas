@@ -37,17 +37,17 @@ function useTelaEstreita(): boolean {
 type Serie = "sem" | "com";
 
 const SERIES: { chave: Serie; nome: string; cor: string; campo: "taxaSem" | "taxaCom" }[] = [
-  { chave: "sem", nome: "Sem SMS", cor: COR.azul, campo: "taxaSem" },
-  { chave: "com", nome: "Com SMS", cor: COR.laranja, campo: "taxaCom" },
+  { chave: "sem", nome: "Sem disparo", cor: COR.azul, campo: "taxaSem" },
+  { chave: "com", nome: "Com disparo", cor: COR.laranja, campo: "taxaCom" },
 ];
 
 /** Descrição do gráfico para leitor de tela: os mesmos valores que aparecem escritos. */
 function descrever(linhas: LinhaSms[]): string {
   const itens = linhas.map((l) => {
     const valor = (s: Serie) => (l[s].consultas === 0 ? "sem consultas" : formatarPct(l[s].taxa));
-    return `${l.nome}: sem SMS ${valor("sem")}, com SMS ${valor("com")}`;
+    return `${l.nome}: sem disparo ${valor("sem")}, com disparo ${valor("com")}`;
   });
-  return `Taxa de falta por faixa de espera, com e sem SMS. ${itens.join("; ")}.`;
+  return `Taxa de falta por faixa de espera, com e sem disparo de lembrete. ${itens.join("; ")}.`;
 }
 
 function DicaSms({ ativo, linha }: { ativo?: boolean; linha?: LinhaSms }) {
@@ -73,7 +73,7 @@ function DicaSms({ ativo, linha }: { ativo?: boolean; linha?: LinhaSms }) {
   );
 }
 
-/** Colunas agrupadas por faixa de espera: sem SMS (azul) e com SMS (laranja). */
+/** Colunas agrupadas por faixa de espera: sem disparo (azul) e com disparo (laranja). */
 export function GraficoSms({ linhas, children, className = "" }: Props) {
   const estreita = useTelaEstreita();
   const fonteDoValor = estreita ? 10 : 14;
@@ -126,7 +126,7 @@ export function GraficoSms({ linhas, children, className = "" }: Props) {
   return (
     <figure className={className}>
       <figcaption className="flex flex-wrap items-baseline gap-x-8">
-        <h2 className="text-grafico font-bold">SMS: a comparação crua engana</h2>
+        <h2 className="text-grafico font-bold">Disparo de lembrete: a comparação crua engana</h2>
         <ul className="flex items-center gap-5 text-rotulo" aria-label="Legenda">
           {SERIES.map((s) => (
             <li key={s.chave} className="flex items-center gap-2">

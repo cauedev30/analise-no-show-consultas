@@ -163,7 +163,7 @@ describe("SMS", () => {
     expect(formatarPct(l.sem.taxa)).toBe("4,6%");
   });
 
-  it("em cada faixa com os dois grupos, quem recebeu SMS faltou menos ou quase igual (a frase da página)", () => {
+  it("em cada faixa com os dois grupos, quem recebeu o disparo (SMS na base) faltou menos ou quase igual (a frase da página)", () => {
     for (const l of linhas.filter((x) => x.com.consultas > 0)) {
       expect(l.com.taxa as number).toBeLessThanOrEqual((l.sem.taxa as number) + 0.1);
     }

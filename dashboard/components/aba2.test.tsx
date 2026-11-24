@@ -84,7 +84,7 @@ describe("nenhum número digitado: os textos da aba 2 vêm do painel", () => {
     ]);
   });
 
-  it("a frase do SMS mostra os valores do painel de teste", () => {
+  it("a frase do disparo mostra os valores do painel de teste", () => {
     confere(renderToStaticMarkup(<FraseSms painel={sentinela} />), ["55,5%", "22,2%", "7,7%"]);
   });
 
@@ -151,11 +151,40 @@ describe("o agente de disparo no lugar das duas recomendações (etapa 3D)", () 
   });
 });
 
+describe("o SMS vira disparo de lembrete na tela (etapa 3D)", () => {
+  const html = renderToStaticMarkup(<GrupoDeRiscoESms />);
+  const texto = html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
+
+  it("traz o título, a legenda e a descrição do gráfico com \"disparo\"", () => {
+    expect(texto).toContain("Disparo de lembrete: a comparação crua engana");
+    expect(texto).toContain("Com disparo");
+    expect(texto).toContain("Sem disparo");
+    expect(html).toContain('aria-label="Disparo de lembrete"');
+    expect(html).toContain("com e sem disparo de lembrete");
+  });
+
+  it("a palavra SMS aparece uma vez, na frase da ponte com a base", () => {
+    expect(texto.match(/SMS/g)).toHaveLength(1);
+    expect(texto).toContain("Na base, o disparo registrado é o SMS.");
+    expect(html.match(/SMS/g)).toHaveLength(1);
+  });
+
+  it("não traz overbooking em lugar nenhum da aba 2", () => {
+    expect(html).not.toMatch(/overbooking/i);
+  });
+
+  it("o rótulo da aba é Grupo de risco e disparo", () => {
+    const pagina = renderToStaticMarkup(<Home />);
+    expect(pagina).toContain("Grupo de risco e disparo");
+    expect(pagina).not.toContain("Grupo de risco e SMS");
+  });
+});
+
 describe("aba 2 com o surgimento (etapa 3B)", () => {
   it("as 3 seções surgem sozinhas e mantêm os títulos; a nota dos filtros fica fora", () => {
     const html = renderToStaticMarkup(<GrupoDeRiscoESms />);
     expect(html.match(/data-revelar=/g)).toHaveLength(3);
-    const posicoes = ["Taxa de falta por idade e espera", "SMS: a comparação crua engana", "O que recomendamos"].map((t) =>
+    const posicoes = ["Taxa de falta por idade e espera", "Disparo de lembrete: a comparação crua engana", "O que recomendamos"].map((t) =>
       html.indexOf(t),
     );
     expect(posicoes.every((i) => i > -1)).toBe(true);
