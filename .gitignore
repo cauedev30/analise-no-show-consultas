@@ -13,3 +13,9 @@ dados/original/noshow-kaggle.zip
 # Python e Jupyter
 __pycache__/
 .ipynb_checkpoints/
+
+# Testes e dashboard (dependências e saídas de build)
+.pytest_cache/
+dashboard/node_modules/
+dashboard/.next/
+dashboard/out/
