@@ -81,7 +81,7 @@ export function VisaoGeral({ filtros, onChange }: Props) {
         <Revelar className="cartao max-sm:px-3">
           {(entrada) => (
             <GraficoLinha
-              className="h-[23rem] xl:h-[24rem]"
+              className="h-[23rem] xl:h-[27rem]"
               titulo="Taxa de falta por faixa de espera"
               categorias={ordem.faixa_espera}
               resumos={dados.porEspera}
@@ -98,7 +98,7 @@ export function VisaoGeral({ filtros, onChange }: Props) {
         <Revelar className="cartao max-sm:px-3">
           {(entrada) => (
             <GraficoDesvio
-              className="h-[18rem] xl:h-[24rem]"
+              className="h-[18rem] xl:h-[27rem]"
               titulo="Por faixa de idade"
               categorias={ordem.faixa_etaria}
               resumos={dados.porIdade}
@@ -115,7 +115,7 @@ export function VisaoGeral({ filtros, onChange }: Props) {
         <Revelar className="cartao max-sm:px-3">
           {(entrada) => (
             <GraficoBairros
-              className="h-[30rem] xl:h-[24rem]"
+              className="h-[30rem] xl:h-[27rem]"
               titulo="Bairros com maior taxa de falta"
               bairros={dados.ranking}
               minimoNaBase={painel.minimo_consultas_bairro}

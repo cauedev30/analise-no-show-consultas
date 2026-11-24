@@ -26,12 +26,12 @@ export default function Home() {
 
   return (
     <>
-      {/* Barra de topo escura, como num painel de BI: título à esquerda, as duas páginas em botões à direita. */}
-      <header className="bg-texto px-6 py-4 text-fundo lg:px-8">
-        <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-3">
-          <div>
+      {/* Barra de topo escura, como num painel de BI: título à esquerda, as duas páginas em abas à direita. */}
+      <header className="bg-texto px-6 pt-3 text-fundo lg:px-8">
+        <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-1">
+          <div className="pb-3">
             <h1 className="text-pagina font-bold">
-              No-show em consultas: <span className="text-marca">taxa de falta</span>
+              No-show em consultas: taxa de falta
             </h1>
             <p className="mt-1 text-rotulo text-fundo/75">
               Base: Medical Appointment No Shows (Kaggle), {formatarInteiro(painel.totais.consultas)} consultas de{" "}
