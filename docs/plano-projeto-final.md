@@ -35,11 +35,11 @@ O notebook 02 olhou um fator de cada vez. O 03 cruza os dois que mais pesam, a e
 
 | | Tarefa | Pronto quando |
 |---|---|---|
-| ☐ | 1.1 Abertura e carga da base tratada | O notebook lê só a base tratada e confere 110.521 consultas e 22.314 faltas |
-| ☐ | 1.2 O cruzamento de idade e espera, com mapa de calor | As 30 combinações somam o total da base |
-| ☐ | 1.3 O grupo de maior risco (16 dias ou mais de espera e 13 a 29 anos): tamanho, taxa e parte das faltas | O grupo calculado pelas faixas é igual ao calculado pela idade e pelos dias de espera |
-| ☐ | 1.4 Onde o overbooking faz sentido: faltas esperadas a cada 100 consultas, por faixa de espera | As taxas batem com as do notebook 02 |
-| ☐ | 1.5 Leitura, limites e execução do zero | O notebook roda do começo ao fim sem erro |
+| ☑ | 1.1 Abertura e carga da base tratada | O notebook lê só a base tratada e confere 110.521 consultas e 22.314 faltas |
+| ☑ | 1.2 O cruzamento de idade e espera, com mapa de calor | As 30 combinações somam o total da base |
+| ☑ | 1.3 O grupo de maior risco (16 dias ou mais de espera e 13 a 29 anos): tamanho, taxa e parte das faltas | O grupo calculado pelas faixas é igual ao calculado pela idade e pelos dias de espera |
+| ☑ | 1.4 Onde o overbooking faz sentido: faltas esperadas a cada 100 consultas, por faixa de espera | As taxas batem com as do notebook 02 |
+| ☑ | 1.5 Leitura, limites e execução do zero | O notebook roda do começo ao fim sem erro |
 
 **Entrega da etapa:** o número do slide **S**.
 
