@@ -26,17 +26,20 @@ export default function Home() {
 
   return (
     <>
-      <header className="px-6 pt-4 lg:px-8">
-        <div className="flex flex-wrap items-end justify-between gap-x-8 border-b border-grade">
-          <h1 className="pb-2 text-pagina font-bold">No-show em consultas: taxa de falta</h1>
-          <div className="-mb-px">
-            <Abas abas={ABAS} ativa={aba} onChange={setAba} />
+      {/* Barra de topo escura, como num painel de BI: título à esquerda, as duas páginas em botões à direita. */}
+      <header className="bg-texto px-6 py-4 text-fundo lg:px-8">
+        <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-3">
+          <div>
+            <h1 className="text-pagina font-bold">
+              No-show em consultas: <span className="text-marca">taxa de falta</span>
+            </h1>
+            <p className="mt-1 text-rotulo text-fundo/75">
+              Base: Medical Appointment No Shows (Kaggle), {formatarInteiro(painel.totais.consultas)} consultas de{" "}
+              {PERIODO}, em {painel.ordem.bairro.length} bairros.
+            </p>
           </div>
+          <Abas abas={ABAS} ativa={aba} onChange={setAba} />
         </div>
-        <p className="py-2 text-rotulo text-texto-2">
-          Base: Medical Appointment No Shows (Kaggle), {formatarInteiro(painel.totais.consultas)} consultas de {PERIODO}
-          , em {painel.ordem.bairro.length} bairros.
-        </p>
       </header>
 
       <main className="flex flex-1 flex-col">

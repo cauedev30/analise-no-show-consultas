@@ -126,7 +126,7 @@ export function GraficoDesvio({
               <BarChart
                 data={barras}
                 layout="vertical"
-                margin={{ top: 4, right: 8, bottom: 4, left: 0 }}
+                margin={{ top: 4, right: 52, bottom: 4, left: 0 }}
                 accessibilityLayer={false}
               >
                 <XAxis type="number" hide domain={escala} />

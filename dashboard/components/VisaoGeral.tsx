@@ -69,20 +69,19 @@ export function VisaoGeral({ filtros, onChange }: Props) {
         </div>
         {/* Sempre montado, para o leitor de tela anunciar a troca de texto e o layout não pular. Ocupa o resto da linha
             dos números (e não uma linha só dele), para a barra não crescer no projetor. */}
-        <p aria-live="polite" className="min-h-lh min-w-48 flex-1 text-rotulo font-bold">
+        <p aria-live="polite" className="min-h-lh min-w-24 flex-1 text-rotulo font-bold">
           {amostraPequena ? `Amostra pequena: menos de ${MINIMO_NO_RECORTE} consultas, a taxa oscila muito.` : ""}
         </p>
       </section>
 
-      {/* Uma seção por achado, na ordem da fala: o fator principal, o perfil e a pista. Cada uma num cartão do painel:
-          a espera na largura toda; idade e bairros lado a lado a partir de 1280 px (com a lateral, abaixo disso o
-          ranking dos bairros fica espremido). */}
-      <div className="grid gap-6 px-6 pt-6 lg:px-8 xl:grid-cols-2">
+      {/* Uma seção por achado, na ordem da fala: o fator principal, o perfil e a pista. Cada uma num cartão do painel,
+          os três lado a lado a partir de 1280 px, para a página caber numa tela como num painel de BI. */}
+      <div className="grid gap-6 px-6 pt-6 lg:px-8 xl:grid-cols-3">
         {/* A espera é uma progressão (quanto mais espera, mais falta): linha com pontos. */}
-        <Revelar className="cartao max-sm:px-3 xl:col-span-2">
+        <Revelar className="cartao max-sm:px-3">
           {(entrada) => (
             <GraficoLinha
-              className="h-[23rem]"
+              className="h-[23rem] xl:h-[24rem]"
               titulo="Taxa de falta por faixa de espera"
               categorias={ordem.faixa_espera}
               resumos={dados.porEspera}
@@ -99,7 +98,7 @@ export function VisaoGeral({ filtros, onChange }: Props) {
         <Revelar className="cartao max-sm:px-3">
           {(entrada) => (
             <GraficoDesvio
-              className="h-[18rem] xl:h-[30rem]"
+              className="h-[18rem] xl:h-[24rem]"
               titulo="Por faixa de idade"
               categorias={ordem.faixa_etaria}
               resumos={dados.porIdade}
@@ -116,7 +115,7 @@ export function VisaoGeral({ filtros, onChange }: Props) {
         <Revelar className="cartao max-sm:px-3">
           {(entrada) => (
             <GraficoBairros
-              className="h-[30rem]"
+              className="h-[30rem] xl:h-[24rem]"
               titulo="Bairros com maior taxa de falta"
               bairros={dados.ranking}
               minimoNaBase={painel.minimo_consultas_bairro}

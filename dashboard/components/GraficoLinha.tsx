@@ -139,7 +139,7 @@ export function GraficoLinha({
                   tickLine={false}
                   axisLine={{ stroke: COR.eixo }}
                   tick={rotuloDoEixo}
-                  padding={{ left: 56, right: 56 }}
+                  padding={{ left: 32, right: 32 }}
                 />
                 <YAxis hide domain={[0, topo]} />
                 <Tooltip

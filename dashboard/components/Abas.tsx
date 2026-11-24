@@ -34,7 +34,7 @@ export function Abas({ abas, ativa, onChange }: Props) {
   }
 
   return (
-    <div role="tablist" aria-label="Seções do painel" className="flex gap-8">
+    <div role="tablist" aria-label="Seções do painel" className="flex gap-2">
       {abas.map((aba, i) => {
         const selecionada = aba.id === ativa;
         return (
@@ -52,10 +52,11 @@ export function Abas({ abas, ativa, onChange }: Props) {
             onClick={() => onChange(aba.id)}
             onKeyDown={(e) => aoTeclar(e, i)}
             className={
-              "cursor-pointer border-b-[3px] py-2 text-corpo " +
+              // Foco em amarelo com `!`: o :focus-visible global (azul-marinho) some na barra escura e ganharia sem ele.
+              "cursor-pointer rounded-lg border px-4 py-2 text-corpo font-bold focus-visible:outline-marca! " +
               (selecionada
-                ? "border-texto font-bold text-texto"
-                : "border-transparent text-texto-2 hover:text-texto")
+                ? "border-marca bg-marca text-texto"
+                : "border-fundo/30 text-fundo/85 hover:bg-fundo/10")
             }
           >
             {aba.rotulo}

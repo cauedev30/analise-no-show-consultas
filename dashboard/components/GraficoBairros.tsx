@@ -59,7 +59,7 @@ export function GraficoBairros({
         </p>
       </figcaption>
 
-      <div className="relative mt-1 min-h-96 flex-1">
+      <div className="relative mt-1 min-h-72 flex-1">
         {semConsultas || bairros.length === 0 ? (
           <p className="absolute inset-0 flex items-center justify-center text-center text-corpo text-texto-2">
             {semConsultas ? "sem consultas neste recorte" : "nenhum bairro atinge o mínimo neste recorte"}

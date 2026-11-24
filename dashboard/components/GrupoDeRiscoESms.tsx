@@ -15,7 +15,7 @@ const linhasSms = montarLinhasSms(painel);
 /** Aba 2: a história de cima a baixo (o grupo de maior risco, o disparo de lembrete e as recomendações), sempre com a base inteira. */
 export function GrupoDeRiscoESms() {
   return (
-    <div className="flex flex-col gap-6 px-6 pb-6 pt-1 lg:px-8">
+    <div className="flex flex-col gap-6 px-6 pb-6 pt-4 lg:px-8">
       <p className="text-rotulo text-texto-2">Esta aba mostra a base inteira; os filtros valem só na Visão geral.</p>
 
       {/* As três seções surgem ao entrar na tela (só o fade: na aba 2 nenhum gráfico cresce). */}
