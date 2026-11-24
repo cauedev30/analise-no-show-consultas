@@ -104,6 +104,10 @@ problema, a relevância e o resultado final. Está tudo coberto: o dataset no **
     vaga.
   - A pergunta: **quem tem mais chance de faltar e o que a clínica pode fazer para reduzir isso?**
 - **O que falar:**
+  - **Por que a falta dói numa clínica privada.** Em geral o paciente marca antes e só paga na hora (ou o convênio só
+    paga a consulta realizada). Quem falta não paga, e a vaga que ele segurou poderia ter sido de outro paciente
+    pagante. Como a falta é sem aviso, não dá tempo de chamar ninguém para o lugar. Não calculamos esse valor em
+    reais porque a base não traz o preço da consulta.
   - **Por que este tema (a ideação).** O problema é comum, fácil de explicar e tem uma base pública boa, em uma tabela
     só. Consideramos outros dois temas e descartamos: Logística/Vendas (a base tem muitas tabelas para juntar) e Ensino
     Superior, com evasão (muitas variáveis acadêmicas).
@@ -254,6 +258,8 @@ bairro com 2 consultas aparece com 100% de falta).
 | Então o SMS reduz a falta? | Os dados mostram a associação, mas não provam. Quem recebe SMS não foi sorteado. Para afirmar, seria preciso um teste controlado |
 | A espera causa a falta? | A análise é descritiva: mostra que a espera é o fator mais associado à falta, não que ela é a causa |
 | O setor é Saúde Privada, mas os dados são da rede pública? | Sim. Não há base pública de clínicas privadas. Usamos esta como aproximação e declaramos a premissa. A clínica deve conferir com os próprios dados |
+| Se o paciente paga a consulta, qual é o prejuízo da clínica? | Em geral ele marca antes e só paga na hora, e o convênio só paga a consulta realizada. Quem falta não paga, e a vaga que ficou presa poderia ter sido de outro paciente pagante. Sem aviso, não dá tempo de encaixar ninguém |
+| Quanto a clínica perde em dinheiro? | Não calculamos. A base não tem o valor da consulta, e ela é a única fonte do projeto. Medimos a perda em consultas: 22.314 faltas em 110.521 |
 | Como garantem que o arquivo original não foi alterado? | O notebook confere o hash (a impressão digital) do arquivo antes e depois da limpeza, e é o mesmo do arquivo baixado do Kaggle |
 | Por que o dashboard não é em Power BI? | O enunciado aceita ferramenta de escolha. A página abre por um link, sem instalar nada, e os números continuam saindo do Python, da mesma base tratada |
 | Onde está o Python no dashboard? | No script que lê a base tratada e gera os números que a página mostra |

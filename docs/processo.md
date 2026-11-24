@@ -20,6 +20,11 @@ documento, no dashboard e nos slides. Se um número mudar, ele muda em todos os 
 atendimento: o horário vago não é reaproveitado e quem estava na fila não consegue vaga. Nos nossos dados, cerca de 1
 em cada 5 agendados falta (**20,2%**).
 
+**Por que isso dói numa clínica privada.** Em geral o paciente marca antes e só paga na hora, e o convênio só paga a
+consulta realizada. Quem falta não paga, e a vaga que ele segurou poderia ter sido de outro paciente pagante. Como a
+falta é sem aviso, não dá tempo de encaixar ninguém. Não calculamos esse valor em reais, porque a base não traz o preço
+da consulta; medimos a perda em consultas.
+
 **A pergunta central.** Quem tem mais chance de faltar e o que a clínica pode fazer para reduzir isso?
 
 **Por que este tema.** O problema é comum, fácil de explicar e tem uma base pública boa para analisar (uma tabela só,
