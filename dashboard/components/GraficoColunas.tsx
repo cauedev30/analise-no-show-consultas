@@ -3,7 +3,7 @@
 import { Bar, BarChart, Cell, LabelList, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { COR } from "./cores";
 import { Dica, descreverLinhas, ehAmostraPequena, type LinhaDoGrafico, type PropsRotulo } from "./Dica";
-import { useEntradaDasBarras } from "./entradaDasBarras";
+import { useEntradaDosDados } from "./entradaDosDados";
 import { formatarInteiro, formatarPct } from "@/lib/formato";
 import type { Resumo } from "@/lib/tipos";
 
@@ -40,7 +40,7 @@ export function GraficoColunas({
   animarEntrada = false,
   className = "",
 }: Props) {
-  const entrada = useEntradaDasBarras(animarEntrada);
+  const entrada = useEntradaDosDados(animarEntrada);
   const linhas: LinhaDoGrafico[] = categorias.map((nome, i) => ({
     nome,
     taxa: resumos[i].taxa ?? 0,

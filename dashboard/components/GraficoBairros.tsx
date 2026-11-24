@@ -3,7 +3,7 @@
 import { Bar, BarChart, LabelList, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { COR } from "./cores";
 import { Dica, descreverLinhas, type LinhaDoGrafico } from "./Dica";
-import { useEntradaDasBarras } from "./entradaDasBarras";
+import { useEntradaDosDados } from "./entradaDosDados";
 import { formatarInteiro, formatarPct } from "@/lib/formato";
 
 interface Props {
@@ -31,7 +31,7 @@ export function GraficoBairros({
   animarEntrada = false,
   className = "",
 }: Props) {
-  const entrada = useEntradaDasBarras(animarEntrada);
+  const entrada = useEntradaDosDados(animarEntrada);
   const maxima = Math.max(0, ...bairros.map((b) => b.taxa));
 
   return (

@@ -2,6 +2,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { ehAmostraPequena } from "./Dica";
 import { GraficoColunas } from "./GraficoColunas";
+import { GraficoLinha } from "./GraficoLinha";
 import { MINIMO_NO_RECORTE, VisaoGeral } from "./VisaoGeral";
 import { carregarPainel } from "@/lib/dados";
 import { agrupar } from "@/lib/metricas";
@@ -74,6 +75,50 @@ describe("amostra pequena nas colunas", () => {
     );
     expect(texto(html)).not.toContain("Coluna clara");
     expect(html).not.toContain("amostra pequena");
+  });
+
+  it("na linha da espera, o ponto pequeno é marcado e a nota fala em ponto claro", () => {
+    const { ordem, totais } = painel;
+    // Um recorte inventado: a 2ª faixa com 40 consultas (pequena) e a 5ª sem nenhuma.
+    const resumos = [
+      { consultas: 500, faltas: 25, taxa: 5 },
+      { consultas: 40, faltas: 10, taxa: 25 },
+      { consultas: 300, faltas: 90, taxa: 30 },
+      { consultas: 200, faltas: 64, taxa: 32 },
+      { consultas: 0, faltas: 0, taxa: null },
+    ];
+    const html = renderToStaticMarkup(
+      <GraficoLinha
+        titulo="Taxa de falta por faixa de espera"
+        categorias={ordem.faixa_espera}
+        resumos={resumos}
+        taxaGeral={totais.taxa}
+        semConsultas={false}
+        minimo={MINIMO_NO_RECORTE}
+      />,
+    );
+    expect(texto(html)).toContain(`Ponto claro: menos de ${MINIMO_NO_RECORTE} consultas (amostra pequena)`);
+    expect(html).toContain("1-7 dias 25,0%, 40 consultas, amostra pequena");
+    expect(html).toContain("31+ dias sem consultas");
+    expect(html.match(/amostra pequena/g)).toHaveLength(2); // a nota e o ponto pequeno
+  });
+
+  it("na linha da espera sem filtro não há ponto pequeno nem nota", () => {
+    const { ordem, totais } = painel;
+    const resumos = agrupar(painel.contagens, "faixaEspera", ordem.faixa_espera.length);
+    const html = renderToStaticMarkup(
+      <GraficoLinha
+        titulo="Taxa de falta por faixa de espera"
+        categorias={ordem.faixa_espera}
+        resumos={resumos}
+        taxaGeral={totais.taxa}
+        semConsultas={false}
+        minimo={MINIMO_NO_RECORTE}
+      />,
+    );
+    expect(texto(html)).not.toContain("Ponto claro");
+    expect(html).not.toContain("amostra pequena");
+    expect(html).toContain("Mesmo dia 4,6%");
   });
 
   it("a aba Visão geral, sem filtro, mostra a nota uma vez (só no dia da semana)", () => {

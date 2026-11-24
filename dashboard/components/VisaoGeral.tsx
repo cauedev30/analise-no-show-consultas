@@ -5,6 +5,7 @@ import { Cartao } from "./Cartao";
 import { Filtros } from "./Filtros";
 import { GraficoBairros } from "./GraficoBairros";
 import { GraficoColunas } from "./GraficoColunas";
+import { GraficoLinha } from "./GraficoLinha";
 import { Revelar } from "./Revelar";
 import { carregarPainel, indicesDosBairrosElegiveis } from "@/lib/dados";
 import { formatarInteiro, formatarPct } from "@/lib/formato";
@@ -52,7 +53,6 @@ export function VisaoGeral({ filtros, onChange }: Props) {
 
   // As três colunas na mesma altura: com o `yMax` comum, a altura de uma coluna se compara entre os gráficos.
   const colunas = [
-    { titulo: "Taxa de falta por faixa de espera", categorias: ordem.faixa_espera, resumos: dados.porEspera },
     { titulo: "Por faixa de idade", categorias: ordem.faixa_etaria, resumos: dados.porIdade },
     { titulo: "Por dia da semana", categorias: ordem.dia_semana, resumos: dados.porDia },
   ];
@@ -83,6 +83,23 @@ export function VisaoGeral({ filtros, onChange }: Props) {
 
       {/* Uma seção por achado, na ordem da fala: o fator principal, o perfil, o que não pesa e a pista. */}
       <div className="flex flex-col gap-20 px-8 pt-6">
+        {/* A espera é uma progressão (quanto mais espera, mais falta): linha com pontos. */}
+        <Revelar>
+          {(entrada) => (
+            <GraficoLinha
+              className="h-[23rem]"
+              titulo="Taxa de falta por faixa de espera"
+              categorias={ordem.faixa_espera}
+              resumos={dados.porEspera}
+              taxaGeral={taxaGeral}
+              semConsultas={semConsultas}
+              minimo={MINIMO_NO_RECORTE}
+              mostrarDados={entrada.surgiu}
+              animarEntrada={entrada.animar}
+            />
+          )}
+        </Revelar>
+
         {colunas.map((c) => (
           <Revelar key={c.titulo}>
             {(entrada) => (
