@@ -138,6 +138,6 @@ Decididos em 2026-11-23. O detalhe e o roteiro da apresentação estão na seç�
   (`consultas_tratadas.csv`), com a taxa de falta e filtros por idade, dia da semana, bairro e dias de espera, usando
   as mesmas faixas e definições dos notebooks. O Python calcula os números e a página só mostra. A proposta dizia
   Power BI; o professor confirmou que ele é opcional, e o enunciado aceita ferramenta de escolha.
-- **Apresentação executiva** de 5 a 10 minutos (o professor reduziu; eram 10 a 15): slides curtos com o contexto e os
-  dados e, depois, o dashboard, com duas recomendações: lembrete reforçado para o grupo de maior risco e overbooking
+- **Apresentação executiva** de 5 a 10 minutos (o professor reduziu; eram 10 a 15): slides pelo D.E.I.L.A.S, um por letra,
+  e, depois, o dashboard, com duas recomendações: lembrete reforçado para o grupo de maior risco e overbooking
   controlado pelo tempo de espera.

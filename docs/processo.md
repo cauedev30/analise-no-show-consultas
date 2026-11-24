@@ -439,26 +439,26 @@ Duas abas, e nada além disso: a rubrica pede um dashboard focado nos KPIs essen
 
 ### Roteiro da apresentação (5 a 10 minutos)
 
-Só dois materiais: os slides e o dashboard. Os slides dão o contexto e explicam os dados, e acabam aí. A análise e as
-recomendações são mostradas no dashboard, ao vivo.
+Só dois materiais: os slides e o dashboard. Os slides seguem o **D.E.I.L.A.S**, um slide por letra, e cada slide
+resume a seção deste documento com a mesma letra. Depois dos slides, o dashboard mostra a análise ao vivo.
 
-**Parte 1, nos slides: o contexto**
+**Parte 1, nos slides: o D.E.I.L.A.S**
 
 | # | Slide | Conteúdo |
 |---|---|---|
 | 1 | Capa | Tema, equipe, disciplina e professor |
-| 2 | O caminho do projeto: D.E.I.L.A.S | As seis letras, com uma linha para cada uma (as seções **D** a **S** deste documento). É o mapa da apresentação. O **S** já traz as duas recomendações |
-| 3 | O problema e a solução | O problema: cerca de 1 em cada 5 pacientes agendados falta (20,2%). O dataset. As ferramentas. A solução: mostrar quem tem mais chance de faltar e recomendar lembrete reforçado e overbooking controlado pelo tempo de espera. A premissa do setor, em uma linha |
+| 2 | **D**: Defina o objetivo | O problema: cerca de 1 em cada 5 pacientes agendados falta (20,2%), e o horário vago não é reaproveitado. A pergunta central: quem tem mais chance de faltar e o que a clínica pode fazer. O setor (Saúde Privada) e a premissa da base, em uma linha. Por que escolhemos este tema |
+| 3 | **E**: Estabeleça métricas | As regras de negócio: o que é falta; taxa de falta = faltas ÷ consultas; espera em dias de calendário; as faixas de idade e de espera |
+| 4 | **I**: Identifique fontes | Kaggle, autor, licença, 110.527 consultas e 14 colunas; baixado e guardado sem alteração; única fonte |
+| 5 | **L**: Limpe as bases | 110.527 para 110.521 consultas; o que saiu (6 linhas impossíveis), o que foi corrigido e por quê; o original intocado; feito em Python (Pandas), em notebook |
+| 6 | **A**: Analise os dados | A espera é o fator mais associado à falta (4,6% no mesmo dia contra 28,5% com antecedência); o SMS parece aumentar a falta, mas é a espera (correlação espúria); a idade (26,6% de 13 a 17 anos, 15,3% com 60 ou mais). Como os números chegam ao dashboard: base tratada → script Python → página |
+| 7 | **S**: Sugira decisões | As duas recomendações, com o número do grupo de maior risco (sai do notebook 03): lembrete reforçado e overbooking controlado pelo tempo de espera. A ideia da calculadora de risco. Os limites da análise, em uma linha |
 
-**Parte 2, nos slides: os dados**
+Com isso os slides cobrem o que o enunciado pede na apresentação: o dataset (**I**), as regras de negócio (**E** e
+**L**), a definição do problema, a relevância e o processo de ideação (**D**) e o resultado final (**A**, **S** e o
+dashboard).
 
-| # | Slide | Conteúdo |
-|---|---|---|
-| 4 | De onde vieram os dados | Seção **I**: Kaggle, autor, licença, 110.527 consultas e 14 colunas; baixado e guardado sem alteração; única fonte |
-| 5 | Como limpamos | Seção **L**: 110.527 para 110.521 consultas; o que saiu (6 linhas impossíveis), o que foi corrigido e por quê; o original intocado |
-| 6 | Como os dados chegam ao dashboard | O caminho: base tratada → script Python → página. As definições da seção **E** (taxa de falta, espera e faixas) e o link do dashboard |
-
-**Parte 3, no dashboard: a análise e as recomendações**
+**Parte 2, no dashboard: a análise ao vivo**
 
 | Passo | Onde | O que mostrar |
 |---|---|---|
@@ -466,9 +466,10 @@ recomendações são mostradas no dashboard, ao vivo.
 | 2 | Visão geral, com filtro | Um filtro ao vivo, para mostrar os números mudando |
 | 3 | Grupo de risco e SMS | O cruzamento de idade e espera e o grupo de maior risco (o número sai do notebook 03) |
 | 4 | Grupo de risco e SMS | O SMS: parece aumentar a falta (27,6% contra 16,7%), mas é a espera (correlação espúria) |
-| 5 | Grupo de risco e SMS, no fim | As recomendações, a ideia da calculadora de risco e os limites da análise |
+| 5 | Grupo de risco e SMS, no fim | O bloco com as recomendações, que repete o slide **S** e fecha a apresentação |
 
-A equipe pode juntar ou cortar slides. O que não muda são os números e as definições deste documento.
+A equipe pode mudar a ordem (por exemplo, mostrar o dashboard entre o **A** e o **S**, para fechar no slide das
+recomendações). O que não muda são os números e as definições deste documento.
 
 ---
 
@@ -483,4 +484,4 @@ Cada entrega acrescenta uma linha aqui.
 | 2026-11-17 e 18 | Entrega 3: limpeza ([`01_limpeza`](../notebooks/01_limpeza.ipynb)), primeira análise ([`02_exploracao`](../notebooks/02_exploracao.ipynb)) e este repositório |
 | 2026-11-20 | Conferência das três entregas contra o repositório: o CSV enviado, o de `dados/original/` e o do `.zip` do Kaggle têm o mesmo hash, e os números batem. Incluída a seção de coerência com as entregas |
 | 2026-11-20 | Decisão sobre o setor: mantemos Saúde Privada, como na proposta, e declaramos a premissa de que a base (rede pública) é uma aproximação |
-| 2026-11-23 | Decisões do projeto final: dashboard em página web (Next.js/React) com os números calculados em Python, no lugar do Power BI; apresentação de 5 a 10 minutos, com slides curtos e depois o dashboard; sem aplicação. Incluída a seção "Projeto final: o que está decidido" |
+| 2026-11-23 | Decisões do projeto final: dashboard em página web (Next.js/React) com os números calculados em Python, no lugar do Power BI; apresentação de 5 a 10 minutos, com slides pelo D.E.I.L.A.S (um por letra) e depois o dashboard; sem aplicação. Incluída a seção "Projeto final: o que está decidido" |
