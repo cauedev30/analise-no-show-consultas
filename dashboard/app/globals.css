@@ -63,11 +63,31 @@ body {
   outline-offset: 2px;
 }
 
-/* Sem animações: quem pede menos movimento já está coberto, e ninguém precisa dele numa apresentação. */
-*,
-*::before,
-*::after {
-  animation: none !important;
-  transition: none !important;
-  scroll-behavior: auto !important;
+/*
+ * Surgimento das seções ao rolar (etapa 3B): o componente Revelar troca `data-revelar` de "escondido" para
+ * "visivel" quando a seção entra na tela, uma vez só. Fade com subida de 16 px em 0,4 s. Só opacidade e
+ * deslocamento: a seção escondida continua para o leitor de tela e para o teclado.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  [data-revelar] {
+    transition:
+      opacity 0.4s ease-out,
+      transform 0.4s ease-out;
+  }
+
+  [data-revelar="escondido"] {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+/* Quem pede menos movimento não vê animação nenhuma: as seções já aparecem e as barras não crescem. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
 }
