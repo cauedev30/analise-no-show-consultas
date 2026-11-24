@@ -1,5 +1,13 @@
 import type { Metadata } from "next";
+import { Atkinson_Hyperlegible_Next } from "next/font/google";
 import "./globals.css";
+
+// Fonte embutida no build (sem pedir nada ao Google na hora da apresentação).
+const atkinson = Atkinson_Hyperlegible_Next({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-atkinson",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "No-show em consultas: taxa de falta",
@@ -9,8 +17,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR">
-      <body>{children}</body>
+    <html lang="pt-BR" className={atkinson.variable}>
+      <body className="flex min-h-dvh flex-col">{children}</body>
     </html>
   );
 }

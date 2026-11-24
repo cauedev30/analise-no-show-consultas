@@ -1,1 +1,71 @@
 @import "tailwindcss";
+
+/*
+ * Tokens do dashboard, em um lugar só.
+ * Paleta = a dos notebooks 02 e 03 (validada para daltonismo na skill dataviz).
+ * O azul é só dos dados: abas, botões e filtros usam a cor do texto.
+ * `static` faz o Tailwind gravar todas as variáveis, mesmo as que o CSS não usa por utilitário
+ * (os gráficos leem `var(--color-...)` direto nos atributos SVG).
+ */
+@theme static {
+  --color-fundo: #fcfcfb;
+  --color-texto: #0b0b0b;
+  --color-texto-2: #52514e;
+  --color-grade: #e1e0d9;
+  --color-eixo: #c3c2b7;
+  --color-neutro: #f0efec;
+
+  --color-azul: #2a78d6;
+  --color-azul-claro: #86b6ef;
+  --color-laranja: #eb6834;
+
+  /* Rampa do mapa de calor (a do notebook 03), do claro ao escuro. */
+  --color-rampa-1: #cde2fb;
+  --color-rampa-2: #9ec5f4;
+  --color-rampa-3: #6da7ec;
+  --color-rampa-4: #3987e5;
+  --color-rampa-5: #256abf;
+  --color-rampa-6: #184f95;
+  --color-rampa-7: #104281;
+
+  --font-sans: var(--font-atkinson), ui-sans-serif, system-ui, sans-serif;
+
+  /* Escala de tipo para projetor: rótulos e eixos nunca abaixo de 14 px. */
+  --text-rotulo: 0.875rem;
+  --text-rotulo--line-height: 1.35;
+  --text-corpo: 1rem;
+  --text-corpo--line-height: 1.5;
+  --text-grafico: 1.125rem;
+  --text-grafico--line-height: 1.3;
+  --text-pagina: 1.5rem;
+  --text-pagina--line-height: 1.25;
+  --text-numero: 2.5rem;
+  --text-numero--line-height: 1;
+}
+
+html {
+  background: var(--color-fundo);
+}
+
+body {
+  background: var(--color-fundo);
+  color: var(--color-texto);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Foco do teclado sempre visível, na cor do texto (não no azul dos dados). */
+:focus-visible {
+  outline: 3px solid var(--color-texto);
+  outline-offset: 2px;
+}
+
+/* Sem animações: quem pede menos movimento já está coberto, e ninguém precisa dele numa apresentação. */
+*,
+*::before,
+*::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
