@@ -25,20 +25,20 @@ export function Recomendacoes({ painel, className = "" }: Props) {
       <p className="mt-1 text-corpo">Um agente de disparo de lembretes para reduzir as faltas</p>
 
       <div className="mt-4 grid gap-4 md:grid-cols-3">
-        <div className="rounded-lg border border-grade bg-pagina p-4">
+        <div className="rounded-lg border border-grade bg-folha p-4">
           <h3 className="text-corpo font-bold">Classifica</h3>
           <p className="mt-1 text-corpo">
             No agendamento, calcula o risco de falta pela espera e pela idade. De {idadesDoGrupo}, com {esperaDoGrupo} de
             espera, a falta é de {formatarPct(grupo.taxa)}.
           </p>
         </div>
-        <div className="rounded-lg border border-grade bg-pagina p-4">
+        <div className="rounded-lg border border-grade bg-folha p-4">
           <h3 className="text-corpo font-bold">Dispara</h3>
           <p className="mt-1 text-corpo">
             Para quem tem risco alto, manda mais de um lembrete antes da consulta e pede confirmação.
           </p>
         </div>
-        <div className="rounded-lg border border-grade bg-pagina p-4">
+        <div className="rounded-lg border border-grade bg-folha p-4">
           <h3 className="text-corpo font-bold">Libera</h3>
           <p className="mt-1 text-corpo">
             Se o paciente cancela ou não confirma, o horário é oferecido a quem está na lista de espera.
@@ -54,7 +54,7 @@ export function Recomendacoes({ painel, className = "" }: Props) {
             {formatarPct(grupo.pct_faltas)} das faltas.
           </p>
         </div>
-        <div className="rounded-lg border border-grade bg-pagina p-4">
+        <div className="rounded-lg border border-grade bg-folha p-4">
           <p className="text-numero font-bold">{consultasAMais}</p>
           <p className="mt-1 text-corpo">consultas a mais em seis semanas, se o grupo de risco faltasse como a média.</p>
         </div>
