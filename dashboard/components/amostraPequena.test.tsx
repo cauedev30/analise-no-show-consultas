@@ -1,7 +1,6 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { ehAmostraPequena } from "./Dica";
-import { GraficoColunas } from "./GraficoColunas";
 import { GraficoDesvio } from "./GraficoDesvio";
 import { GraficoLinha } from "./GraficoLinha";
 import { MINIMO_NO_RECORTE, VisaoGeral } from "./VisaoGeral";
@@ -17,23 +16,7 @@ function texto(html: string): string {
   return html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ");
 }
 
-function graficoDoDiaDaSemana() {
-  const { ordem, totais } = painel;
-  const resumos = agrupar(painel.contagens, "diaSemana", ordem.dia_semana.length);
-  return renderToStaticMarkup(
-    <GraficoColunas
-      titulo="Por dia da semana"
-      categorias={ordem.dia_semana}
-      resumos={resumos}
-      taxaGeral={totais.taxa}
-      yMax={30}
-      semConsultas={false}
-      minimo={MINIMO_NO_RECORTE}
-    />,
-  );
-}
-
-describe("amostra pequena nas colunas", () => {
+describe("amostra pequena nos gráficos", () => {
   it("a regra: tem consultas, mas menos que o mínimo", () => {
     expect(ehAmostraPequena(0, 100)).toBe(false);
     expect(ehAmostraPequena(1, 100)).toBe(true);
@@ -48,34 +31,6 @@ describe("amostra pequena nas colunas", () => {
     expect(pequenas).toHaveLength(1);
     expect(pequenas[0]).toMatch(/^S.bado$/);
     expect(resumos[ordem.dia_semana.indexOf(pequenas[0])].consultas).toBe(39);
-  });
-
-  it("o gráfico do dia da semana marca o sábado e mostra a nota com o mínimo vindo da prop", () => {
-    const html = graficoDoDiaDaSemana();
-    const t = texto(html);
-    expect(t).toContain(`Coluna clara: menos de ${MINIMO_NO_RECORTE} consultas (amostra pequena)`);
-    // A descrição para leitor de tela traz as consultas de cada coluna e a marca só no sábado.
-    expect(html).toMatch(/S.bado 23,1%, 39 consultas, amostra pequena/);
-    expect(html).toMatch(/Segunda [\d,]+%, [\d.]+ consultas[,.;]/);
-    expect(html.match(/amostra pequena/g)).toHaveLength(2); // a nota e o sábado
-  });
-
-  it("sem coluna pequena, a nota não aparece", () => {
-    const { ordem, totais } = painel;
-    const resumos = agrupar(painel.contagens, "faixaEspera", ordem.faixa_espera.length);
-    const html = renderToStaticMarkup(
-      <GraficoColunas
-        titulo="Por faixa de espera"
-        categorias={ordem.faixa_espera}
-        resumos={resumos}
-        taxaGeral={totais.taxa}
-        yMax={30}
-        semConsultas={false}
-        minimo={MINIMO_NO_RECORTE}
-      />,
-    );
-    expect(texto(html)).not.toContain("Coluna clara");
-    expect(html).not.toContain("amostra pequena");
   });
 
   it("na linha da espera, o ponto pequeno é marcado e a nota fala em ponto claro", () => {
@@ -171,8 +126,19 @@ describe("amostra pequena nas colunas", () => {
     expect(html).toContain("60+ 15,3%");
   });
 
-  it("a aba Visão geral, sem filtro, mostra a nota uma vez (só no dia da semana)", () => {
+  it("a aba Visão geral, sem filtro, não tem nota de amostra pequena (o sábado era o único caso)", () => {
     const html = renderToStaticMarkup(<VisaoGeral filtros={SEM_FILTROS} onChange={() => {}} />);
-    expect(texto(html).match(/Coluna clara/g)).toHaveLength(1);
+    expect(texto(html)).not.toMatch(/Ponto claro|Barra clara|Amostra pequena/);
+  });
+
+  it("filtrando o sábado (39 consultas), as notas e o aviso da barra aparecem", () => {
+    const sabado = painel.ordem.dia_semana.findIndex((d) => /^S.bado$/.test(d));
+    const html = renderToStaticMarkup(
+      <VisaoGeral filtros={{ ...SEM_FILTROS, diaSemana: [sabado] }} onChange={() => {}} />,
+    );
+    const t = texto(html);
+    expect(t).toContain("Ponto claro");
+    expect(t).toContain("Barra clara");
+    expect(t).toContain(`Amostra pequena: menos de ${MINIMO_NO_RECORTE} consultas`);
   });
 });

@@ -4,7 +4,6 @@ import { useMemo } from "react";
 import { Cartao } from "./Cartao";
 import { Filtros } from "./Filtros";
 import { GraficoBairros } from "./GraficoBairros";
-import { GraficoColunas } from "./GraficoColunas";
 import { GraficoDesvio } from "./GraficoDesvio";
 import { GraficoLinha } from "./GraficoLinha";
 import { Revelar } from "./Revelar";
@@ -25,7 +24,11 @@ interface Props {
   onChange: (filtros: TipoFiltros) => void;
 }
 
-/** Aba 1: o recorte escolhido nos filtros, em três números (na barra fixa) e quatro seções, uma embaixo da outra. */
+/**
+ * Aba 1: o recorte escolhido nos filtros, em três números (na barra fixa) e três seções, uma embaixo da outra. Cada
+ * seção tem a forma do seu achado: a espera é uma progressão (linha), a idade fica acima ou abaixo da média (desvio) e
+ * os bairros são um ranking (pirulito). O dia da semana fica só como filtro: a taxa quase não muda entre os dias.
+ */
 export function VisaoGeral({ filtros, onChange }: Props) {
   const { ordem } = painel;
 
@@ -34,28 +37,19 @@ export function VisaoGeral({ filtros, onChange }: Props) {
     const resumo = somar(recorte);
     const porEspera = agrupar(recorte, "faixaEspera", ordem.faixa_espera.length);
     const porIdade = agrupar(recorte, "faixaEtaria", ordem.faixa_etaria.length);
-    const porDia = agrupar(recorte, "diaSemana", ordem.dia_semana.length);
     const ranking = rankingBairros(recorte, elegiveis, MINIMO_NO_RECORTE, BAIRROS_NO_RANKING).map((b) => ({
       nome: ordem.bairro[b.bairro],
       taxa: b.taxa,
       consultas: b.consultas,
       faltas: b.faltas,
     }));
-    // Mesma escala nos três gráficos de colunas, com folga em cima para o valor escrito.
-    const taxas = [...porEspera, ...porIdade, ...porDia].map((r) => r.taxa ?? 0);
-    const yMax = Math.max(painel.totais.taxa, ...taxas) * 1.05;
-    return { resumo, porEspera, porIdade, porDia, ranking, yMax };
+    return { resumo, porEspera, porIdade, ranking };
   }, [filtros, ordem]);
 
   const { resumo } = dados;
   const semConsultas = resumo.consultas === 0;
   const amostraPequena = !semConsultas && resumo.consultas < MINIMO_NO_RECORTE;
   const taxaGeral = painel.totais.taxa;
-
-  // As três colunas na mesma altura: com o `yMax` comum, a altura de uma coluna se compara entre os gráficos.
-  const colunas = [
-    { titulo: "Por dia da semana", categorias: ordem.dia_semana, resumos: dados.porDia },
-  ];
 
   return (
     <div className="pb-24">
@@ -81,7 +75,7 @@ export function VisaoGeral({ filtros, onChange }: Props) {
         </div>
       </section>
 
-      {/* Uma seção por achado, na ordem da fala: o fator principal, o perfil, o que não pesa e a pista. */}
+      {/* Uma seção por achado, na ordem da fala: o fator principal, o perfil e a pista. */}
       <div className="flex flex-col gap-20 px-8 pt-6">
         {/* A espera é uma progressão (quanto mais espera, mais falta): linha com pontos. */}
         <Revelar>
@@ -117,25 +111,7 @@ export function VisaoGeral({ filtros, onChange }: Props) {
           )}
         </Revelar>
 
-        {colunas.map((c) => (
-          <Revelar key={c.titulo}>
-            {(entrada) => (
-              <GraficoColunas
-                className="h-[23rem]"
-                titulo={c.titulo}
-                categorias={c.categorias}
-                resumos={c.resumos}
-                taxaGeral={taxaGeral}
-                yMax={dados.yMax}
-                semConsultas={semConsultas}
-                minimo={MINIMO_NO_RECORTE}
-                mostrarBarras={entrada.surgiu}
-                animarEntrada={entrada.animar}
-              />
-            )}
-          </Revelar>
-        ))}
-
+        {/* Os bairros são um ranking: pirulito (linha fina e um ponto no fim). */}
         <Revelar>
           {(entrada) => (
             <GraficoBairros
@@ -145,7 +121,7 @@ export function VisaoGeral({ filtros, onChange }: Props) {
               minimoNaBase={painel.minimo_consultas_bairro}
               minimoNoRecorte={MINIMO_NO_RECORTE}
               semConsultas={semConsultas}
-              mostrarBarras={entrada.surgiu}
+              mostrarDados={entrada.surgiu}
               animarEntrada={entrada.animar}
             />
           )}

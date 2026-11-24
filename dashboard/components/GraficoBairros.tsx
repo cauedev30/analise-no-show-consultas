@@ -6,6 +6,9 @@ import { Dica, descreverLinhas, type LinhaDoGrafico } from "./Dica";
 import { useEntradaDosDados } from "./entradaDosDados";
 import { formatarInteiro, formatarPct } from "@/lib/formato";
 
+// Raio do ponto do pirulito, em px.
+const RAIO = 7;
+
 interface Props {
   titulo: string;
   /** Já ordenado, do maior para o menor, e com os nomes dos bairros. */
@@ -14,9 +17,9 @@ interface Props {
   minimoNoRecorte: number;
   /** O recorte não tem nenhuma consulta. */
   semConsultas: boolean;
-  /** Falso enquanto a seção não surgiu: o gráfico fica sem as barras, que entram quando ela aparece. */
-  mostrarBarras?: boolean;
-  /** As barras crescem ao entrar (uma vez). Depois, filtro não anima. */
+  /** Falso enquanto a seção não surgiu: o gráfico fica sem os pirulitos, que entram quando ela aparece. */
+  mostrarDados?: boolean;
+  /** Os pirulitos crescem ao entrar (uma vez). Depois, filtro não anima. */
   animarEntrada?: boolean;
   className?: string;
 }
@@ -27,12 +30,24 @@ export function GraficoBairros({
   minimoNaBase,
   minimoNoRecorte,
   semConsultas,
-  mostrarBarras = true,
+  mostrarDados = true,
   animarEntrada = false,
   className = "",
 }: Props) {
   const entrada = useEntradaDosDados(animarEntrada);
   const maxima = Math.max(0, ...bairros.map((b) => b.taxa));
+
+  // Pirulito: uma linha fina do zero até a taxa e um ponto no fim (um ranking leve, sem barras grossas).
+  const pirulito = ({ x = 0, y = 0, width = 0, height = 0 }: { x?: number; y?: number; width?: number; height?: number }) => {
+    if (width < 0.5) return <g />;
+    const meio = y + height / 2;
+    return (
+      <g>
+        <line x1={x} y1={meio} x2={x + width - RAIO} y2={meio} stroke={COR.azul} strokeWidth={2} />
+        <circle cx={x + width - RAIO} cy={meio} r={RAIO} fill={COR.azul} />
+      </g>
+    );
+  };
 
   return (
     <figure className={`flex flex-col ${className}`}>
@@ -73,8 +88,8 @@ export function GraficoBairros({
                   isAnimationActive={false}
                   content={(p) => <Dica ativo={p.active} linha={p.payload?.[0]?.payload as LinhaDoGrafico | undefined} />}
                 />
-                {mostrarBarras && (
-                  <Bar dataKey="taxa" fill={COR.azul} radius={[0, 4, 4, 0]} barSize={22} {...entrada}>
+                {mostrarDados && (
+                  <Bar dataKey="taxa" fill={COR.azul} barSize={RAIO * 2} shape={pirulito} {...entrada}>
                     <LabelList
                       dataKey="taxa"
                       position="right"
