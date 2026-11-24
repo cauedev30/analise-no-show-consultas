@@ -23,8 +23,8 @@ em cada 5 agendados falta (**20,2%**).
 **A pergunta central.** Quem tem mais chance de faltar e o que a clínica pode fazer para reduzir isso?
 
 **Por que este tema.** O problema é comum, fácil de explicar e tem uma base pública boa para analisar (uma tabela só,
-sem juntar várias fontes). O escopo é enxuto de propósito: limpeza, análise, dashboard e recomendações, sem API, banco
-nem deploy.
+sem juntar várias fontes). O escopo é enxuto de propósito: limpeza, análise, dashboard e recomendações, sem API nem
+banco de dados.
 
 **Setor e premissa.** O setor do projeto é **Saúde Privada**, como na proposta aprovada. A base, porém, traz a coluna de
 Bolsa Família e bairros de Vitória (ES), o que indica consultas da **rede pública**. Não existe base pública equivalente
@@ -442,6 +442,9 @@ Duas abas, e nada além disso: a rubrica pede um dashboard focado nos KPIs essen
 Só dois materiais: os slides e o dashboard. Os slides seguem o **D.E.I.L.A.S**, um slide por letra, e cada slide
 resume a seção deste documento com a mesma letra. Depois dos slides, o dashboard mostra a análise ao vivo.
 
+O conteúdo de cada slide (o que escrever e o que falar), as decisões com o porquê e as perguntas que o professor pode
+fazer estão no [guia de estudo](guia-de-estudo.md). A tabela abaixo é o resumo.
+
 **Parte 1, nos slides: o D.E.I.L.A.S**
 
 | # | Slide | Conteúdo |
@@ -484,4 +487,4 @@ Cada entrega acrescenta uma linha aqui.
 | 2026-11-17 e 18 | Entrega 3: limpeza ([`01_limpeza`](../notebooks/01_limpeza.ipynb)), primeira análise ([`02_exploracao`](../notebooks/02_exploracao.ipynb)) e este repositório |
 | 2026-11-20 | Conferência das três entregas contra o repositório: o CSV enviado, o de `dados/original/` e o do `.zip` do Kaggle têm o mesmo hash, e os números batem. Incluída a seção de coerência com as entregas |
 | 2026-11-20 | Decisão sobre o setor: mantemos Saúde Privada, como na proposta, e declaramos a premissa de que a base (rede pública) é uma aproximação |
-| 2026-11-23 | Decisões do projeto final: dashboard em página web (Next.js/React) com os números calculados em Python, no lugar do Power BI; apresentação de 5 a 10 minutos, com slides pelo D.E.I.L.A.S (um por letra) e depois o dashboard; sem aplicação. Incluída a seção "Projeto final: o que está decidido" |
+| 2026-11-23 | Decisões do projeto final: dashboard em página web (Next.js/React) com os números calculados em Python, no lugar do Power BI; apresentação de 5 a 10 minutos, com slides pelo D.E.I.L.A.S (um por letra) e depois o dashboard; sem aplicação. Incluídos a seção "Projeto final: o que está decidido" e o [guia de estudo](guia-de-estudo.md), com o conteúdo dos slides |
