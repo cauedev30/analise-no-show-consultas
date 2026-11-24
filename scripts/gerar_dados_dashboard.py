@@ -1,9 +1,9 @@
 """Gera os números do dashboard: o Python calcula, o React só mostra.
 
 Lê a base tratada (dados/tratados/consultas_tratadas.csv, a mesma da análise) e grava
-dashboard/public/dados/painel.json. A página do dashboard não calcula taxa nenhuma por conta própria: ela só soma as
-contagens deste arquivo, conforme os filtros que a pessoa escolhe. Assim as definições e os números são os mesmos
-do notebook, do README, dos slides e do dashboard.
+dashboard/public/dados/painel.json. A página do dashboard só mostra o que está neste arquivo; a única conta dela é a
+dos filtros: somar as consultas e as faltas das contagens do recorte escolhido e dividir uma pela outra. Assim as
+definições e os números são os mesmos do notebook, do README, dos slides e do dashboard.
 
 Uso (da raiz do repositório):
     python scripts/gerar_dados_dashboard.py
