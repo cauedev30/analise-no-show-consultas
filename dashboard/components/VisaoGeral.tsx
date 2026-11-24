@@ -60,11 +60,12 @@ export function VisaoGeral({ filtros, onChange }: Props) {
   return (
     <div className="pb-24">
       {/* Barra fixa: acompanha a rolagem, para um filtro mudado lá embaixo mostrar o efeito na hora. Fica acima das
-          seções no empilhamento, para os menus dos filtros abrirem por cima dos gráficos. */}
+          seções no empilhamento, para os menus dos filtros abrirem por cima dos gráficos. Só presa a partir de 768 px:
+          no celular ela quebra em várias linhas e cobriria metade da tela. */}
       <section
         data-barra-fixa
         aria-label="Filtros e números do recorte"
-        className="sticky top-0 z-30 flex flex-wrap items-center justify-between gap-x-8 gap-y-3 border-b border-grade bg-fundo px-8 pb-1 pt-3"
+        className="relative z-30 md:sticky md:top-0 flex flex-wrap items-center justify-between gap-x-8 gap-y-3 border-b border-grade bg-fundo px-8 pb-1 pt-3"
       >
         <Filtros ordem={ordem} filtros={filtros} onChange={onChange} />
         <div>
