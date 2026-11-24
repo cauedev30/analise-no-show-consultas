@@ -25,7 +25,7 @@ interface Props {
 }
 
 /**
- * Aba 1: o recorte escolhido nos filtros, em três números (na barra fixa) e três seções, uma embaixo da outra. Cada
+ * Aba 1: o recorte escolhido nos filtros, em três números (na barra fixa) e três seções, cada uma num cartão. Cada
  * seção tem a forma do seu achado: a espera é uma progressão (linha), a idade fica acima ou abaixo da média (desvio) e
  * os bairros são um ranking (pirulito). O dia da semana fica só como filtro: a taxa quase não muda entre os dias.
  */
@@ -59,26 +59,27 @@ export function VisaoGeral({ filtros, onChange }: Props) {
       <section
         data-barra-fixa
         aria-label="Filtros e números do recorte"
-        className="relative z-30 md:sticky md:top-0 flex flex-wrap items-center justify-between gap-x-8 gap-y-3 border-b border-grade bg-fundo px-8 pb-1 pt-3"
+        className="relative z-30 flex flex-wrap items-center gap-x-6 gap-y-3 border-b border-grade bg-pagina px-6 py-3 md:sticky md:top-0 lg:px-8"
       >
         <Filtros ordem={ordem} filtros={filtros} onChange={onChange} />
-        <div>
-          <div className="flex divide-x divide-eixo">
-            <Cartao rotulo="Consultas" valor={formatarInteiro(resumo.consultas)} />
-            <Cartao rotulo="Faltas" valor={formatarInteiro(resumo.faltas)} />
-            <Cartao rotulo="Taxa de falta" valor={formatarPct(resumo.taxa)} />
-          </div>
-          {/* Sempre montado, para o leitor de tela anunciar a troca de texto e o layout não pular. */}
-          <p aria-live="polite" className="mt-1 min-h-lh text-rotulo font-bold">
-            {amostraPequena ? `Amostra pequena: menos de ${MINIMO_NO_RECORTE} consultas, a taxa oscila muito.` : ""}
-          </p>
+        <div className="flex flex-wrap gap-3">
+          <Cartao rotulo="Consultas" valor={formatarInteiro(resumo.consultas)} />
+          <Cartao rotulo="Faltas" valor={formatarInteiro(resumo.faltas)} />
+          <Cartao rotulo="Taxa de falta" valor={formatarPct(resumo.taxa)} destaque />
         </div>
+        {/* Sempre montado, para o leitor de tela anunciar a troca de texto e o layout não pular. Ocupa o resto da linha
+            dos números (e não uma linha só dele), para a barra não crescer no projetor. */}
+        <p aria-live="polite" className="min-h-lh min-w-48 flex-1 text-rotulo font-bold">
+          {amostraPequena ? `Amostra pequena: menos de ${MINIMO_NO_RECORTE} consultas, a taxa oscila muito.` : ""}
+        </p>
       </section>
 
-      {/* Uma seção por achado, na ordem da fala: o fator principal, o perfil e a pista. */}
-      <div className="flex flex-col gap-20 px-8 pt-6">
+      {/* Uma seção por achado, na ordem da fala: o fator principal, o perfil e a pista. Cada uma num cartão do painel:
+          a espera na largura toda; idade e bairros lado a lado a partir de 1280 px (com a lateral, abaixo disso o
+          ranking dos bairros fica espremido). */}
+      <div className="grid gap-6 px-6 pt-6 lg:px-8 xl:grid-cols-2">
         {/* A espera é uma progressão (quanto mais espera, mais falta): linha com pontos. */}
-        <Revelar>
+        <Revelar className="cartao max-sm:px-3 xl:col-span-2">
           {(entrada) => (
             <GraficoLinha
               className="h-[23rem]"
@@ -95,10 +96,10 @@ export function VisaoGeral({ filtros, onChange }: Props) {
         </Revelar>
 
         {/* A idade mostra quem fica acima ou abaixo da média: barras de desvio da taxa geral. */}
-        <Revelar>
+        <Revelar className="cartao max-sm:px-3">
           {(entrada) => (
             <GraficoDesvio
-              className="h-[18rem]"
+              className="h-[18rem] xl:h-[30rem]"
               titulo="Por faixa de idade"
               categorias={ordem.faixa_etaria}
               resumos={dados.porIdade}
@@ -112,7 +113,7 @@ export function VisaoGeral({ filtros, onChange }: Props) {
         </Revelar>
 
         {/* Os bairros são um ranking: pirulito (linha fina e um ponto no fim). */}
-        <Revelar>
+        <Revelar className="cartao max-sm:px-3">
           {(entrada) => (
             <GraficoBairros
               className="h-[30rem]"
