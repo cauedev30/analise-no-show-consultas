@@ -313,7 +313,8 @@ flowchart LR
     A["Original<br/>dados/original/KaggleV2-May-2016.csv<br/>(intocado)"] --> B["notebooks/01_limpeza"]
     B --> C["Base tratada<br/>dados/tratados/consultas_tratadas.csv<br/>(única base)"]
     C --> D["notebooks/02_exploracao"]
-    C --> E["Dashboard Power BI<br/>(próxima etapa)"]
+    C --> G["Script Python<br/>gera os números do dashboard<br/>(próxima etapa)"]
+    G --> E["Dashboard<br/>página web (Next.js/React)<br/>(próxima etapa)"]
     D --> F["Apresentação executiva"]
     E --> F
 ```
@@ -321,8 +322,9 @@ flowchart LR
 - O arquivo do **Kaggle** foi baixado e guardado como veio: é o **original**.
 - O **original** só é lido, nunca alterado.
 - O notebook **01** limpa e grava a **base tratada**.
-- O notebook **02** e o **dashboard** leem a **mesma** base tratada. O dashboard não refaz a limpeza nem cria faixas
-  próprias: usa as mesmas definições e os mesmos rótulos da seção **E**.
+- O notebook **02** e o **dashboard** partem da **mesma** base tratada. No dashboard, um script Python lê a base tratada
+  e grava os números em um arquivo; a página web só mostra esses números. O dashboard não refaz a limpeza nem cria
+  faixas próprias: usa as mesmas definições e os mesmos rótulos da seção **E**.
 - A **apresentação** reúne os achados da análise e do dashboard e as recomendações.
 
 ---
@@ -344,8 +346,8 @@ isso está no projeto.
 | Recomendar lembretes direcionados aos grupos de maior risco e overbooking controlado | As duas recomendações da seção **S** |
 | Script de limpeza em Python | [notebook 01](../notebooks/01_limpeza.ipynb) (feito) |
 | Exploração com Pandas e Seaborn | [notebook 02](../notebooks/02_exploracao.ipynb), com Pandas, Matplotlib e Seaborn (feito) |
-| Dashboard interativo com filtros no Power BI | Próxima etapa, sobre a base tratada |
-| Apresentação executiva de 10 a 15 minutos | Próxima etapa, com este documento como roteiro |
+| Dashboard interativo com filtros no Power BI | Próxima etapa, sobre a base tratada, com os mesmos filtros. A ferramenta mudou para uma página web (ver "O que mudou", abaixo) |
+| Apresentação executiva de 10 a 15 minutos | Próxima etapa, em 5 a 10 minutos (ver "O que mudou", abaixo) |
 | Dataset: *Medical Appointment No Shows* (Kaggle) | O mesmo, e é o único (seção **I**) |
 
 ### Entrega 2: Dados (2026-11-10)
@@ -388,15 +390,85 @@ Foi enviado o link deste repositório com o resumo da etapa. Os números do resu
 | Faltas: 22.319 para 22.314 | As 5 consultas removidas no Passo 4 eram todas faltas. A taxa continua em 20,2% |
 | "Script Python" (proposta e Entrega 2) virou notebook Jupyter | O código é o mesmo Python. O notebook mostra o resultado de cada passo ao lado do código, o que ajuda a explicar a limpeza |
 | "Daniel Viera" (proposta e Entrega 2) passou a "Daniel Vieira" | Erro de digitação nas duas primeiras entregas. O nome correto é Daniel Vieira |
+| Dashboard: Power BI (proposta e Entrega 3) passou a uma página web (Next.js/React), com os números calculados em Python | O professor confirmou em 2026-11-23 que o Power BI é opcional, e o enunciado aceita "ferramenta de escolha". A página abre por um link, sem instalar nada. Os números continuam saindo da mesma base tratada, pelo mesmo Python dos notebooks, e os filtros prometidos são os mesmos |
+| Apresentação: 10 a 15 minutos (enunciado e proposta) passou a 5 a 10 minutos | O professor reduziu o tempo |
 
 Fora isso, nada mudou: a fonte, o arquivo, as definições e as faixas são os mesmos desde a primeira entrega.
 
 ### O que vale para o projeto final
 
-O dashboard e a apresentação partem deste mesmo material. O dashboard lê `dados/tratados/consultas_tratadas.csv`, sem
-refazer a limpeza e sem trazer outra base. Os slides usam os números e as definições deste documento. Se um número
-precisar mudar, ele muda aqui, no README, nos notebooks, no dashboard e nos slides, com o porquê registrado no histórico
-abaixo.
+O dashboard e a apresentação partem deste mesmo material. Os números do dashboard saem de
+`dados/tratados/consultas_tratadas.csv`, sem refazer a limpeza e sem trazer outra base. Os slides usam os números e as
+definições deste documento. Se um número precisar mudar, ele muda aqui, no README, nos notebooks, no dashboard e nos
+slides, com o porquê registrado no histórico abaixo.
+
+---
+
+## Projeto final: o que está decidido
+
+Decisões da equipe em 2026-11-23 para o que falta. O que foi feito até a Entrega 3 não muda.
+
+### As três partes
+
+| Parte | O que é | Situação |
+|---|---|---|
+| **Dados** | A limpeza ([notebook 01](../notebooks/01_limpeza.ipynb)), a primeira análise ([notebook 02](../notebooks/02_exploracao.ipynb)) e um notebook novo, o 03, que cruza espera e idade para medir o grupo de maior risco | 01 e 02 feitos; 03 a fazer |
+| **Dashboard** | Uma página web (Next.js/React), publicada no GitHub Pages deste repositório, que abre por um link | A fazer |
+| **Slides** | Simples e objetivos: apoio da apresentação e material de estudo da equipe | A fazer |
+
+### O dashboard
+
+**O Python calcula, a página mostra.** Um script Python lê a base tratada e grava um arquivo com os números. A página
+lê esse arquivo e mais nada. A única conta feita na página é a dos filtros: somar as consultas e as faltas do recorte
+escolhido e dividir, pela mesma definição da seção **E**.
+
+| Aba | O que tem |
+|---|---|
+| **Visão geral** | Os 4 filtros da proposta (faixa de idade, dia da semana, bairro e faixa de espera); 3 cartões (consultas, faltas e taxa de falta); taxa de falta por faixa de espera, por faixa de idade e por dia da semana; bairros com maior taxa de falta, entre os que têm 500 consultas ou mais |
+| **Grupo de risco e SMS** | A taxa de falta cruzando idade e espera (o mesmo cruzamento do notebook 03); os números do grupo de maior risco; a taxa com e sem SMS em cada faixa de espera (o caso da correlação espúria); e um bloco final com as recomendações |
+
+Duas abas, e nada além disso: a rubrica pede um dashboard focado nos KPIs essenciais.
+
+### O que não entra
+
+- **Aplicação.** O projeto diagnostica o problema e **sugere** as decisões (o **S** do D.E.I.L.A.S); não constrói a
+  solução. Uma calculadora de risco de falta (a recepção informa a idade e os dias de espera e vê a taxa de falta do
+  grupo) entra só como ideia de aplicação, nas recomendações.
+- Modelo de previsão, receita perdida (a fonte não tem o valor da consulta), API, banco de dados e qualquer outra fonte
+  de dados.
+
+### Roteiro da apresentação (5 a 10 minutos)
+
+Só dois materiais: os slides e o dashboard. Os slides dão o contexto e explicam os dados, e acabam aí. A análise e as
+recomendações são mostradas no dashboard, ao vivo.
+
+**Parte 1, nos slides: o contexto**
+
+| # | Slide | Conteúdo |
+|---|---|---|
+| 1 | Capa | Tema, equipe, disciplina e professor |
+| 2 | O caminho do projeto: D.E.I.L.A.S | As seis letras, com uma linha para cada uma (as seções **D** a **S** deste documento). É o mapa da apresentação. O **S** já traz as duas recomendações |
+| 3 | O problema e a solução | O problema: cerca de 1 em cada 5 pacientes agendados falta (20,2%). O dataset. As ferramentas. A solução: mostrar quem tem mais chance de faltar e recomendar lembrete reforçado e overbooking controlado pelo tempo de espera. A premissa do setor, em uma linha |
+
+**Parte 2, nos slides: os dados**
+
+| # | Slide | Conteúdo |
+|---|---|---|
+| 4 | De onde vieram os dados | Seção **I**: Kaggle, autor, licença, 110.527 consultas e 14 colunas; baixado e guardado sem alteração; única fonte |
+| 5 | Como limpamos | Seção **L**: 110.527 para 110.521 consultas; o que saiu (6 linhas impossíveis), o que foi corrigido e por quê; o original intocado |
+| 6 | Como os dados chegam ao dashboard | O caminho: base tratada → script Python → página. As definições da seção **E** (taxa de falta, espera e faixas) e o link do dashboard |
+
+**Parte 3, no dashboard: a análise e as recomendações**
+
+| Passo | Onde | O que mostrar |
+|---|---|---|
+| 1 | Visão geral, sem filtro | Os três cartões (110.521 consultas, 22.314 faltas e 20,2%) e a espera como o fator mais associado à falta (4,6% no mesmo dia contra 28,5% com antecedência) |
+| 2 | Visão geral, com filtro | Um filtro ao vivo, para mostrar os números mudando |
+| 3 | Grupo de risco e SMS | O cruzamento de idade e espera e o grupo de maior risco (o número sai do notebook 03) |
+| 4 | Grupo de risco e SMS | O SMS: parece aumentar a falta (27,6% contra 16,7%), mas é a espera (correlação espúria) |
+| 5 | Grupo de risco e SMS, no fim | As recomendações, a ideia da calculadora de risco e os limites da análise |
+
+A equipe pode juntar ou cortar slides. O que não muda são os números e as definições deste documento.
 
 ---
 
@@ -411,3 +483,4 @@ Cada entrega acrescenta uma linha aqui.
 | 2026-11-17 e 18 | Entrega 3: limpeza ([`01_limpeza`](../notebooks/01_limpeza.ipynb)), primeira análise ([`02_exploracao`](../notebooks/02_exploracao.ipynb)) e este repositório |
 | 2026-11-20 | Conferência das três entregas contra o repositório: o CSV enviado, o de `dados/original/` e o do `.zip` do Kaggle têm o mesmo hash, e os números batem. Incluída a seção de coerência com as entregas |
 | 2026-11-20 | Decisão sobre o setor: mantemos Saúde Privada, como na proposta, e declaramos a premissa de que a base (rede pública) é uma aproximação |
+| 2026-11-23 | Decisões do projeto final: dashboard em página web (Next.js/React) com os números calculados em Python, no lugar do Power BI; apresentação de 5 a 10 minutos, com slides curtos e depois o dashboard; sem aplicação. Incluída a seção "Projeto final: o que está decidido" |

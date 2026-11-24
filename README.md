@@ -95,7 +95,7 @@ limpeza, as mesmas definições e os mesmos números. Nada aqui contradiz um env
 | **Proposta do tema** (2026-11-03, aprovada) | Tema, problema, fatores a analisar (espera, idade, dia da semana e lembrete), entregáveis e o dataset | [O problema](#o-problema), seções 2 a 5 do [notebook 02](notebooks/02_exploracao.ipynb) e seção **S** do [processo](docs/processo.md) |
 | **Entrega 2: Dados** (2026-11-10) | Fonte, autor e licença, descrição da base, dicionário das 14 colunas e os 7 pontos a tratar na limpeza | [Fonte dos dados](#fonte-dos-dados) e os 9 passos do [notebook 01](notebooks/01_limpeza.ipynb), que tratam os 7 pontos um a um |
 | **Entrega 3: dados tratados, limpeza e primeira análise** (2026-11-18) | O link deste repositório e o resumo da etapa | `dados/original/`, `dados/tratados/`, os dois notebooks e o [processo](docs/processo.md) |
-| **Projeto final** (próxima etapa) | Dashboard em Power BI e apresentação executiva | Vão ler a mesma base tratada, com as mesmas faixas e definições |
+| **Projeto final** (próxima etapa) | Dashboard (página web) e apresentação executiva | Vão partir da mesma base tratada, com as mesmas faixas e definições. O que já está decidido: [Projeto final](docs/processo.md#projeto-final-o-que-está-decidido) |
 
 A conferência ponto a ponto (o que cada entrega disse e onde isso foi cumprido) está na seção
 [Coerência com as entregas ao professor](docs/processo.md#coerência-com-as-entregas-ao-professor) do processo.
@@ -130,7 +130,14 @@ Importados como número, o programa pode alterá-los.
 
 ## Próximos passos
 
-- **Dashboard em Power BI**, sobre a mesma base tratada (`consultas_tratadas.csv`), com a taxa de falta e filtros por
-  idade, dia da semana, bairro e dias de espera, usando as mesmas faixas e definições dos notebooks.
-- **Apresentação executiva** de 10 a 15 minutos, com duas recomendações a validar no dashboard: lembrete reforçado para
-  o grupo de maior risco e overbooking controlado pelo tempo de espera.
+Decididos em 2026-11-23. O detalhe e o roteiro da apresentação estão na seção
+[Projeto final: o que está decidido](docs/processo.md#projeto-final-o-que-está-decidido) do processo.
+
+- **Notebook 03**, cruzando espera e idade para medir o grupo de maior risco.
+- **Dashboard em uma página web** (Next.js/React, publicada no GitHub Pages), sobre a mesma base tratada
+  (`consultas_tratadas.csv`), com a taxa de falta e filtros por idade, dia da semana, bairro e dias de espera, usando
+  as mesmas faixas e definições dos notebooks. O Python calcula os números e a página só mostra. A proposta dizia
+  Power BI; o professor confirmou que ele é opcional, e o enunciado aceita ferramenta de escolha.
+- **Apresentação executiva** de 5 a 10 minutos (o professor reduziu; eram 10 a 15): slides curtos com o contexto e os
+  dados e, depois, o dashboard, com duas recomendações: lembrete reforçado para o grupo de maior risco e overbooking
+  controlado pelo tempo de espera.
