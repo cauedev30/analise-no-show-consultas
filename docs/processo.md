@@ -31,7 +31,7 @@ da consulta; medimos a perda em consultas.
 o fim, com as duas mudanças registradas na seção "O que mudou de uma entrega para a outra, e por quê" (a ferramenta do
 dashboard e a solução).
 
-| Ponto | Texto |
+| Ponto | Como ficou |
 |---|---|
 | **Problema** | Cerca de 1 em cada 5 pacientes agendados falta à consulta (20,2%). O horário vago não é reaproveitado e quem está na fila fica sem vaga |
 | **Dataset** | *Medical Appointment No Shows* (Kaggle): 110.527 consultas, 14 colunas, única fonte do projeto |
@@ -253,7 +253,7 @@ fatores que mais pesam e mede o grupo de maior risco. Cada seção tem a pergunt
 os números que o próprio notebook calculou.
 
 **Um nome só: "disparo de lembrete".** Na apresentação e no dashboard, o envio de lembrete se chama **disparo de
-lembrete**, porque a solução usa um canal atual (o WhatsApp), e o SMS é arcaico. Na base, o disparo registrado é o SMS
+lembrete**, porque o canal mais usado hoje é o WhatsApp, e é ele que a solução usa. Na base, o disparo registrado é o SMS
 (coluna `recebeu_sms`). O notebook 02 foi enviado na Entrega 3 e fala em SMS, como a base; aqui, o disparo é a mesma
 coisa que o SMS da base.
 
@@ -387,7 +387,7 @@ justamente isso. Ela não foi construída, porque o projeto não é uma aplicaç
   não. O teste é o que mostra quantas faltas o lembrete realmente evita.
 - **A conta dos 1.083 é ilustrativa.** Ela supõe que as próximas consultas se comportem como as da base e não diz
   quantas faltas o lembrete evitaria.
-- **Os dados vêm da rede pública**, usados como aproximação de uma clínica privada (seção **D**). Antes de aplicar o
+- **Os dados indicam a rede pública**, usados como aproximação de uma clínica privada (seção **D**). Antes de aplicar o
   agente, a clínica deve repetir o cruzamento de idade e espera com a própria agenda.
 - **A base não tem o horário da consulta**, só a data. Por isso a espera é contada em dias e o critério do risco é a
   espera, não o horário.
@@ -492,7 +492,7 @@ Foi enviado o link deste repositório com o resumo da etapa. Os números do resu
 | Dashboard: Power BI (proposta e Entrega 3) passou a uma página web (Next.js/React), com os números calculados em Python | O professor confirmou em 2026-11-23 que o Power BI é opcional, e o enunciado aceita "ferramenta de escolha". A página abre por um link, sem instalar nada. Os números continuam saindo da mesma base tratada, pelo mesmo Python dos notebooks, e os filtros prometidos são os mesmos |
 | Apresentação: 10 a 15 minutos (enunciado e proposta) passou a 5 a 10 minutos | O professor reduziu o tempo |
 | Duas recomendações (proposta e, depois, o rascunho do projeto final: lembrete reforçado e **overbooking controlado**) viraram **uma solução só, um agente de disparo de lembretes** (Classifica, Dispara, Libera) | O overbooking saiu: o grupo preferiu uma solução só, sem marcar consultas acima da capacidade. O enunciado e a rubrica não pedem um número de soluções ("propor soluções", "recomendações estratégicas"), e a proposta citava as ações **como exemplos** ("ações práticas, como lembretes direcionados aos grupos de maior risco e overbooking controlado"). O agente continua sendo mais de uma ação (classifica, dispara e libera o horário) e já cobre o que o overbooking queria, reaproveitar o horário vago, pela lista de espera. A ideia da calculadora de risco entrou como o passo "Classifica" |
-| "SMS" passou a **"disparo de lembrete"** no que o projeto apresenta (a coluna `recebeu_sms` e o notebook 02 continuam como estavam) | O canal pensado para a solução é o WhatsApp, e o SMS é arcaico. O nome fica o mesmo do começo ao fim da apresentação. Para não parecer outro dado, a ponte com a base fica escrita: na base, o disparo registrado é o SMS. Os números não mudaram |
+| "SMS" passou a **"disparo de lembrete"** no que o projeto apresenta (a coluna `recebeu_sms` e o notebook 02 continuam como estavam) | O canal mais usado hoje é o WhatsApp, e é o canal pensado para a solução. O nome fica o mesmo do começo ao fim da apresentação. Para não parecer outro dado, a ponte com a base fica escrita: na base, o disparo registrado é o SMS. Os números não mudaram |
 
 Fora isso, nada mudou: a fonte, o arquivo, as definições e as faixas são os mesmos desde a primeira entrega.
 
@@ -528,7 +528,7 @@ publica de novo.
 
 | Aba | O que tem |
 |---|---|
-| **Visão geral** | Uma barra fixa no topo, sempre à vista, com os 4 filtros da proposta (faixa de idade, dia da semana, bairro e faixa de espera) e 3 números (consultas, faltas e taxa de falta). Embaixo, 3 seções, uma por achado: a **espera** em linha com pontos, a **idade** em barras de desvio da taxa geral e os **bairros** com maior taxa de falta (entre os que têm 500 consultas ou mais) em pirulito. O dia da semana fica só como filtro |
+| **Visão geral** | Uma barra fixa no topo, sempre à vista, com os 4 filtros da proposta (faixa de idade, dia da semana, bairro e dias de espera) e 3 números (consultas, faltas e taxa de falta). Embaixo, 3 seções, uma por achado: a **espera** em linha com pontos, a **idade** em barras de desvio da taxa geral e os **bairros** com maior taxa de falta (entre os que têm 500 consultas ou mais e, com filtro, 100 ou mais no recorte) em pirulito. O dia da semana fica só como filtro |
 | **Grupo de risco e disparo** | O cruzamento de idade e espera em mapa de calor, com o grupo de maior risco contornado e 3 cartões (consultas, taxa de falta e parte das faltas); o gráfico do disparo de lembrete, que mostra a comparação crua e a comparação dentro de cada faixa de espera (o caso da correlação espúria); e o bloco "O que recomendamos", com o agente de disparo de lembretes, o 40,2% e os 1.083. Esta aba sempre mostra a base inteira: os filtros valem só na Visão geral |
 
 **Por que cada forma de gráfico.** Cada achado tem o gráfico do seu tipo:
@@ -542,8 +542,8 @@ publica de novo.
   fica, porque está na proposta aprovada.
 
 As seções surgem suavemente ao rolar a página, e as barras crescem na entrada; mudar um filtro não anima, e quem usa
-"reduzir movimento" no sistema vê tudo direto. As colunas com menos de 100 consultas aparecem em azul claro, com o aviso
-de "amostra pequena" (o sábado, por exemplo, tem 39). Os prints estão em
+"reduzir movimento" no sistema vê tudo direto. Os pontos da espera e as barras da idade com menos de 100 consultas no recorte aparecem em azul claro, com o aviso
+de "amostra pequena" (por exemplo, ao filtrar o sábado, que tem 39 consultas). Os prints estão em
 [`dashboard/imagens/`](../dashboard/imagens/): [visão geral](../dashboard/imagens/visao-geral.png),
 [visão geral inteira](../dashboard/imagens/visao-geral-inteira.png) e
 [grupo de risco e disparo](../dashboard/imagens/grupo-de-risco.png).
@@ -571,11 +571,11 @@ fazer estão no [guia de estudo](guia-de-estudo.md). A tabela abaixo é o resumo
 | # | Slide | Conteúdo |
 |---|---|---|
 | 1 | Capa | Tema, equipe, disciplina e professor |
-| 2 | **D**: Defina o objetivo | O problema: cerca de 1 em cada 5 pacientes agendados falta (20,2%), e o horário vago não é reaproveitado. A pergunta central: quem tem mais chance de faltar e o que a clínica pode fazer. O setor (Saúde Privada) e a premissa da base, em uma linha. Por que escolhemos este tema |
+| 2 | **D**: Defina o objetivo | O problema: cerca de 1 em cada 5 pacientes agendados falta (20,2%), e o horário vago não é reaproveitado. A pergunta central: quem tem mais chance de faltar e o que a clínica pode fazer. O setor (Saúde Privada) e a premissa da base, em uma linha. Por que escolhemos este tema. As cinco perguntas de negócio (P1 a P5, no [guia de estudo](guia-de-estudo.md#as-perguntas-de-negócio-p1-a-p5)), que o resto da apresentação responde |
 | 3 | **E**: Estabeleça métricas | As regras de negócio: o que é falta; taxa de falta = faltas ÷ consultas; espera em dias de calendário; as faixas de idade e de espera |
 | 4 | **I**: Identifique fontes | Kaggle, autor, licença, 110.527 consultas e 14 colunas; baixado e guardado sem alteração; única fonte |
 | 5 | **L**: Limpe as bases | 110.527 para 110.521 consultas; o que saiu (6 linhas impossíveis), o que foi corrigido e por quê; o original intocado; feito em Python (Pandas), em notebook |
-| 6 | **A**: Analise os dados | A espera é o fator mais associado à falta (4,6% no mesmo dia contra 28,5% com antecedência); o disparo de lembrete (SMS na base) parece aumentar a falta, mas é a espera (correlação espúria); a idade (26,6% de 13 a 17 anos, 15,3% com 60 ou mais). Como os números chegam ao dashboard: base tratada → script Python → página |
+| 6 | **A**: Analise os dados | A espera é o fator mais associado à falta (4,6% no mesmo dia contra 28,5% com antecedência); o disparo de lembrete (SMS na base) parece aumentar a falta, mas é a espera (correlação espúria); a idade (26,6% de 13 a 17 anos, 15,3% com 60 ou mais); o perfil de maior risco (13 a 29 anos e 16 dias ou mais: 40,2%). Como os números chegam ao dashboard: base tratada → script Python → página |
 | 7 | **S**: Sugira decisões | A recomendação: um agente de disparo de lembretes (Classifica, Dispara, Libera), com o grupo de maior risco (40,2% de falta, 4,9% das consultas) e as **1.083** consultas a mais em seis semanas (os dois números saem do notebook 03). Os limites, em uma linha: é associação, e por isso o agente começa em teste, com metade do grupo de risco recebendo o reforço |
 
 Com isso os slides cobrem o que o enunciado pede na apresentação: o dataset (**I**), as regras de negócio (**E** e
@@ -586,11 +586,11 @@ dashboard).
 
 | Passo | Onde | O que mostrar |
 |---|---|---|
-| 1 | Visão geral, sem filtro | Os três números da barra fixa (110.521 consultas, 22.314 faltas e 20,2%) e a espera como o fator mais associado à falta (4,6% no mesmo dia contra 28,5% com antecedência) |
-| 2 | Visão geral, com filtro | Um filtro ao vivo (por exemplo, uma faixa de idade), para mostrar os números mudando; depois rolar a página: espera, idade e bairros, com a barra de filtros sempre à vista |
-| 3 | Grupo de risco e disparo | O mapa de calor de idade x espera e o grupo de maior risco (5.422 consultas, 40,2% de falta) |
-| 4 | Grupo de risco e disparo | O disparo de lembrete: parece aumentar a falta (27,6% contra 16,7%), mas é a espera (correlação espúria) |
-| 5 | Grupo de risco e disparo, no fim | O bloco "O que recomendamos", que mostra o agente e repete o slide **S** |
+| 1 | Visão geral, sem filtro | Os três números da barra fixa (**110.521** consultas, **22.314** faltas e **20,2%**) e, logo abaixo, a linha da espera: **4,6%** no mesmo dia, subindo até 33,0% com 31 dias ou mais (os 28,5% com antecedência são falados, como no slide **A**) |
+| 2 | Visão geral, com filtro | Um filtro ao vivo. Exemplo: em "Dias de espera", escolher "Mesmo dia": os números passam a 38.562 consultas, 1.792 faltas e 4,6%. Depois, rolar: a **espera** (linha), a **idade** (barras de desvio) e os **bairros** (pirulito), com a barra de filtros sempre à vista. "Limpar filtros" volta ao começo |
+| 3 | Grupo de risco e disparo | O mapa de calor de idade x espera e o **grupo de maior risco** contornado: 5.422 consultas, **40,2%** de falta |
+| 4 | Grupo de risco e disparo | O **disparo de lembrete**: na base inteira parece aumentar a falta (27,6% contra 16,7%), mas dentro de cada faixa de espera quem recebeu falta menos ou quase igual (correlação espúria) |
+| 5 | Grupo de risco e disparo, no fim | O bloco **"O que recomendamos"**, que mostra o agente (Classifica, Dispara, Libera), o 40,2% e os 1.083, e repete o slide **S** |
 
 A equipe pode mudar a ordem (por exemplo, mostrar o dashboard entre o **A** e o **S**, para fechar no slide das
 recomendações). O que não muda são os números e as definições deste documento.

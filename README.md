@@ -26,7 +26,7 @@ Vitória, ES) e entra como **aproximação** do comportamento de falta numa clí
 
 ### Os quatro pontos da proposta
 
-| Ponto | Texto |
+| Ponto | Como ficou |
 |---|---|
 | **Problema** | Cerca de 1 em cada 5 pacientes agendados falta à consulta (20,2%). O horário vago não é reaproveitado e quem está na fila fica sem vaga |
 | **Dataset** | *Medical Appointment No Shows* (Kaggle): 110.527 consultas, 14 colunas, única fonte do projeto |
@@ -156,7 +156,7 @@ falta.
 - **Visão geral.** Uma barra fixa no topo, sempre à vista, com os 4 filtros (faixa de idade, dia da semana, bairro e
   dias de espera) e 3 números (consultas, faltas e taxa de falta). Embaixo, 3 seções que mudam com os filtros: a taxa
   de falta por faixa de espera (linha com pontos), por faixa de idade (barras de desvio da taxa geral) e os bairros com
-  maior taxa (pirulito, só os que têm 500 consultas ou mais).
+  maior taxa (pirulito, só os que têm 500 consultas ou mais e, com filtro, 100 ou mais no recorte).
 - **Grupo de risco e disparo.** O mapa de calor de idade x espera com o grupo de maior risco contornado; o disparo de
   lembrete (a comparação crua e a comparação dentro de cada faixa de espera); e o bloco "O que recomendamos". Esta aba
   mostra sempre a base inteira.
@@ -181,7 +181,7 @@ faz três coisas, uma atrás da outra:
 
 **Limites:** é associação, não causa. Na base, dentro da mesma faixa de espera, o disparo aparece junto com menos falta,
 o que ainda é associação. Por isso o agente **começa em teste**: metade do grupo de risco recebe o reforço, e a outra
-metade não. Os 1.083 são o tamanho do problema, não quantas faltas o lembrete evitaria. Os dados vêm da rede pública e
+metade não. Os 1.083 são o tamanho do problema, não quantas faltas o lembrete evitaria. Os dados indicam a rede pública e
 entram como aproximação; a clínica deve repetir o cruzamento com a própria agenda antes de aplicar. A base não tem o
 horário da consulta, só a data, e por isso o risco é medido pela espera. A explicação completa está na seção **S** do
 [processo](docs/processo.md#s-sugira-decisões).
@@ -196,7 +196,7 @@ limpeza, as mesmas definições e os mesmos números. Nada aqui contradiz um env
 | **Proposta do tema** (2026-11-03, aprovada) | Tema, problema, fatores a analisar (espera, idade, dia da semana e lembrete), entregáveis e o dataset | [O problema](#o-problema), seções 2 a 5 do [notebook 02](notebooks/02_exploracao.ipynb) e seção **S** do [processo](docs/processo.md) |
 | **Entrega 2: Dados** (2026-11-10) | Fonte, autor e licença, descrição da base, dicionário das 14 colunas e os 7 pontos a tratar na limpeza | [Fonte dos dados](#fonte-dos-dados) e os 9 passos do [notebook 01](notebooks/01_limpeza.ipynb), que tratam os 7 pontos um a um |
 | **Entrega 3: dados tratados, limpeza e primeira análise** (2026-11-18) | O link deste repositório e o resumo da etapa | `dados/original/`, `dados/tratados/`, os notebooks 01 e 02 e o [processo](docs/processo.md) |
-| **Projeto final** (2026-11-24, feito) | Dashboard (página web), a análise do grupo de maior risco, a recomendação e a apresentação executiva (slides e dashboard) | [Notebook 03](notebooks/03_grupo_de_risco.ipynb), [`scripts/`](scripts/), [`dashboard/`](dashboard/), o [dashboard publicado](https://cauedev30.github.io/analise-no-show-consultas/), o [guia de estudo](docs/guia-de-estudo.md) e o [plano](docs/plano-projeto-final.md) |
+| **Projeto final** (feito em 2026-11-24; enviado pelo link deste repositório) | Dashboard (página web), a análise do grupo de maior risco, a recomendação e a apresentação executiva (slides e dashboard) | [Notebook 03](notebooks/03_grupo_de_risco.ipynb), [`scripts/`](scripts/), [`dashboard/`](dashboard/), o [dashboard publicado](https://cauedev30.github.io/analise-no-show-consultas/), o [guia de estudo](docs/guia-de-estudo.md) e o [plano](docs/plano-projeto-final.md) |
 
 A conferência ponto a ponto (o que cada entrega disse e onde isso foi cumprido) e o que mudou de uma entrega para a
 outra estão nas seções [Coerência com as entregas ao professor](docs/processo.md#coerência-com-as-entregas-ao-professor)

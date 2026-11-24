@@ -47,7 +47,7 @@ Todo o projeto segue o método **D.E.I.L.A.S**, da aula:
 A proposta aprovada pelo professor resumia o projeto em quatro pontos. Eles aparecem no roteiro: o problema e o objetivo
 no **D** e no **S**, o dataset no **I** e a ferramenta no **L** e no **A**.
 
-| Ponto | Texto |
+| Ponto | Como ficou |
 |---|---|
 | **Problema** | Cerca de 1 em cada 5 pacientes agendados falta à consulta (20,2%). O horário vago não é reaproveitado e quem está na fila fica sem vaga |
 | **Dataset** | *Medical Appointment No Shows* (Kaggle): 110.527 consultas, 14 colunas, única fonte do projeto |
@@ -93,7 +93,7 @@ Decisões de 2026-11-23 e 2026-11-24.
 | **O dashboard é uma página web** (Next.js/React), publicada no GitHub Pages | Power BI (como estava na proposta), Streamlit e Dash (em Python) e a página web | O professor confirmou que o Power BI é opcional, e o enunciado aceita "ferramenta de escolha". A página abre por um link, sem instalar nada, e dá mais controle do visual, que a rubrica avalia ("visualmente intuitivo") |
 | **O Python calcula, a página mostra** | Fazer as contas na própria página ou calcular tudo em Python | A disciplina é de análise de dados em Python. Um script Python lê a base tratada e grava os números em um arquivo; a página só exibe. Assim os números do dashboard são os mesmos dos notebooks |
 | **Uma solução só: o agente de disparo de lembretes** | Duas recomendações (lembrete reforçado e overbooking controlado) ou uma solução só | O grupo preferiu uma solução só. O enunciado não pede um número de soluções, e a proposta citava as ações como exemplos. O agente continua sendo mais de uma ação (classifica, dispara e libera o horário) e já cobre o que o overbooking queria, reaproveitar o horário vago, pela lista de espera |
-| **"Disparo de lembrete" no lugar de "SMS"** | Manter "SMS" ou usar um nome do canal | O canal pensado é o WhatsApp, e o SMS é arcaico. O nome fica igual do começo ao fim da apresentação. Para não parecer outro dado, a ponte com a base fica dita: **na base, o disparo registrado é o SMS** (coluna `recebeu_sms`) |
+| **"Disparo de lembrete" no lugar de "SMS"** | Manter "SMS" ou usar um nome do canal | O canal mais usado hoje é o WhatsApp, e é o canal pensado. O nome fica igual do começo ao fim da apresentação. Para não parecer outro dado, a ponte com a base fica dita: **na base, o disparo registrado é o SMS** (coluna `recebeu_sms`) |
 | **Não construímos uma aplicação** | Construir uma calculadora de risco de falta ou só propor | O enunciado pede diagnosticar o problema e **propor** soluções com base nos dados. A ideia da calculadora virou o passo **Classifica** do agente |
 | **A documentação fica só neste repositório** | Um documento à parte (docx/PDF) ou o repositório | Um lugar só evita versões diferentes do mesmo número. O README é a porta de entrada, o [processo](processo.md) é o detalhe e este guia é o resumo para estudar |
 | **A apresentação usa só dois materiais: os slides e o dashboard** | Abrir também o repositório e os notebooks durante a fala | São 5 a 10 minutos. Os slides explicam o caminho e o dashboard mostra o resultado |
@@ -281,7 +281,7 @@ Os 9 passos, em uma linha cada:
     (metade do grupo de risco recebe o reforço, a outra metade não) mostra quantas faltas o lembrete realmente evita.
   - **A calculadora de risco** (a recepção informa a idade e os dias de espera e vê a taxa do grupo) é o passo
     **Classifica**. Ela não foi construída: o projeto sugere a solução, não faz uma aplicação.
-  - **Os outros limites.** Os dados são da rede pública e entram como aproximação; a clínica deve repetir o cruzamento
+  - **Os outros limites.** Os dados indicam a rede pública e entram como aproximação; a clínica deve repetir o cruzamento
     de idade e espera com a própria agenda antes de aplicar. A base não tem o horário da consulta, só a data, e por
     isso o risco é medido pela espera.
 - **Detalhe:** [seção S do processo](processo.md#s-sugira-decisões) e a
@@ -314,7 +314,7 @@ presa no topo da Visão geral, então dá para mudar um filtro lá embaixo e ver
 
 | Passo | Onde | O que mostrar |
 |---|---|---|
-| 1 | Visão geral, sem filtro | Os três números da barra fixa (**110.521** consultas, **22.314** faltas e **20,2%**) e, logo abaixo, a linha da espera: **4,6%** no mesmo dia contra 28,5% com antecedência |
+| 1 | Visão geral, sem filtro | Os três números da barra fixa (**110.521** consultas, **22.314** faltas e **20,2%**) e, logo abaixo, a linha da espera: **4,6%** no mesmo dia, subindo até 33,0% com 31 dias ou mais (os 28,5% com antecedência são falados, como no slide **A**) |
 | 2 | Visão geral, com filtro | Um filtro ao vivo. Exemplo: em "Dias de espera", escolher "Mesmo dia": os números passam a 38.562 consultas, 1.792 faltas e 4,6%. Depois, rolar: a **espera** (linha), a **idade** (barras de desvio) e os **bairros** (pirulito), com a barra de filtros sempre à vista. "Limpar filtros" volta ao começo |
 | 3 | Grupo de risco e disparo | O mapa de calor de idade x espera e o **grupo de maior risco** contornado: 5.422 consultas, **40,2%** de falta |
 | 4 | Grupo de risco e disparo | O **disparo de lembrete**: na base inteira parece aumentar a falta (27,6% contra 16,7%), mas dentro de cada faixa de espera quem recebeu falta menos ou quase igual (correlação espúria) |
@@ -332,15 +332,15 @@ Cada achado tem o gráfico do seu tipo. Se o professor perguntar, a resposta é 
 - **Idade, barras de desvio da taxa geral.** O que importa é quem fica acima ou abaixo da média. A barra vai para a
   direita acima de 20,2% e para a esquerda abaixo, e o número escrito é a taxa da faixa.
 - **Bairros, pirulito.** É um ranking com nomes compridos. A linha fina com um ponto no fim deixa os nomes e os valores
-  legíveis. Só entram bairros com **500 consultas ou mais**, porque com poucas consultas a taxa é puro acaso (um bairro
+  legíveis. Só entram bairros com **500 consultas ou mais** (e, com filtro, 100 ou mais no recorte), porque com poucas consultas a taxa é puro acaso (um bairro
   com 2 consultas aparece com 100% de falta).
 - **Dia da semana, sem gráfico.** A taxa quase não muda, e isso cabe numa frase. O filtro fica.
 - **Mapa de calor (aba 2).** Cruza duas faixas (idade e espera). Cada célula mostra a taxa e, embaixo, o número de
   consultas. O grupo de maior risco aparece contornado.
 - **Barras do disparo (aba 2).** Mostram, lado a lado, a taxa sem e com disparo dentro de cada faixa de espera.
 
-Outros cuidados da página: a cor azul é só para dados; colunas com **menos de 100 consultas** aparecem em azul claro com
-o aviso de "amostra pequena" (o sábado, por exemplo, tem 39); as seções surgem suavemente ao rolar e as barras crescem
+Outros cuidados da página: a cor azul é só para dados; os pontos da espera e as barras da idade com **menos de 100 consultas no recorte** aparecem em azul claro, com
+o aviso de "amostra pequena" (por exemplo, ao filtrar o sábado, que tem 39 consultas); as seções surgem suavemente ao rolar e as barras crescem
 na entrada (mudar um filtro não anima); e quem usa "reduzir movimento" no sistema vê tudo direto.
 
 ### Como o dashboard foi feito
@@ -375,15 +375,15 @@ Para rodar na sua máquina, veja "Como rodar" no [README](../README.md#como-roda
 | Por que removeram só 6 linhas? | Só removemos o que é impossível e não tem conserto: 1 idade negativa e 5 consultas antes do agendamento. O resto é raro, mas possível, e ficou |
 | Idade 0 e idade 115 não são erros? | Idade 0 são bebês com menos de 1 ano (3.539 consultas). Acima de 100 são 7 consultas: raro, mas possível, e sem prova de erro. Não mudam as taxas |
 | O Kaggle diz 30% de falta. Por que 20,2%? | 30% é o subtítulo da página. Medindo nos dados, são 22.319 faltas em 110.527 consultas: 20,2% |
-| Então o disparo de lembrete aumenta a falta? | Não. É uma correlação espúria: o disparo só vai para quem espera 3 dias ou mais, e quem espera mais falta mais. Dentro da mesma faixa de espera, quem recebeu o disparo falta igual ou menos |
+| Então o disparo de lembrete aumenta a falta? | Os dados não mostram isso. É uma correlação espúria: o disparo só vai para quem espera 3 dias ou mais, e quem espera mais falta mais. Dentro da mesma faixa de espera, quem recebeu o disparo falta igual ou menos |
 | Então o disparo reduz a falta? | Os dados mostram a associação, mas não provam. Quem recebeu o disparo na base não foi sorteado. Para afirmar, é preciso um teste controlado, e por isso o agente começa em teste |
-| Na base é SMS; por que vocês chamam de disparo? | O canal pensado para a solução é o WhatsApp, e o SMS é arcaico. O nome "disparo de lembrete" fica o mesmo do começo ao fim da apresentação. A base só registra o SMS (coluna `recebeu_sms`), e os números são os mesmos: o disparo da apresentação é o SMS da base |
+| Na base é SMS; por que vocês chamam de disparo? | O canal mais usado hoje é o WhatsApp, e é o canal pensado para a solução. O nome "disparo de lembrete" fica o mesmo do começo ao fim da apresentação. A base só registra o SMS (coluna `recebeu_sms`), e os números são os mesmos: o disparo da apresentação é o SMS da base |
 | Por que tiraram o overbooking? | O grupo preferiu uma solução só. O enunciado não pede um número de soluções, e a proposta citava as ações como exemplos. O agente já reaproveita o horário vago pela lista de espera (o passo Libera), sem marcar acima da capacidade |
 | A espera causa a falta? | A análise é descritiva: mostra que a espera é o fator mais associado à falta, não que ela é a causa |
 | O que são os 1.083? | O quanto o grupo de maior risco falta acima da média: 2.178 faltas contra cerca de 1.095 se ele faltasse a 20,2%, em seis semanas. É o tamanho do problema, não quantas faltas o lembrete evitaria |
 | Por que o agente começa em teste? | Porque a base mostra associação, e não causa. Com metade do grupo de risco recebendo o reforço e a outra metade não, dá para medir quantas faltas o lembrete realmente evita |
 | Por que o grupo de risco é 13 a 29 anos e 16 dias ou mais? | Porque o cruzamento de idade e espera (notebook 03) mostra que as quatro maiores taxas (de 39,7% a 42,5%) são exatamente as dessas faixas. Os cortes das faixas foram fechados antes da análise |
-| O setor é Saúde Privada, mas os dados são da rede pública? | Sim. Não há base pública de clínicas privadas. Usamos esta como aproximação e declaramos a premissa. A clínica deve conferir com os próprios dados |
+| O setor é Saúde Privada, mas os dados indicam a rede pública? | Sim. Não há base pública de clínicas privadas. Usamos esta como aproximação e declaramos a premissa. A clínica deve conferir com os próprios dados |
 | Se o paciente paga a consulta, qual é o prejuízo da clínica? | Em geral ele marca antes e só paga na hora, e o convênio só paga a consulta realizada. Quem falta não paga, e a vaga que ficou presa poderia ter sido de outro paciente pagante. Sem aviso, não dá tempo de encaixar ninguém |
 | Quanto a clínica perde em dinheiro? | Não calculamos. A base não tem o valor da consulta, e ela é a única fonte do projeto. Medimos a perda em consultas: 22.314 faltas em 110.521 |
 | Como garantem que o arquivo original não foi alterado? | O notebook confere o hash (a impressão digital) do arquivo antes e depois da limpeza, e é o mesmo do arquivo baixado do Kaggle |
@@ -424,7 +424,7 @@ notebook 03, os números do dashboard, o dashboard publicado e a documentação 
 | # | O que falta | O que entrega |
 |---|---|---|
 | 1 | Conferência final com os slides | Os números oficiais iguais no README, no processo, neste guia, no dashboard e nos slides |
-| 2 | Execução do zero em uma cópia limpa | Notebooks, script, testes e dashboard rodam sem erro |
+| ~~2~~ | ~~Execução do zero em uma cópia limpa~~ **Feito em 2026-11-24** | Os três notebooks rodaram do zero, a base tratada saiu com o mesmo hash e o `painel.json` saiu igual; 18 testes Python e 79 do dashboard passaram, e o build funcionou |
 | 3 | Ensaio da apresentação | Cabe em 5 a 10 minutos; a equipe decide a ordem (todos os slides e depois o dashboard, ou o dashboard entre o **A** e o **S**) |
 | 4 | Envio ao professor | O link do repositório e do dashboard |
 
@@ -433,3 +433,5 @@ pelo IQR: 5.803 consultas acima de 37 dias, até 179 dias, com 32% de falta). Es
 sai de nenhum notebook nem do script, e a regra do projeto é que todo número venha de um deles. A equipe decide se a
 linha sai do slide ou se o cálculo entra em um notebook. O resto dos números dos slides já bate com a tabela dos números
 oficiais.
+
+No slide **S**, a frase do limite passa a ser: "Na base, dentro da mesma faixa de espera, o disparo aparece junto com menos falta, o que ainda é associação." Sem o trecho da faixa de espera, ela parece contradizer a comparação crua (27,6% x 16,7%).
