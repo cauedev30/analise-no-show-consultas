@@ -75,6 +75,22 @@ Uma página web (Next.js/React) com duas abas, publicada no GitHub Pages.
 o GitHub Actions roda o lint, os testes e o build e publica de novo). Colunas com menos de 100 consultas aparecem em
 azul claro, como amostra pequena (por exemplo, o sábado, com 39 consultas).
 
+## Etapa 3B: o dashboard com rolagem e surgimento suave
+
+**O que mudou:** a aba **Visão geral** estava acumulada para caber numa tela só. Nenhum conteúdo saiu: a regra "tudo
+numa tela" caiu, os 4 gráficos viraram seções na largura toda (espera, idade, dia da semana e bairros, na ordem da fala)
+e os filtros e os 3 números ficam numa barra presa no topo. **Por quê:** cada achado ganha espaço e entra na tela quando
+é comentado; mudar um filtro lá embaixo mostra o efeito na hora. Saíram o rodapé e o bloco "Ideia de aplicação" e
+"Limites" do fim de "O que recomendamos" (os dois seguem nos slides e no guia de estudo).
+
+| | Tarefa | Pronto quando |
+|---|---|---|
+| ☑ | 3B.1 Tirar o rodapé e o bloco de ideia e limites | As duas recomendações continuam, com os números do painel |
+| ☑ | 3B.2 O surgimento das seções | Cada seção surge uma vez ao entrar na tela; com "reduzir movimento", tudo aparece direto |
+| ☑ | 3B.3 Aba **Visão geral** em seções, com a barra fixa | A primeira tela mostra a barra e o gráfico da espera inteiro; filtro não anima |
+| ☑ | 3B.4 Aba **Grupo de risco e SMS** com o surgimento | As 3 seções surgem; layout e números iguais |
+| ☐ | 3B.5 Publicação, conferência no site e os três prints | O site publicado passa na conferência |
+
 ## Etapa 4: documentação
 
 | | Tarefa | Pronto quando |
