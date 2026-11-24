@@ -10,5 +10,5 @@ export const COR = {
   eixo: "var(--color-eixo)",
   neutro: "var(--color-neutro)",
   fundo: "var(--color-fundo)",
-  pagina: "var(--color-pagina)",
+  folha: "var(--color-folha)",
 } as const;
