@@ -61,7 +61,7 @@ export function Recomendacoes({ painel, className = "" }: Props) {
       </div>
 
       <p className="mt-6 max-w-5xl text-corpo">
-        Na base, o disparo aparece junto com menos falta, o que ainda é associação. Por isso o agente começa em teste:
+        Na base, dentro da mesma faixa de espera, o disparo aparece junto com menos falta, o que ainda é associação. Por isso o agente começa em teste:
         metade do grupo de risco recebe o reforço, e a outra metade não.
       </p>
     </section>

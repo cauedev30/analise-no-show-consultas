@@ -138,6 +138,7 @@ describe("o agente de disparo no lugar das duas recomendações (etapa 3D)", () 
   });
 
   it("traz o limite (associação, começa em teste) e não cita o canal", () => {
+    expect(texto).toContain("dentro da mesma faixa de espera, o disparo aparece junto com menos falta");
     expect(texto).toContain("o que ainda é associação");
     expect(texto).toContain("metade do grupo de risco recebe o reforço, e a outra metade não");
     expect(texto).not.toMatch(/SMS|WhatsApp/i);
