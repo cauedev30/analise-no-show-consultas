@@ -104,10 +104,26 @@ describe("rankingBairros", () => {
     expect(ranking.every((r) => elegiveis.includes(r.bairro))).toBe(true);
     expect(ranking.every((r) => r.consultas >= 100)).toBe(true);
 
-    const filtros = { ...semFiltro, faixaEspera: [4] };
+    const filtros = { ...semFiltro, faixaEspera: [indice(painel.ordem.faixa_espera, "31+ dias")] };
     const recorte = filtrar(painel.contagens, filtros);
     const rankingRecorte = rankingBairros(recorte, elegiveis, 100, 100);
     expect(rankingRecorte.length).toBeLessThan(ranking.length);
     expect(rankingRecorte.every((r) => r.consultas >= 100)).toBe(true);
+  });
+
+  it("no limite do mínimo: 100 consultas entram e 99 não", () => {
+    const linha = (bairro: number, consultas: number) => ({
+      faixaEtaria: 0,
+      diaSemana: 0,
+      bairro,
+      faixaEspera: 0,
+      consultas,
+      faltas: 10,
+    });
+    // Bairro 0 com 100 consultas no recorte (somando duas linhas) e bairro 1 com 99.
+    const sinteticas = [linha(0, 60), linha(0, 40), linha(1, 99)];
+    const ranking = rankingBairros(sinteticas, [0, 1], 100, 10);
+    expect(ranking.map((r) => r.bairro)).toEqual([0]);
+    expect(ranking[0].consultas).toBe(100);
   });
 });

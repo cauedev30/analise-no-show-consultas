@@ -6,7 +6,7 @@ espera. Os números não são calculados aqui: o Python (`scripts/gerar_dados_da
 
 ## Como rodar
 
-Precisa do Node 20 ou mais novo. Dentro desta pasta (`dashboard/`):
+Precisa do Node 22.12 ou mais novo (testado com o 24). Dentro desta pasta (`dashboard/`):
 
 ```bash
 npm install      # uma vez, baixa as dependências

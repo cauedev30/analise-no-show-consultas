@@ -45,9 +45,10 @@ export function rankingBairros(
   minimoNoRecorte: number,
   limite: number,
 ): BairroNoRanking[] {
+  const permitidos = new Set(elegiveis);
   const porBairro = new Map<number, { consultas: number; faltas: number }>();
   for (const c of contagens) {
-    if (!elegiveis.includes(c.bairro)) continue;
+    if (!permitidos.has(c.bairro)) continue;
     const atual = porBairro.get(c.bairro) ?? { consultas: 0, faltas: 0 };
     atual.consultas += c.consultas;
     atual.faltas += c.faltas;
@@ -58,6 +59,7 @@ export function rankingBairros(
     if (consultas < minimoNoRecorte) continue;
     ranking.push({ bairro, consultas, faltas, taxa: (faltas / consultas) * 100 });
   }
-  ranking.sort((a, b) => b.taxa - a.taxa);
+  // Desempate fixo: taxa maior, depois mais consultas, depois o menor índice de bairro.
+  ranking.sort((a, b) => b.taxa - a.taxa || b.consultas - a.consultas || a.bairro - b.bairro);
   return ranking.slice(0, limite);
 }
