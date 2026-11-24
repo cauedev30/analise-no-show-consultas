@@ -5,6 +5,7 @@ import { Cartao } from "./Cartao";
 import { Filtros } from "./Filtros";
 import { GraficoBairros } from "./GraficoBairros";
 import { GraficoColunas } from "./GraficoColunas";
+import { GraficoDesvio } from "./GraficoDesvio";
 import { GraficoLinha } from "./GraficoLinha";
 import { Revelar } from "./Revelar";
 import { carregarPainel, indicesDosBairrosElegiveis } from "@/lib/dados";
@@ -53,7 +54,6 @@ export function VisaoGeral({ filtros, onChange }: Props) {
 
   // As três colunas na mesma altura: com o `yMax` comum, a altura de uma coluna se compara entre os gráficos.
   const colunas = [
-    { titulo: "Por faixa de idade", categorias: ordem.faixa_etaria, resumos: dados.porIdade },
     { titulo: "Por dia da semana", categorias: ordem.dia_semana, resumos: dados.porDia },
   ];
 
@@ -91,6 +91,23 @@ export function VisaoGeral({ filtros, onChange }: Props) {
               titulo="Taxa de falta por faixa de espera"
               categorias={ordem.faixa_espera}
               resumos={dados.porEspera}
+              taxaGeral={taxaGeral}
+              semConsultas={semConsultas}
+              minimo={MINIMO_NO_RECORTE}
+              mostrarDados={entrada.surgiu}
+              animarEntrada={entrada.animar}
+            />
+          )}
+        </Revelar>
+
+        {/* A idade mostra quem fica acima ou abaixo da média: barras de desvio da taxa geral. */}
+        <Revelar>
+          {(entrada) => (
+            <GraficoDesvio
+              className="h-[18rem]"
+              titulo="Por faixa de idade"
+              categorias={ordem.faixa_etaria}
+              resumos={dados.porIdade}
               taxaGeral={taxaGeral}
               semConsultas={semConsultas}
               minimo={MINIMO_NO_RECORTE}

@@ -2,6 +2,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 import { ehAmostraPequena } from "./Dica";
 import { GraficoColunas } from "./GraficoColunas";
+import { GraficoDesvio } from "./GraficoDesvio";
 import { GraficoLinha } from "./GraficoLinha";
 import { MINIMO_NO_RECORTE, VisaoGeral } from "./VisaoGeral";
 import { carregarPainel } from "@/lib/dados";
@@ -119,6 +120,55 @@ describe("amostra pequena nas colunas", () => {
     expect(texto(html)).not.toContain("Ponto claro");
     expect(html).not.toContain("amostra pequena");
     expect(html).toContain("Mesmo dia 4,6%");
+  });
+
+  it("no desvio da idade, a linha de leitura usa a taxa geral recebida e a nota fala em barra clara", () => {
+    const { ordem } = painel;
+    const resumos = [
+      { consultas: 500, faltas: 100, taxa: 20 },
+      { consultas: 60, faltas: 18, taxa: 30 },
+      { consultas: 400, faltas: 100, taxa: 25 },
+      { consultas: 400, faltas: 80, taxa: 20 },
+      { consultas: 400, faltas: 60, taxa: 15 },
+      { consultas: 0, faltas: 0, taxa: null },
+    ];
+    const html = renderToStaticMarkup(
+      <GraficoDesvio
+        titulo="Por faixa de idade"
+        categorias={ordem.faixa_etaria}
+        resumos={resumos}
+        taxaGeral={33.3}
+        semConsultas={false}
+        minimo={MINIMO_NO_RECORTE}
+      />,
+    );
+    const t = texto(html);
+    // A taxa geral vem da prop (sentinela 33,3%), não está digitada.
+    expect(t).toContain("Taxa geral 33,3%. Para a direita: acima dela. Para a esquerda: abaixo.");
+    expect(t).not.toContain("20,2%");
+    expect(t).toContain(`Barra clara: menos de ${MINIMO_NO_RECORTE} consultas (amostra pequena)`);
+    // A descrição traz as 6 faixas com a taxa (não a diferença).
+    expect(html).toContain("13-17 30,0%, 60 consultas, amostra pequena");
+    expect(html).toContain("60+ sem consultas");
+    expect(html.match(/consultas/g)!.length).toBeGreaterThanOrEqual(6);
+  });
+
+  it("no desvio da idade sem filtro não há barra clara", () => {
+    const { ordem, totais } = painel;
+    const resumos = agrupar(painel.contagens, "faixaEtaria", ordem.faixa_etaria.length);
+    const html = renderToStaticMarkup(
+      <GraficoDesvio
+        titulo="Por faixa de idade"
+        categorias={ordem.faixa_etaria}
+        resumos={resumos}
+        taxaGeral={totais.taxa}
+        semConsultas={false}
+        minimo={MINIMO_NO_RECORTE}
+      />,
+    );
+    expect(texto(html)).not.toContain("Barra clara");
+    expect(html).toContain("13-17 26,6%");
+    expect(html).toContain("60+ 15,3%");
   });
 
   it("a aba Visão geral, sem filtro, mostra a nota uma vez (só no dia da semana)", () => {
