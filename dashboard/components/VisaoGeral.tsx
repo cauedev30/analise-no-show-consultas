@@ -59,7 +59,7 @@ export function VisaoGeral({ filtros, onChange }: Props) {
       <section
         data-barra-fixa
         aria-label="Filtros e números do recorte"
-        className="relative z-30 flex flex-wrap items-center gap-x-6 gap-y-3 border-b border-grade bg-pagina px-6 py-3 md:sticky md:top-0 lg:px-8"
+        className="relative z-30 flex flex-wrap items-center gap-x-6 gap-y-3 border-b border-grade bg-folha px-6 py-3 md:sticky md:top-0 lg:px-8"
       >
         <Filtros ordem={ordem} filtros={filtros} onChange={onChange} />
         <div className="flex flex-wrap gap-3">
