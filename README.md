@@ -155,7 +155,7 @@ falta.
 
 - **Visão geral.** Uma barra fixa no topo, sempre à vista, com os 4 filtros (faixa de idade, dia da semana, bairro e
   dias de espera) e 3 números (consultas, faltas e taxa de falta). Embaixo, 3 seções que mudam com os filtros: a taxa
-  de falta por faixa de espera (linha com pontos), por faixa de idade (barras de desvio da taxa geral) e os bairros com
+  de falta por faixa de espera (linha com pontos, na largura toda) e, lado a lado, por faixa de idade (barras de desvio da taxa geral) e os bairros com
   maior taxa (pirulito, só os que têm 500 consultas ou mais e, com filtro, 100 ou mais no recorte).
 - **Grupo de risco e disparo.** O mapa de calor de idade x espera com o grupo de maior risco contornado; o disparo de
   lembrete (a comparação crua e a comparação dentro de cada faixa de espera); e o bloco "O que recomendamos". Esta aba

@@ -304,12 +304,12 @@ São **duas abas**, e nada além disso: a rubrica pede um dashboard focado nos i
 
 | Aba | O que tem |
 |---|---|
-| **Visão geral** | Uma barra fixa no topo, sempre à vista, com os **4 filtros** (faixa de idade, dia da semana, bairro e dias de espera) e **3 números** (consultas, faltas e taxa de falta). Embaixo, 3 seções, uma por achado: a **espera**, a **idade** e os **bairros** |
+| **Visão geral** | Uma barra fixa no topo, sempre à vista, com os **4 filtros** (faixa de idade, dia da semana, bairro e dias de espera) e **3 números** (consultas, faltas e taxa de falta). Embaixo, 3 seções em cartões, uma por achado: a **espera** na largura toda e, lado a lado, a **idade** e os **bairros** |
 | **Grupo de risco e disparo** | O mapa de calor de idade x espera, com o grupo de maior risco contornado e 3 cartões (consultas, taxa de falta e parte das faltas); o gráfico do disparo de lembrete (a comparação crua e a comparação dentro de cada faixa de espera); e o bloco "O que recomendamos", com o agente, o 40,2% e os 1.083. Esta aba mostra sempre a base inteira: os filtros valem só na Visão geral |
 
 ### Passo a passo da demonstração (cerca de 3 minutos)
 
-A página é longa, e a graça é **rolar**: cada seção surge ao entrar na tela, na ordem da fala. A barra de filtros fica
+A página se lê de cima a baixo, na ordem da fala: cada seção surge ao entrar na tela. A barra de filtros fica
 presa no topo da Visão geral, então dá para mudar um filtro lá embaixo e ver o efeito.
 
 | Passo | Onde | O que mostrar |

@@ -528,7 +528,7 @@ publica de novo.
 
 | Aba | O que tem |
 |---|---|
-| **Visão geral** | Uma barra fixa no topo, sempre à vista, com os 4 filtros da proposta (faixa de idade, dia da semana, bairro e dias de espera) e 3 números (consultas, faltas e taxa de falta). Embaixo, 3 seções, uma por achado: a **espera** em linha com pontos, a **idade** em barras de desvio da taxa geral e os **bairros** com maior taxa de falta (entre os que têm 500 consultas ou mais e, com filtro, 100 ou mais no recorte) em pirulito. O dia da semana fica só como filtro |
+| **Visão geral** | Uma barra fixa no topo, sempre à vista, com os 4 filtros da proposta (faixa de idade, dia da semana, bairro e dias de espera) e 3 números (consultas, faltas e taxa de falta). Embaixo, 3 seções em cartões, uma por achado: a **espera** em linha com pontos, na largura toda, e, lado a lado, a **idade** em barras de desvio da taxa geral e os **bairros** com maior taxa de falta (entre os que têm 500 consultas ou mais e, com filtro, 100 ou mais no recorte) em pirulito. O dia da semana fica só como filtro |
 | **Grupo de risco e disparo** | O cruzamento de idade e espera em mapa de calor, com o grupo de maior risco contornado e 3 cartões (consultas, taxa de falta e parte das faltas); o gráfico do disparo de lembrete, que mostra a comparação crua e a comparação dentro de cada faixa de espera (o caso da correlação espúria); e o bloco "O que recomendamos", com o agente de disparo de lembretes, o 40,2% e os 1.083. Esta aba sempre mostra a base inteira: os filtros valem só na Visão geral |
 
 **Por que cada forma de gráfico.** Cada achado tem o gráfico do seu tipo:
