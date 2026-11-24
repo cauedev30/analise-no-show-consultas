@@ -5,6 +5,9 @@ dashboard/public/dados/painel.json. A página do dashboard só mostra o que est�
 dos filtros: somar as consultas e as faltas das contagens do recorte escolhido e dividir uma pela outra. Assim as
 definições e os números são os mesmos do notebook, do README, dos slides e do dashboard.
 
+Na tela, o SMS aparece como "disparo de lembrete": na base, o disparo registrado é o SMS (coluna recebeu_sms). Os nomes
+internos (sms_geral, sms_espera) seguem a coluna da base.
+
 Uso (da raiz do repositório):
     python scripts/gerar_dados_dashboard.py
 
@@ -169,7 +172,8 @@ def montar_idade_espera(df):
 
 def montar_grupo(df, faixas_etarias, faixas_espera):
     # Mede um grupo definido por faixas de idade e de espera (faixas_etarias=None quer dizer "todas as idades").
-    # Usado para o grupo de maior risco (13 a 29 anos e 16+ dias) e para a espera longa (16+ dias, qualquer idade).
+    # Usado para o grupo de maior risco (13 a 29 anos e 16+ dias) e para a espera longa (16+ dias, qualquer idade;
+    # sem uso na tela desde a etapa 3D, fica como a comparação do notebook 03).
     # Pelas faixas da base tratada: é o mesmo que idade 13-29 e dias_espera >= 16 (o teste confere pelas colunas cruas).
     todas_as_idades = faixas_etarias is None
     if todas_as_idades:
@@ -178,6 +182,7 @@ def montar_grupo(df, faixas_etarias, faixas_espera):
     recorte = resumo(df[mascara])
     total_consultas = int(len(df))
     total_faltas = int(df["faltou"].sum())
+    taxa_geral = taxa(total_faltas, total_consultas)  # a taxa da base inteira, em % (a mesma de `totais`)
     return {
         "faixas_etarias": list(faixas_etarias),
         "faixas_espera": list(faixas_espera),
@@ -185,13 +190,17 @@ def montar_grupo(df, faixas_etarias, faixas_espera):
         # Quanto do total de consultas e de faltas cai neste grupo (em %): o grupo pequeno que concentra muita falta
         "pct_consultas": recorte["consultas"] / total_consultas * 100,
         "pct_faltas": recorte["faltas"] / total_faltas * 100,
+        # Quantas faltas o grupo tem acima da média: as faltas dele menos as que teria se faltasse na taxa geral
+        # (consultas do grupo x taxa geral ÷ 100). Em número de consultas, sem arredondar: para o grupo de maior
+        # risco dá cerca de 1.083 ("consultas a mais em seis semanas, se o grupo de risco faltasse como a média")
+        "faltas_acima_da_media": recorte["faltas"] - recorte["consultas"] * taxa_geral / 100,
     }
 
 
 def montar_sms(df):
-    # A comparação do SMS. Devolve (sms_geral, sms_espera).
-    # sms_geral é a conta crua: com SMS faltam mais (27,6% x 16,7%). Ela engana, porque o SMS só começa com 3+ dias de
-    # espera, e quem espera mais falta mais (correlação espúria).
+    # A comparação do disparo de lembrete (na base, o SMS: coluna recebeu_sms). Devolve (sms_geral, sms_espera).
+    # sms_geral é a conta crua: com disparo (SMS) faltam mais (27,6% x 16,7%). Ela engana, porque o disparo só começa
+    # com 3+ dias de espera, e quem espera mais falta mais (correlação espúria).
     # sms_espera abre a mesma conta por faixa de espera, que é onde dá para comparar quem é parecido.
     recebeu = df["recebeu_sms"] == 1
     sms_geral = {"com": resumo(df[recebeu]), "sem": resumo(df[~recebeu])}
@@ -274,6 +283,7 @@ def main():
     print(f"Bairros: {len(painel['ordem']['bairro'])} na base, {len(painel['bairros_elegiveis'])} com "
           f"{painel['minimo_consultas_bairro']}+ consultas")
     print(f"Grupo de maior risco: {fmt_num(grupo['consultas'])} consultas, taxa {fmt_pct(grupo['taxa'])}")
+    print(f"Faltas do grupo acima da média: {fmt_num(round(grupo['faltas_acima_da_media']))}")
     print(f"Espera longa (16+ dias): {fmt_num(longa['consultas'])} consultas, taxa {fmt_pct(longa['taxa'])}")
     print(f"Gravado: {CAMINHO_PAINEL.relative_to(RAIZ).as_posix()} ({fmt_num(CAMINHO_PAINEL.stat().st_size)} bytes)")
 

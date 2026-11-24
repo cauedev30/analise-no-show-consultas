@@ -206,6 +206,16 @@ def test_07_grupo_de_risco_bate_com_colunas_cruas_celulas_e_notebook_03(painel, 
     assert round(grupo["pct_consultas"], 1) == 4.9
     assert round(grupo["pct_faltas"], 1) == 9.8
 
+    # Faltas acima da média (etapa 3D): faltas do grupo - consultas do grupo x taxa geral ÷ 100, em número de
+    # consultas e sem arredondar. Dá 1.083 e é igual à conta feita com as outras chaves do painel.
+    assert round(grupo["faltas_acima_da_media"]) == 1_083
+    assert grupo["faltas_acima_da_media"] == grupo["faltas"] - grupo["consultas"] * painel["totais"]["taxa"] / 100
+    assert type(grupo["faltas_acima_da_media"]) is float
+    assert list(grupo) == [
+        "faixas_etarias", "faixas_espera", "consultas", "faltas", "taxa", "pct_consultas", "pct_faltas",
+        "faltas_acima_da_media",
+    ]
+
 
 def test_07b_espera_longa_bate_com_colunas_cruas_celulas_e_notebook_03(painel, base):
     longa = painel["espera_longa"]
@@ -220,6 +230,10 @@ def test_07b_espera_longa_bate_com_colunas_cruas_celulas_e_notebook_03(painel, b
     assert round(longa["taxa"], 1) == 32.7
     assert round(longa["pct_consultas"], 1) == 23.7
     assert round(longa["pct_faltas"], 1) == 38.5
+
+    # O mesmo campo, no mesmo formato (a espera longa, que já não aparece na tela, usa a mesma função)
+    assert list(longa) == list(painel["grupo_risco"])
+    assert longa["faltas_acima_da_media"] == longa["faltas"] - longa["consultas"] * painel["totais"]["taxa"] / 100
 
 
 # ---------------------------------------------------------------------------------------------------------------
