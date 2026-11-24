@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Abas, idDaAba, idDoPainel, type Aba } from "@/components/Abas";
 import { SEM_FILTROS } from "@/components/Filtros";
+import { GrupoDeRiscoESms } from "@/components/GrupoDeRiscoESms";
 import { Rodape } from "@/components/Rodape";
 import { VisaoGeral } from "@/components/VisaoGeral";
 import { carregarPainel } from "@/lib/dados";
@@ -50,11 +51,7 @@ export default function Home() {
             className={a.id === aba ? "flex flex-1 flex-col" : "hidden"}
           >
             {a.id === aba && a.id === "visao-geral" && <VisaoGeral filtros={filtros} onChange={setFiltros} />}
-            {a.id === aba && a.id === "grupo-de-risco-e-sms" && (
-              <div className="px-8 py-4">
-                <h2 className="text-grafico font-bold">{a.rotulo}</h2>
-              </div>
-            )}
+            {a.id === aba && a.id === "grupo-de-risco-e-sms" && <GrupoDeRiscoESms />}
           </div>
         ))}
       </main>
