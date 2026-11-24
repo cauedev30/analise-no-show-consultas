@@ -25,7 +25,7 @@ export function ehAmostraPequena(consultas: number, minimo: number): boolean {
 
 /** A caixa escura das dicas dos gráficos (a aparência é a mesma em todos). */
 export function CaixaDeDica({ children }: { children: React.ReactNode }) {
-  return <div className="bg-texto px-3 py-2 text-rotulo text-fundo">{children}</div>;
+  return <div className="rounded bg-texto px-3 py-2 text-rotulo text-fundo">{children}</div>;
 }
 
 /** Dica ao passar o mouse: a taxa e o número de consultas e de faltas da categoria. */

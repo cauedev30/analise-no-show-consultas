@@ -54,7 +54,7 @@ export function Abas({ abas, ativa, onChange }: Props) {
             className={
               "cursor-pointer border-b-[3px] py-2 text-corpo " +
               (selecionada
-                ? "border-azul font-bold text-texto"
+                ? "border-texto font-bold text-texto"
                 : "border-transparent text-texto-2 hover:text-texto")
             }
           >

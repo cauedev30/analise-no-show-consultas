@@ -130,7 +130,7 @@ export function GraficoSms({ linhas, children, className = "" }: Props) {
         <ul className="flex items-center gap-5 text-rotulo" aria-label="Legenda">
           {SERIES.map((s) => (
             <li key={s.chave} className="flex items-center gap-2">
-              <span className="inline-block size-3" style={{ backgroundColor: s.cor }} aria-hidden="true" />
+              <span className="inline-block size-3 rounded-sm" style={{ backgroundColor: s.cor }} aria-hidden="true" />
               {s.nome}
             </li>
           ))}

@@ -98,7 +98,7 @@ export function SeletorMultiplo({ rotulo, opcoes, selecionados, onChange, comBus
         aria-controls={aberto ? idLista : undefined}
         onClick={() => (aberto ? fechar(false) : setAberto(true))}
         className={
-          "flex min-w-36 max-w-60 cursor-pointer flex-col border bg-fundo px-3 py-1.5 text-left hover:bg-neutro " +
+          "flex min-w-36 max-w-60 cursor-pointer flex-col rounded-lg border bg-fundo px-3 py-1.5 text-left shadow-sm hover:bg-neutro " +
           (selecionados.length > 0 ? "border-texto" : "border-grade")
         }
       >
@@ -112,7 +112,7 @@ export function SeletorMultiplo({ rotulo, opcoes, selecionados, onChange, comBus
           role="group"
           aria-label={rotulo}
           onMouseDown={aoApertarNaLista}
-          className="absolute left-0 top-full z-20 mt-1 w-64 border border-texto bg-fundo p-2"
+          className="absolute left-0 top-full z-20 mt-1 w-64 rounded-lg border border-grade bg-fundo p-2 shadow-lg"
         >
           {comBusca && (
             <input
@@ -122,13 +122,13 @@ export function SeletorMultiplo({ rotulo, opcoes, selecionados, onChange, comBus
               onChange={(e) => setBusca(e.target.value)}
               placeholder={textoBusca}
               aria-label={`Buscar em ${rotulo.toLowerCase()}`}
-              className="mb-2 w-full border border-eixo bg-fundo px-2 py-1.5 text-corpo"
+              className="mb-2 w-full rounded-md border border-eixo bg-fundo px-2 py-1.5 text-corpo"
             />
           )}
           <ul className="max-h-72 overflow-y-auto">
             {visiveis.map(({ nome, posicao }) => (
               <li key={posicao}>
-                <label className="flex cursor-pointer items-center gap-2 px-2 py-1.5 text-corpo hover:bg-neutro">
+                <label className="flex cursor-pointer items-center gap-2 rounded px-2 py-1.5 text-corpo hover:bg-neutro">
                   <input
                     type="checkbox"
                     checked={selecionados.includes(posicao)}
