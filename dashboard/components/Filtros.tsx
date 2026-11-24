@@ -20,7 +20,13 @@ export function Filtros({ ordem, filtros, onChange }: Props) {
     <div className="flex flex-wrap items-center gap-2">
       <SeletorMultiplo rotulo="Faixa de idade" opcoes={ordem.faixa_etaria} selecionados={filtros.faixaEtaria} onChange={definir("faixaEtaria")} />
       <SeletorMultiplo rotulo="Dia da semana" opcoes={ordem.dia_semana} selecionados={filtros.diaSemana} onChange={definir("diaSemana")} />
-      <SeletorMultiplo rotulo="Bairro" opcoes={ordem.bairro} selecionados={filtros.bairro} onChange={definir("bairro")} comBusca />
+      <SeletorMultiplo
+        rotulo="Bairro"
+        opcoes={ordem.bairro} selecionados={filtros.bairro} onChange={definir("bairro")}
+        comBusca
+        textoBusca="Buscar bairro"
+        textoSemResultado="Nenhum bairro encontrado"
+      />
       <SeletorMultiplo rotulo="Dias de espera" opcoes={ordem.faixa_espera} selecionados={filtros.faixaEspera} onChange={definir("faixaEspera")} />
       <button
         type="button"

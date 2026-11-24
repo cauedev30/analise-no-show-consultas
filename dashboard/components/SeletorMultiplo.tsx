@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, type FocusEvent } from "react";
+import { useEffect, useId, useRef, useState, type FocusEvent, type MouseEvent } from "react";
 
 interface Props {
   rotulo: string;
@@ -10,12 +10,16 @@ interface Props {
   onChange: (selecionados: number[]) => void;
   /** Mostra um campo para filtrar a lista (usado no bairro, que tem 81 opções). */
   comBusca?: boolean;
+  /** Texto do campo de busca (só com `comBusca`). */
+  textoBusca?: string;
+  /** Mensagem quando a busca não acha nenhuma opção (só com `comBusca`). */
+  textoSemResultado?: string;
 }
 
 const semAcento = (s: string) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
 /** Botão que abre uma lista de caixas de seleção. Fecha com Esc, com clique fora e ao sair com o Tab. */
-export function SeletorMultiplo({ rotulo, opcoes, selecionados, onChange, comBusca = false }: Props) {
+export function SeletorMultiplo({ rotulo, opcoes, selecionados, onChange, comBusca = false, textoBusca = "", textoSemResultado = "" }: Props) {
   const [aberto, setAberto] = useState(false);
   const [busca, setBusca] = useState("");
   const raiz = useRef<HTMLDivElement>(null);
@@ -54,8 +58,16 @@ export function SeletorMultiplo({ rotulo, opcoes, selecionados, onChange, comBus
     if (devolverFoco) botao.current?.focus();
   }
 
+  // Só fecha quando o foco vai para um elemento fora do seletor (Tab para fora). Um clique no texto ou no
+  // espaço da lista tira o foco sem destino (relatedTarget nulo) e não deve fechar; o clique fora é do pointerdown.
   function aoPerderFoco(e: FocusEvent<HTMLDivElement>) {
-    if (aberto && !raiz.current?.contains(e.relatedTarget as Node | null)) fechar(false);
+    const destino = e.relatedTarget as Node | null;
+    if (aberto && destino !== null && !raiz.current?.contains(destino)) fechar(false);
+  }
+
+  // Clicar na lista não tira o foco de onde ele está; só o campo de busca recebe o foco do clique.
+  function aoApertarNaLista(e: MouseEvent<HTMLDivElement>) {
+    if (!(e.target instanceof HTMLInputElement && e.target.type === "search")) e.preventDefault();
   }
 
   function alternar(posicao: number) {
@@ -70,7 +82,12 @@ export function SeletorMultiplo({ rotulo, opcoes, selecionados, onChange, comBus
     .map((nome, posicao) => ({ nome, posicao }))
     .filter(({ nome }) => termo === "" || semAcento(nome).includes(termo));
 
-  const resumo = selecionados.length === 0 ? "Sem filtro" : `${selecionados.length} de ${opcoes.length}`;
+  const resumo =
+    selecionados.length === 0
+      ? "Sem filtro"
+      : selecionados.length === 1
+        ? opcoes[selecionados[0]]
+        : `${selecionados.length} de ${opcoes.length}`;
 
   return (
     <div ref={raiz} className="relative" onBlur={aoPerderFoco}>
@@ -81,12 +98,12 @@ export function SeletorMultiplo({ rotulo, opcoes, selecionados, onChange, comBus
         aria-controls={aberto ? idLista : undefined}
         onClick={() => (aberto ? fechar(false) : setAberto(true))}
         className={
-          "flex min-w-36 cursor-pointer flex-col rounded border px-3 py-1.5 text-left hover:bg-neutro " +
+          "flex min-w-36 max-w-60 cursor-pointer flex-col rounded border px-3 py-1.5 text-left hover:bg-neutro " +
           (selecionados.length > 0 ? "border-texto" : "border-eixo")
         }
       >
         <span className="text-rotulo text-texto-2">{rotulo}</span>
-        <span className="text-corpo font-bold">{resumo}</span>
+        <span className="truncate text-corpo font-bold">{resumo}</span>
       </button>
 
       {aberto && (
@@ -94,6 +111,7 @@ export function SeletorMultiplo({ rotulo, opcoes, selecionados, onChange, comBus
           id={idLista}
           role="group"
           aria-label={rotulo}
+          onMouseDown={aoApertarNaLista}
           className="absolute left-0 top-full z-20 mt-1 w-64 rounded border border-texto bg-fundo p-2"
         >
           {comBusca && (
@@ -102,7 +120,7 @@ export function SeletorMultiplo({ rotulo, opcoes, selecionados, onChange, comBus
               type="search"
               value={busca}
               onChange={(e) => setBusca(e.target.value)}
-              placeholder="Buscar bairro"
+              placeholder={textoBusca}
               aria-label={`Buscar em ${rotulo.toLowerCase()}`}
               className="mb-2 w-full rounded border border-eixo bg-fundo px-2 py-1.5 text-corpo"
             />
@@ -121,7 +139,7 @@ export function SeletorMultiplo({ rotulo, opcoes, selecionados, onChange, comBus
                 </label>
               </li>
             ))}
-            {visiveis.length === 0 && <li className="px-2 py-1.5 text-rotulo text-texto-2">Nenhum bairro encontrado</li>}
+            {visiveis.length === 0 && <li className="px-2 py-1.5 text-rotulo text-texto-2">{textoSemResultado}</li>}
           </ul>
         </div>
       )}

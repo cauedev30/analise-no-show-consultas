@@ -28,7 +28,7 @@ export default function Home() {
     <>
       <header className="px-8 pt-4">
         <div className="flex flex-wrap items-end justify-between gap-x-8 border-b border-grade">
-          <h1 className="pb-2 text-pagina font-bold">Faltas em consultas: quem falta mais</h1>
+          <h1 className="pb-2 text-pagina font-bold">No-show em consultas: taxa de falta</h1>
           <div className="-mb-px">
             <Abas abas={ABAS} ativa={aba} onChange={setAba} />
           </div>
@@ -44,6 +44,7 @@ export default function Home() {
           <div
             key={a.id}
             role="tabpanel"
+            tabIndex={0}
             id={idDoPainel(a.id)}
             aria-labelledby={idDaAba(a.id)}
             className={a.id === aba ? "flex flex-1 flex-col" : "hidden"}

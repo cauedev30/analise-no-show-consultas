@@ -47,7 +47,7 @@ export function GraficoColunas({ titulo, categorias, resumos, taxaGeral, yMax, s
         fontWeight={700}
         fill={COR.texto}
         stroke={COR.fundo}
-        strokeWidth={4}
+        strokeWidth={6}
         paintOrder="stroke"
         strokeLinejoin="round"
       >

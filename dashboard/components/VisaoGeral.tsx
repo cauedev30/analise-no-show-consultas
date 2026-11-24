@@ -59,11 +59,10 @@ export function VisaoGeral({ filtros, onChange }: Props) {
             <Cartao rotulo="Faltas" valor={formatarInteiro(resumo.faltas)} />
             <Cartao rotulo="Taxa de falta" valor={formatarPct(resumo.taxa)} />
           </div>
-          {amostraPequena && (
-            <p role="status" className="mt-1 text-rotulo font-bold">
-              Amostra pequena: menos de {MINIMO_NO_RECORTE} consultas, a taxa oscila muito.
-            </p>
-          )}
+          {/* Sempre montado, para o leitor de tela anunciar a troca de texto e o layout não pular. */}
+          <p aria-live="polite" className="mt-1 min-h-lh text-rotulo font-bold">
+            {amostraPequena ? `Amostra pequena: menos de ${MINIMO_NO_RECORTE} consultas, a taxa oscila muito.` : ""}
+          </p>
         </div>
       </section>
 
