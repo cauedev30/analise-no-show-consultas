@@ -14,9 +14,10 @@ Este guia é para a equipe. Ele serve para duas coisas:
 O detalhe completo, com o porquê de cada decisão, está no [processo](processo.md). Este guia é o resumo dele. **Os
 números daqui são os mesmos de lá**; se um deles mudar, muda nos dois.
 
-Situação em 2026-11-24: os três notebooks (01, 02 e 03), o script e o dashboard estão prontos, e o dashboard está
-publicado em **<https://cauedev30.github.io/analise-no-show-consultas/>**. Falta a conferência final dos números com os
-slides e o envio (veja [O que falta fazer](#o-que-falta-fazer)).
+Situação em 2026-11-24: os três notebooks (01, 02 e 03), o script e o dashboard estão prontos, o dashboard está
+publicado em **<https://cauedev30.github.io/analise-no-show-consultas/>** e **a apresentação foi feita**. A seção dos
+slides abaixo traz a versão final, a que foi apresentada. Falta só o envio do link ao professor (veja
+[O que falta fazer](#o-que-falta-fazer)).
 
 ---
 
@@ -66,6 +67,7 @@ Use sempre estes, com esta escrita. Eles saem dos notebooks e do script, não de
 | Consultas na base tratada | **110.521** (19 colunas) | notebook 01, Passo 9 |
 | Linhas removidas na limpeza | **6** (1 com idade -1 e 5 com consulta antes do agendamento) | notebook 01, Passos 3 e 4 |
 | Idade 0 / idade acima de 100 (ficam) | 3.539 consultas / 7 consultas | notebook 01, Passo 5 |
+| Esperas acima do limite do IQR (ficam) | **5.803** consultas acima de 37 dias (limite 37,5 = 15 + 1,5 × 15), até 179 dias, com 32,0% de falta | notebook 01, Passo 5 |
 | Faltas no original / na base tratada | 22.319 / **22.314** | notebook 01 |
 | Taxa de falta | **20,2%** (no original e na base tratada) | notebook 02, Seção 1 |
 | Mesmo dia x com antecedência | **4,6%** (1.792 de 38.562) x **28,5%** (20.522 de 71.959) | notebook 02, Seção 2 |
@@ -119,17 +121,19 @@ problema, a relevância e o resultado final. Está tudo coberto: o dataset no **
 
 ### Slide 1: Capa
 
-- **No slide:** "Redução de faltas em consultas (no-show) em clínicas"; Cauê Franco, Lucio Lima e Daniel Vieira;
-  Análise de Dados e BI, professor Daniel Brandão.
+- **No slide:** "Redução de faltas em consultas médicas"; "No-show é quando o paciente marca a consulta e não aparece
+  nem avisa. Na base que usamos, isso aconteceu em 1 de cada 5 consultas. O horário fica parado, e sem aviso não dá
+  tempo de chamar outro paciente."; Cauê Franco, Lucio Lima e Daniel Vieira; Projeto final de Análise de Dados e BI,
+  Prof. Daniel Brandão.
 
 ### Slide 2: D, Defina o objetivo
 
-- **Número grande:** **20,2%** (cerca de 1 em cada 5 agendados falta: 22.314 de 110.521, em cerca de seis semanas).
+- **Título:** "Queremos saber quem falta e o que a clínica pode fazer".
+- **Número grande:** **20,2%** das consultas agendadas terminaram em falta (22.314 de 110.521, em cerca de seis
+  semanas).
 - **No slide:**
-  - No-show: o paciente marca a consulta e não comparece, sem avisar.
-  - A dor: a clínica perde capacidade de atendimento. O horário vago não é reaproveitado e quem estava na fila fica sem
-    vaga.
-  - A pergunta: **quem tem mais chance de faltar e o que a clínica pode fazer para reduzir isso?**
+  - "Quem falta não paga, e o convênio só paga a consulta realizada. A base não traz o preço, então medimos a perda em
+    número de consultas."
   - As cinco **perguntas de negócio**, que o resto da apresentação responde (veja
     [as perguntas P1 a P5](#as-perguntas-de-negócio-p1-a-p5)).
 - **O que falar:**
@@ -160,12 +164,15 @@ Os slides fazem cinco perguntas e respondem uma a uma. Todas as respostas usam s
 
 ### Slide 3: E, Estabeleça métricas
 
+- **Título:** "Definimos as regras de cálculo antes de analisar".
 - **Número grande:** **taxa de falta = faltas ÷ consultas** (22.314 ÷ 110.521 = 20,2%).
 - **No slide:**
   - **Taxa de falta:** consultas em que o paciente faltou, divididas pelo total de consultas, em %.
-  - **Espera:** dias de calendário entre o dia do agendamento e o dia da consulta.
+  - **Espera:** os dias entre marcar e ir à consulta. A base tem a data, mas não a hora.
   - As faixas de idade: 0-12, 13-17, 18-29, 30-44, 45-59 e 60+.
-  - As faixas de espera: Mesmo dia, 1-7 dias, 8-15 dias, 16-30 dias e 31+ dias.
+  - As faixas de espera: Mesmo dia, 1-7, 8-15, 16-30 e 31+ dias.
+  - "Escolhemos as faixas antes de ver os resultados, para não ajustar os cortes à conclusão. O código e o dashboard
+    usam as mesmas."
 - **O que falar:**
   - Estas são as **regras de negócio** do projeto. Elas valem iguais no código, no dashboard e nos slides.
   - A espera é contada em dias porque a base só traz a **data** da consulta, sem o horário.
@@ -175,12 +182,16 @@ Os slides fazem cinco perguntas e respondem uma a uma. Todas as respostas usam s
 
 ### Slide 4: I, Identifique fontes
 
-- **Número grande:** **110.527 consultas**.
+- **Título:** "Uma base pública com 110.527 consultas reais".
 - **No slide:**
-  - Base *Medical Appointment No Shows*, do Kaggle. Autor: Joni Hoppen (Aquarela Analytics). Licença CC BY-NC-SA 4.0.
-  - 14 colunas, 62.299 pacientes, 81 bairros de Vitória (ES).
-  - Consultas de 29/04/2016 a 08/06/2016.
-  - É a **única fonte** de dados do projeto.
+  - **Fonte:** Kaggle, *Medical Appointment No Shows*, de Joni Hoppen (Aquarela Analytics). **Licença:** CC BY-NC-SA 4.0.
+  - **Onde e quando:** Vitória-ES, de 29/04 a 08/06/2016. Tudo indica que é a rede pública.
+  - **Tamanho:** 110.527 consultas de 62.299 pacientes, 14 colunas.
+  - **Qualidade:** nenhum valor vazio e nenhuma consulta repetida.
+  - **Arquivo:** baixado em 10/11/2026 e guardado sem alteração, conferido por SHA-256.
+  - **Premissa:** usamos a rede pública como aproximação de uma clínica privada.
+  - **Uma linha da base**, como exemplo: paciente de 62 anos, hipertensa, do Jardim da Penha, que marcou e foi atendida
+    no mesmo dia (29/04/2016), sem disparo, e não faltou.
 - **O que falar:**
   - **Como obtivemos:** baixamos o arquivo do Kaggle em 2026-11-10 e guardamos em `dados/original/` sem nenhuma
     alteração. Não houve coleta própria nem junção com outra base.
@@ -194,12 +205,17 @@ Os slides fazem cinco perguntas e respondem uma a uma. Todas as respostas usam s
 
 ### Slide 5: L, Limpe as bases
 
-- **Número grande:** **110.527 → 110.521** (6 linhas removidas).
+- **Título:** "Só removemos as 6 linhas impossíveis".
+- **Número grande:** **110.527 → 110.521** (−1 com idade igual a −1; −5 com consulta marcada para antes do
+  agendamento). Depois da limpeza, a taxa de falta continua 20,2%.
 - **No slide:**
-  - **Removemos o que é impossível:** 1 consulta com idade -1 e 5 consultas com data anterior ao agendamento.
-  - **Mantivemos o que é raro, mas possível:** idade 0 (3.539 consultas de bebês) e idade acima de 100 (7 consultas).
-  - **Corrigimos e padronizamos:** nomes das colunas e datas.
-  - **Criamos:** a coluna `faltou` (1 = faltou, 0 = compareceu) e as faixas de idade e de espera.
+  - **O que mantivemos de propósito:** 3.539 consultas de bebês (idade 0); 7 consultas acima de 100 anos; 5.803 esperas
+    acima de 37 dias (limite do IQR), até 179 dias, que são reais e viram falta em 32% das vezes.
+  - **5 colunas novas, de 14 para 19:** `dias_espera` (o fator mais ligado à falta); `dia_semana` (alimenta o filtro do
+    dashboard, previsto na proposta aprovada); `faixa_etaria` e `faixa_espera` (agrupam idade e espera nas faixas do
+    slide **E**, para os gráficos e o grupo de risco); `tem_deficiencia` (resume a `Handcap`, de 0 a 4, em sim ou não).
+  - "Também convertemos No-show em `faltou` (0/1), corrigimos nomes como Hipertension e Handcap e passamos as datas de
+    texto para data."
 - **O que falar:**
   - A limpeza tem **9 passos** no notebook 01. Cada passo traz o problema, a decisão, a justificativa e uma checagem
     automática.
@@ -207,6 +223,10 @@ Os slides fazem cinco perguntas e respondem uma a uma. Todas as respostas usam s
     verdadeira de quem está com -1, nem qual das duas datas está errada. Inventar um valor seria inventar dado.
   - **Por que a idade 0 ficou.** São 3.539 consultas de bebês com menos de 1 ano. É possível, então fica.
   - **Por que a idade acima de 100 ficou.** São 7 consultas. É raro, mas possível, e não há prova de erro.
+  - **Por que as esperas longas ficaram.** A regra do IQR (intervalo interquartil) marca como *outlier* o que passa de
+    Q3 + 1,5 × IQR. Na espera, Q1 = 0 e Q3 = 15 dias, então o limite é 37,5 dias, e 5.803 consultas passam dele. Mas
+    elas são reais (marcar com um ou dois meses de antecedência é comum), e tirá-las apagaria justamente as consultas
+    que mais faltam (32,0%). O IQR aponta o que é raro, não o que é erro.
   - **A taxa de falta não mudou.** As 5 consultas removidas por data eram todas faltas (22.319 → 22.314), mas 5 linhas
     em mais de 110 mil não mexem na proporção: continua 20,2%.
   - Feito em Python, com Pandas, em notebook Jupyter.
@@ -221,7 +241,7 @@ Os 9 passos, em uma linha cada:
 | 2 | As duas datas convertidas de texto para data | 0 |
 | 3 | Idade -1 removida | 1 |
 | 4 | Consultas com data anterior ao agendamento removidas | 5 |
-| 5 | Idade 0 e idade acima de 100 mantidas | 0 |
+| 5 | Idade 0, idade acima de 100 e esperas acima do limite do IQR mantidas | 0 |
 | 6 | Coluna de deficiência (0 a 4) mantida como veio, com a dúvida registrada | 0 |
 | 7 | Criada a coluna `faltou` (0 ou 1) | 0 |
 | 8 | Criadas as colunas de espera, dia da semana e faixas (14 → 19 colunas) | 0 |
@@ -229,15 +249,16 @@ Os 9 passos, em uma linha cada:
 
 ### Slide 6: A, Analise os dados
 
-- **Número grande:** **4,6% x 28,5%** (mesmo dia x com antecedência).
+- **Título:** "Quanto maior a espera, maior a chance de falta".
 - **No slide:**
-  - **A espera é o fator mais associado à falta (P2).** Quem marca para o mesmo dia quase não falta; a taxa sobe de
-    4,6% para 33,0% e, a partir de 16 dias, passa de 32%.
-  - **O perfil de maior risco (P3).** De 13 a 29 anos com 16 dias ou mais de espera, a falta é de **40,2%**, o dobro da
+  - **P2, taxa de falta por tempo de espera** (gráfico, com a linha da média de 20,2%): mesmo dia 4,6%, 1-7 dias 24,1%,
+    8-15 dias 30,8%, 16-30 dias 32,5% e 31+ dias 33,0%.
+  - **P3, perfil de maior risco:** **40,2%** de falta entre 13 e 29 anos com 16 dias ou mais de espera, o dobro da
     média. Esse grupo é 4,9% das consultas, mas soma 9,8% das faltas.
-  - **O disparo de lembrete e a correlação espúria (P4).** Com todo mundo junto, quem recebeu o disparo falta mais
-    (27,6% x 16,7%), mas na mesma faixa de espera quem recebe não falta mais.
-  - **A idade.** Adolescentes de 13 a 17 anos faltam mais (26,6%); quem tem 60 anos ou mais falta menos (15,3%).
+  - **P4, o disparo de lembrete ajuda?** "Na mesma espera, quem recebe o disparo não falta mais." Gráfico sem e com
+    disparo em cada faixa: 1-7 dias 24,4 x 23,8; 8-15 34,1 x 28,4; 16-30 36,8 x 29,7; 31+ 37,5 x 30,2. E a nota: "Com
+    todo mundo junto, parece o contrário: 27,6% de falta com disparo e 16,7% sem. É que o disparo só vai para quem
+    espera 3 dias ou mais."
 - **O que falar:**
   - **A espera.** Mesmo dia: 4,6%. Com antecedência: 28,5%, cerca de 6 vezes mais. A taxa sobe até a faixa de 16 a 30
     dias e depois quase para de crescer.
@@ -251,6 +272,8 @@ Os 9 passos, em uma linha cada:
     **correlação espúria**: duas coisas andam juntas nos números, mas por causa de um terceiro fator.
   - **A ponte com a base.** Na apresentação o envio se chama "disparo de lembrete"; na base, o disparo registrado é o
     SMS (coluna `recebeu_sms`). São o mesmo dado.
+  - **A idade, se perguntarem.** Adolescentes de 13 a 17 anos faltam mais (26,6%); quem tem 60 anos ou mais falta menos
+    (15,3%). Está no dashboard, no gráfico da idade.
   - **O que não pesa.** O dia da semana quase não importa (de 19,3% a 21,2%, de segunda a sexta).
   - **O limite.** A análise é descritiva. Ela mostra associação, e **não prova causa**.
   - **Como os números chegam ao dashboard.** Base tratada → script Python → página. É a deixa para abrir o dashboard.
@@ -267,8 +290,11 @@ Os 9 passos, em uma linha cada:
     mais de espera, a falta é de **40,2%**.
   - **Dispara:** para quem tem risco alto, manda mais de um lembrete antes da consulta e pede confirmação.
   - **Libera:** se o paciente cancela ou não confirma, o horário é oferecido a quem está na lista de espera.
-  - **O limite:** na base, dentro da mesma faixa de espera, o disparo aparece junto com menos falta, o que ainda é
-    associação. Por isso o agente começa em teste: metade do grupo de risco recebe o reforço, e a outra metade não.
+  - **O limite:** "Na base, o disparo aparece junto com menos falta, o que ainda é associação. Por isso o agente começa
+    em teste: metade do grupo de risco recebe o reforço, e a outra metade não." (Ao falar, vale lembrar que é **dentro
+    da mesma faixa de espera**, como no slide **A**; o dashboard escreve assim.)
+  - **No fim:** "Obrigado. Perguntas?", com o link do código (github.com/cauedev30/analise-no-show-consultas) e do
+    dashboard (cauedev30.github.io/analise-no-show-consultas).
 - **O que falar:**
   - **Por que o agente faz sentido.** O grupo de maior risco é pequeno (4,9% da agenda, 5.422 consultas) e fácil de
     achar: a idade e a data do agendamento já estão no cadastro. Ele falta em 40,2% e soma 9,8% das faltas.
@@ -292,30 +318,30 @@ Os 9 passos, em uma linha cada:
 ## O dashboard
 
 **Link:** <https://cauedev30.github.io/analise-no-show-consultas/> (publicado em 2026-11-24). Os prints estão em
-[`dashboard/imagens/`](../dashboard/imagens/): [visão geral](../dashboard/imagens/visao-geral.png),
-[visão geral inteira](../dashboard/imagens/visao-geral-inteira.png) e
+[`dashboard/imagens/`](../dashboard/imagens/): [visão geral](../dashboard/imagens/visao-geral.png) e
 [grupo de risco e disparo](../dashboard/imagens/grupo-de-risco.png).
 
 **Como funciona, em uma frase:** um script Python lê a base tratada e grava os números em um arquivo; a página web lê
 esse arquivo e mostra. A única conta que a página faz é a dos filtros (somar as consultas e as faltas do recorte
 escolhido e dividir), pela mesma definição do slide **E**.
 
-São **duas abas**, e nada além disso: a rubrica pede um dashboard focado nos indicadores essenciais.
+São **duas abas**, e nada além disso: a rubrica pede um dashboard focado nos indicadores essenciais. As abas ficam numa
+barra escura no topo, ao lado do título.
 
 | Aba | O que tem |
 |---|---|
-| **Visão geral** | Uma barra fixa no topo, sempre à vista, com os **4 filtros** (faixa de idade, dia da semana, bairro e dias de espera) e **3 números** (consultas, faltas e taxa de falta). Embaixo, 3 seções em cartões, uma por achado: a **espera** na largura toda e, lado a lado, a **idade** e os **bairros** |
-| **Grupo de risco e disparo** | O mapa de calor de idade x espera, com o grupo de maior risco contornado e 3 cartões (consultas, taxa de falta e parte das faltas); o gráfico do disparo de lembrete (a comparação crua e a comparação dentro de cada faixa de espera); e o bloco "O que recomendamos", com o agente, o 40,2% e os 1.083. Esta aba mostra sempre a base inteira: os filtros valem só na Visão geral |
+| **Visão geral** | Uma faixa com os **4 filtros** (faixa de idade, dia da semana, bairro e dias de espera) e os **3 números** (consultas, faltas e taxa de falta). Embaixo, **3 gráficos lado a lado**, um por achado: a **espera**, a **idade** e os **bairros**. Numa tela de 1366x768 cabe tudo, sem rolar, como um painel de BI; em telas mais estreitas, os gráficos ficam um embaixo do outro |
+| **Grupo de risco e disparo** | De cima a baixo: o mapa de calor de idade x espera, com o grupo de maior risco contornado e 3 cartões (consultas, taxa de falta e parte das faltas); o gráfico do disparo de lembrete (a comparação crua e a comparação dentro de cada faixa de espera); e o bloco "O que recomendamos", com o agente, o 40,2% e os 1.083. Esta aba mostra sempre a base inteira: os filtros valem só na Visão geral |
 
 ### Passo a passo da demonstração (cerca de 3 minutos)
 
-A página se lê de cima a baixo, na ordem da fala: cada seção surge ao entrar na tela. A barra de filtros fica
-presa no topo da Visão geral, então dá para mudar um filtro lá embaixo e ver o efeito.
+A Visão geral cabe numa tela: os filtros e os números em cima, os três gráficos embaixo, lidos da esquerda para a
+direita na ordem da fala. A aba 2 se lê de cima a baixo, e cada seção surge ao entrar na tela.
 
 | Passo | Onde | O que mostrar |
 |---|---|---|
-| 1 | Visão geral, sem filtro | Os três números da barra fixa (**110.521** consultas, **22.314** faltas e **20,2%**) e, logo abaixo, a linha da espera: **4,6%** no mesmo dia, subindo até 33,0% com 31 dias ou mais (os 28,5% com antecedência são falados, como no slide **A**) |
-| 2 | Visão geral, com filtro | Um filtro ao vivo. Exemplo: em "Dias de espera", escolher "Mesmo dia": os números passam a 38.562 consultas, 1.792 faltas e 4,6%. Depois, rolar: a **espera** (linha), a **idade** (barras de desvio) e os **bairros** (pirulito), com a barra de filtros sempre à vista. "Limpar filtros" volta ao começo |
+| 1 | Visão geral, sem filtro | Os três números (**110.521** consultas, **22.314** faltas e **20,2%**) e, no primeiro gráfico, a linha da espera: **4,6%** no mesmo dia, subindo até 33,0% com 31 dias ou mais (os 28,5% com antecedência são falados, como no slide **A**) |
+| 2 | Visão geral, com filtro | Um filtro ao vivo. Exemplo: em "Dias de espera", escolher "Mesmo dia": os números passam a 38.562 consultas, 1.792 faltas e 4,6%, e os três gráficos mudam na mesma tela: a **espera** (linha), a **idade** (barras de desvio) e os **bairros** (pirulito). "Limpar filtros" volta ao começo |
 | 3 | Grupo de risco e disparo | O mapa de calor de idade x espera e o **grupo de maior risco** contornado: 5.422 consultas, **40,2%** de falta |
 | 4 | Grupo de risco e disparo | O **disparo de lembrete**: na base inteira parece aumentar a falta (27,6% contra 16,7%), mas dentro de cada faixa de espera quem recebeu falta menos ou quase igual (correlação espúria) |
 | 5 | Grupo de risco e disparo, no fim | O bloco **"O que recomendamos"**, que mostra o agente (Classifica, Dispara, Libera), o 40,2% e os 1.083, e repete o slide **S** |
@@ -340,7 +366,7 @@ Cada achado tem o gráfico do seu tipo. Se o professor perguntar, a resposta é 
 - **Barras do disparo (aba 2).** Mostram, lado a lado, a taxa sem e com disparo dentro de cada faixa de espera.
 
 Outros cuidados da página: a cor azul é só para dados; os pontos da espera e as barras da idade com **menos de 100 consultas no recorte** aparecem em azul claro, com
-o aviso de "amostra pequena" (por exemplo, ao filtrar o sábado, que tem 39 consultas); as seções surgem suavemente ao rolar e as barras crescem
+o aviso de "amostra pequena" (por exemplo, ao filtrar o sábado, que tem 39 consultas); as seções surgem suavemente ao entrar na tela e as barras crescem
 na entrada (mudar um filtro não anima); e quem usa "reduzir movimento" no sistema vê tudo direto.
 
 ### Como o dashboard foi feito
@@ -373,6 +399,7 @@ Para rodar na sua máquina, veja "Como rodar" no [README](../README.md#como-roda
 | Pergunta | Resposta |
 |---|---|
 | Por que removeram só 6 linhas? | Só removemos o que é impossível e não tem conserto: 1 idade negativa e 5 consultas antes do agendamento. O resto é raro, mas possível, e ficou |
+| Esperas de até 179 dias não são *outliers*? | Pela regra do IQR, sim: 5.803 consultas passam do limite de 37,5 dias. Mas *outlier* quer dizer raro, não errado: as datas são válidas e marcar com meses de antecedência acontece. Ficaram, e são as que mais faltam (32,0%). A conferência está no Passo 5 do notebook 01 |
 | Idade 0 e idade 115 não são erros? | Idade 0 são bebês com menos de 1 ano (3.539 consultas). Acima de 100 são 7 consultas: raro, mas possível, e sem prova de erro. Não mudam as taxas |
 | O Kaggle diz 30% de falta. Por que 20,2%? | 30% é o subtítulo da página. Medindo nos dados, são 22.319 faltas em 110.527 consultas: 20,2% |
 | Então o disparo de lembrete aumenta a falta? | Os dados não mostram isso. É uma correlação espúria: o disparo só vai para quem espera 3 dias ou mais, e quem espera mais falta mais. Dentro da mesma faixa de espera, quem recebeu o disparo falta igual ou menos |
@@ -423,15 +450,7 @@ notebook 03, os números do dashboard, o dashboard publicado e a documentação 
 
 | # | O que falta | O que entrega |
 |---|---|---|
-| 1 | Conferência final com os slides | Os números oficiais iguais no README, no processo, neste guia, no dashboard e nos slides |
+| ~~1~~ | ~~Conferência final com os slides~~ **Feito em 2026-11-24** | Todos os números da versão final dos slides batem com a tabela dos [números oficiais](#os-números-oficiais) e com o dashboard. O IQR do slide **L** passou a sair do notebook 01 (Passo 5) |
 | ~~2~~ | ~~Execução do zero em uma cópia limpa~~ **Feito em 2026-11-24** | Os três notebooks rodaram do zero, a base tratada saiu com o mesmo hash e o `painel.json` saiu igual; 18 testes Python e 79 do dashboard passaram, e o build funcionou |
-| 3 | Ensaio da apresentação | Cabe em 5 a 10 minutos; a equipe decide a ordem (todos os slides e depois o dashboard, ou o dashboard entre o **A** e o **S**) |
+| ~~3~~ | ~~Apresentação~~ **Feita em 2026-11-24** | Os 7 slides e o dashboard |
 | 4 | Envio ao professor | O link do repositório e do dashboard |
-
-**A alinhar com os slides.** A versão atual dos slides tem, no slide **L**, uma linha sobre esperas muito longas (limite
-pelo IQR: 5.803 consultas acima de 37 dias, até 179 dias, com 32% de falta). Esse número foi conferido na base, mas não
-sai de nenhum notebook nem do script, e a regra do projeto é que todo número venha de um deles. A equipe decide se a
-linha sai do slide ou se o cálculo entra em um notebook. O resto dos números dos slides já bate com a tabela dos números
-oficiais.
-
-No slide **S**, a frase do limite passa a ser: "Na base, dentro da mesma faixa de espera, o disparo aparece junto com menos falta, o que ainda é associação." Sem o trecho da faixa de espera, ela parece contradizer a comparação crua (27,6% x 16,7%).

@@ -80,7 +80,7 @@ passos. Cada um traz o problema, a decisão, a justificativa, o antes e depois e
 | 2. Datas | Datas em texto, com hora e fuso (`Z`); a consulta nunca tem horário | Converter para data `AAAA-MM-DD`, sem converter o fuso | 0 (2 colunas convertidas) |
 | 3. Idade negativa | 1 consulta com idade -1 | Remover | **1 removida** |
 | 4. Consulta antes do agendamento | 5 consultas com data anterior ao agendamento (de -6 a -1 dia) | Remover | **5 removidas** |
-| 5. Idade 0 e acima de 100 | 3.539 consultas com idade 0 e 7 com idade acima de 100 (115 anos x5, 102 anos x2) | Manter: são raras, mas possíveis | 0 (nenhuma removida) |
+| 5. Idade 0, acima de 100 e esperas longas | 3.539 consultas com idade 0 e 7 com idade acima de 100 (115 anos x5, 102 anos x2); pela regra do IQR, 5.803 esperas acima de 37 dias (até 179) | Manter: são raras, mas possíveis. As esperas longas são reais, e tirá-las apagaria as consultas que mais faltam (32,0%) | 0 (nenhuma removida) |
 | 6. Coluna `deficiencia` | Vai de 0 a 4, e a fonte não explica o que 2, 3 e 4 significam | Manter de 0 a 4 e criar `tem_deficiencia` (0 ou 1) no passo 8 | 0 (nenhuma removida) |
 | 7. `faltou` | `No-show` tem `Yes`/`No`, e o "No" duplo confunde | Criar `faltou`: 1 = faltou, 0 = compareceu | 0 (1 coluna convertida) |
 | 8. Colunas derivadas | Faltam grupos prontos para a análise | Criar `dias_espera`, `dia_semana`, `faixa_etaria`, `faixa_espera` e `tem_deficiencia` | 0 (5 colunas criadas) |
@@ -153,15 +153,16 @@ lê a base tratada e grava os números em `dashboard/public/dados/painel.json`; 
 conta que ela faz é a dos filtros: somar as consultas e as faltas do recorte e dividir, pela mesma definição de taxa de
 falta.
 
-- **Visão geral.** Uma barra fixa no topo, sempre à vista, com os 4 filtros (faixa de idade, dia da semana, bairro e
-  dias de espera) e 3 números (consultas, faltas e taxa de falta). Embaixo, 3 seções que mudam com os filtros: a taxa
-  de falta por faixa de espera (linha com pontos, na largura toda) e, lado a lado, por faixa de idade (barras de desvio da taxa geral) e os bairros com
-  maior taxa (pirulito, só os que têm 500 consultas ou mais e, com filtro, 100 ou mais no recorte).
-- **Grupo de risco e disparo.** O mapa de calor de idade x espera com o grupo de maior risco contornado; o disparo de
-  lembrete (a comparação crua e a comparação dentro de cada faixa de espera); e o bloco "O que recomendamos". Esta aba
-  mostra sempre a base inteira.
+No topo, uma barra escura com o título e as duas abas.
 
-![Dashboard, aba Visão geral, página inteira](dashboard/imagens/visao-geral-inteira.png)
+- **Visão geral** (o print do começo desta página). Uma faixa com os 4 filtros (faixa de idade, dia da semana, bairro e
+  dias de espera) e 3 números (consultas, faltas e taxa de falta). Embaixo, 3 gráficos lado a lado, que mudam com os
+  filtros: a taxa de falta por faixa de espera (linha com pontos), por faixa de idade (barras de desvio da taxa geral) e
+  os bairros com maior taxa (pirulito, só os que têm 500 consultas ou mais e, com filtro, 100 ou mais no recorte). Numa
+  tela de 1366x768 a aba cabe inteira, sem rolar; em telas mais estreitas, os gráficos ficam um embaixo do outro.
+- **Grupo de risco e disparo.** De cima a baixo: o mapa de calor de idade x espera com o grupo de maior risco contornado;
+  o disparo de lembrete (a comparação crua e a comparação dentro de cada faixa de espera); e o bloco "O que
+  recomendamos". Esta aba mostra sempre a base inteira.
 
 ![Dashboard, aba Grupo de risco e disparo](dashboard/imagens/grupo-de-risco.png)
 
@@ -196,12 +197,12 @@ limpeza, as mesmas definições e os mesmos números. Nada aqui contradiz um env
 | **Proposta do tema** (2026-11-03, aprovada) | Tema, problema, fatores a analisar (espera, idade, dia da semana e lembrete), entregáveis e o dataset | [O problema](#o-problema), seções 2 a 5 do [notebook 02](notebooks/02_exploracao.ipynb) e seção **S** do [processo](docs/processo.md) |
 | **Entrega 2: Dados** (2026-11-10) | Fonte, autor e licença, descrição da base, dicionário das 14 colunas e os 7 pontos a tratar na limpeza | [Fonte dos dados](#fonte-dos-dados) e os 9 passos do [notebook 01](notebooks/01_limpeza.ipynb), que tratam os 7 pontos um a um |
 | **Entrega 3: dados tratados, limpeza e primeira análise** (2026-11-18) | O link deste repositório e o resumo da etapa | `dados/original/`, `dados/tratados/`, os notebooks 01 e 02 e o [processo](docs/processo.md) |
-| **Projeto final** (feito em 2026-11-24; enviado pelo link deste repositório) | Dashboard (página web), a análise do grupo de maior risco, a recomendação e a apresentação executiva (slides e dashboard) | [Notebook 03](notebooks/03_grupo_de_risco.ipynb), [`scripts/`](scripts/), [`dashboard/`](dashboard/), o [dashboard publicado](https://cauedev30.github.io/analise-no-show-consultas/), o [guia de estudo](docs/guia-de-estudo.md) e o [plano](docs/plano-projeto-final.md) |
+| **Projeto final** (feito e apresentado em 2026-11-24; enviado pelo link deste repositório) | Dashboard (página web), a análise do grupo de maior risco, a recomendação e a apresentação executiva (slides e dashboard) | [Notebook 03](notebooks/03_grupo_de_risco.ipynb), [`scripts/`](scripts/), [`dashboard/`](dashboard/), o [dashboard publicado](https://cauedev30.github.io/analise-no-show-consultas/), o [guia de estudo](docs/guia-de-estudo.md) e o [plano](docs/plano-projeto-final.md) |
 
 A conferência ponto a ponto (o que cada entrega disse e onde isso foi cumprido) e o que mudou de uma entrega para a
 outra estão nas seções [Coerência com as entregas ao professor](docs/processo.md#coerência-com-as-entregas-ao-professor)
-e [O que mudou](docs/processo.md#o-que-mudou-de-uma-entrega-para-a-outra-e-por-quê) do processo. A apresentação tem de
-5 a 10 minutos: 7 slides (a capa e um por letra do D.E.I.L.A.S) e depois o dashboard ao vivo. O conteúdo dos slides, as
+e [O que mudou](docs/processo.md#o-que-mudou-de-uma-entrega-para-a-outra-e-por-quê) do processo. A apresentação, feita em
+2026-11-24, tem de 5 a 10 minutos: 7 slides (a capa e um por letra do D.E.I.L.A.S) e depois o dashboard ao vivo. O conteúdo dos slides, as
 decisões com o porquê e as perguntas que o professor pode fazer estão no [guia de estudo](docs/guia-de-estudo.md).
 
 ## Estrutura das pastas

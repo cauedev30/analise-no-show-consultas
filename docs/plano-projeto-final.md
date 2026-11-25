@@ -152,10 +152,11 @@ os prints mostram o dashboard atual.
 |---|---|---|
 | ☑ | 5.1 Conferência de coerência | Os números oficiais aparecem iguais no README, no processo, no guia, no dashboard e nos slides |
 | ☑ | 5.2 Execução do zero em uma cópia limpa do repositório | Notebooks, script, testes e dashboard rodam sem erro |
-| ☐ | 5.3 Ensaio da apresentação (slides e dashboard) | Cabe em 5 a 10 minutos |
+| ☑ | 5.3 Ensaio e apresentação (slides e dashboard) | Apresentação feita em 2026-11-24 |
 | ☐ | 5.4 Envio ao professor | Link do repositório e do dashboard enviados |
 
 ## Os slides
 
 Os slides são montados pelo Daniel Vieira a partir do [guia de estudo](guia-de-estudo.md): a capa e um slide por letra
-do D.E.I.L.A.S, e depois o dashboard ao vivo. Os números dos slides foram conferidos com a base tratada em 2026-11-24.
+do D.E.I.L.A.S, e depois o dashboard ao vivo. Os números dos slides foram conferidos com a base tratada em 2026-11-24,
+também na versão final, a apresentada. O IQR do slide **L** sai do Passo 5 do notebook 01.

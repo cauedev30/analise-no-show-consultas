@@ -163,14 +163,20 @@ colunas derivadas, e chegamos a **110.521 consultas e 19 colunas** na base trata
   taxa de falta continua em 20,2%, porque 5 linhas em mais de 110 mil quase não mexem na proporção.
 - **Onde ver:** [Passo 4](../notebooks/01_limpeza.ipynb) no notebook de limpeza.
 
-### Passo 5: idade 0 e idade acima de 100 (ficam)
+### Passo 5: idade 0, idade acima de 100 e esperas muito longas (ficam)
 
 - **Problema:** duas faixas de idade parecem estranhas: **3.539** consultas com idade **0** e **7** com idade acima de
-  100 (5 com 115 anos e 2 com 102).
-- **Decisão:** manter as duas. Nenhuma linha é removida.
+  100 (5 com 115 anos e 2 com 102). E a espera tem valores muito acima do resto: pela regra do **IQR** (intervalo
+  interquartil), uma espera acima de Q3 + 1,5 × IQR seria um *outlier*. Aqui Q1 = 0 e Q3 = 15 dias, então o limite é
+  37,5 dias, e **5.803** consultas passam dele, com esperas de até **179** dias.
+- **Decisão:** manter as três. Nenhuma linha é removida.
 - **Por quê:** idade 0 são bebês com menos de 1 ano, o que é perfeitamente possível numa consulta. Acima de 100 é raro,
   mas possível, e não temos prova de que seja erro. São só 7 linhas em mais de 110 mil, então não mudam as taxas. Elas
-  caem na faixa `60+`.
+  caem na faixa `60+`. As esperas acima de 37 dias são reais: marcar com um ou dois meses de antecedência é comum, e as
+  datas são válidas. O IQR aponta o que é raro, não o que é erro, e tirar essas consultas apagaria justamente as que
+  mais faltam (**32,0%**, contra 20,2% na base). Elas caem na faixa `31+ dias`.
+- **Quando entrou:** a conferência do IQR foi acrescentada ao notebook depois da Entrega 3 (em 2026-11-24), porque o
+  slide **L** cita esse número. É só uma checagem: a base tratada saiu igual, com o mesmo hash.
 - **Linhas afetadas:** 0.
 - **Onde ver:** [Passo 5](../notebooks/01_limpeza.ipynb) no notebook de limpeza.
 
@@ -237,6 +243,7 @@ mesma).
 |---|---|
 | **Idade 0** (3.539 consultas) | São bebês com menos de 1 ano, o que é possível numa consulta ([Passo 5](../notebooks/01_limpeza.ipynb)) |
 | **Idade acima de 100** (7 consultas) | É raro, mas possível, e não há prova de erro. São 7 linhas e não mudam as taxas ([Passo 5](../notebooks/01_limpeza.ipynb)) |
+| **Esperas acima do limite do IQR** (5.803 consultas, de 38 a 179 dias) | São esperas reais, e não erro. Tirá-las apagaria as consultas que mais faltam (32,0%) ([Passo 5](../notebooks/01_limpeza.ipynb)) |
 | **Deficiência de 0 a 4** | Não sabemos o que 2, 3 e 4 significam, e não dá para corrigir o que não sabemos. Manter não perde informação ([Passo 6](../notebooks/01_limpeza.ipynb)) |
 | **Sábados** (39 consultas) | Poucas consultas. Nada é removido: a cautela vai para a leitura da análise, porque a taxa de grupos muito pequenos oscila muito |
 | **Bairros com poucas consultas** (5 dos 81 bairros têm menos de 50) | Idem: nada é removido. Na análise, o ranking de bairros só considera os que têm pelo menos 500 consultas |
@@ -526,10 +533,12 @@ feita na página é a dos filtros: somar as consultas e as faltas do recorte esc
 seção **E**. O código da página está em [`dashboard/`](../dashboard/); cada push que mexe nessa pasta roda os testes e
 publica de novo.
 
+No topo, uma barra escura com o título e as duas abas.
+
 | Aba | O que tem |
 |---|---|
-| **Visão geral** | Uma barra fixa no topo, sempre à vista, com os 4 filtros da proposta (faixa de idade, dia da semana, bairro e dias de espera) e 3 números (consultas, faltas e taxa de falta). Embaixo, 3 seções em cartões, uma por achado: a **espera** em linha com pontos, na largura toda, e, lado a lado, a **idade** em barras de desvio da taxa geral e os **bairros** com maior taxa de falta (entre os que têm 500 consultas ou mais e, com filtro, 100 ou mais no recorte) em pirulito. O dia da semana fica só como filtro |
-| **Grupo de risco e disparo** | O cruzamento de idade e espera em mapa de calor, com o grupo de maior risco contornado e 3 cartões (consultas, taxa de falta e parte das faltas); o gráfico do disparo de lembrete, que mostra a comparação crua e a comparação dentro de cada faixa de espera (o caso da correlação espúria); e o bloco "O que recomendamos", com o agente de disparo de lembretes, o 40,2% e os 1.083. Esta aba sempre mostra a base inteira: os filtros valem só na Visão geral |
+| **Visão geral** | Uma faixa com os 4 filtros da proposta (faixa de idade, dia da semana, bairro e dias de espera) e 3 números (consultas, faltas e taxa de falta). Embaixo, 3 gráficos lado a lado, em cartões, um por achado: a **espera** em linha com pontos, a **idade** em barras de desvio da taxa geral e os **bairros** com maior taxa de falta (entre os que têm 500 consultas ou mais e, com filtro, 100 ou mais no recorte) em pirulito. O dia da semana fica só como filtro. Numa tela de 1366x768 a aba cabe inteira, sem rolar, como um painel de BI; em telas mais estreitas, os gráficos ficam um embaixo do outro |
+| **Grupo de risco e disparo** | De cima a baixo: o cruzamento de idade e espera em mapa de calor, com o grupo de maior risco contornado e 3 cartões (consultas, taxa de falta e parte das faltas); o gráfico do disparo de lembrete, que mostra a comparação crua e a comparação dentro de cada faixa de espera (o caso da correlação espúria); e o bloco "O que recomendamos", com o agente de disparo de lembretes, o 40,2% e os 1.083. Esta aba sempre mostra a base inteira: os filtros valem só na Visão geral |
 
 **Por que cada forma de gráfico.** Cada achado tem o gráfico do seu tipo:
 
@@ -541,11 +550,10 @@ publica de novo.
 - **Dia da semana, sem gráfico:** a taxa quase não muda (19,3% a 21,2%), o que cabe numa frase na análise. O filtro
   fica, porque está na proposta aprovada.
 
-As seções surgem suavemente ao rolar a página, e as barras crescem na entrada; mudar um filtro não anima, e quem usa
+As seções surgem suavemente ao entrar na tela, e as barras crescem na entrada; mudar um filtro não anima, e quem usa
 "reduzir movimento" no sistema vê tudo direto. Os pontos da espera e as barras da idade com menos de 100 consultas no recorte aparecem em azul claro, com o aviso
 de "amostra pequena" (por exemplo, ao filtrar o sábado, que tem 39 consultas). Os prints estão em
-[`dashboard/imagens/`](../dashboard/imagens/): [visão geral](../dashboard/imagens/visao-geral.png),
-[visão geral inteira](../dashboard/imagens/visao-geral-inteira.png) e
+[`dashboard/imagens/`](../dashboard/imagens/): [visão geral](../dashboard/imagens/visao-geral.png) e
 [grupo de risco e disparo](../dashboard/imagens/grupo-de-risco.png).
 
 Duas abas, e nada além disso: a rubrica pede um dashboard focado nos KPIs essenciais.
@@ -574,7 +582,7 @@ fazer estão no [guia de estudo](guia-de-estudo.md). A tabela abaixo é o resumo
 | 2 | **D**: Defina o objetivo | O problema: cerca de 1 em cada 5 pacientes agendados falta (20,2%), e o horário vago não é reaproveitado. A pergunta central: quem tem mais chance de faltar e o que a clínica pode fazer. O setor (Saúde Privada) e a premissa da base, em uma linha. Por que escolhemos este tema. As cinco perguntas de negócio (P1 a P5, no [guia de estudo](guia-de-estudo.md#as-perguntas-de-negócio-p1-a-p5)), que o resto da apresentação responde |
 | 3 | **E**: Estabeleça métricas | As regras de negócio: o que é falta; taxa de falta = faltas ÷ consultas; espera em dias de calendário; as faixas de idade e de espera |
 | 4 | **I**: Identifique fontes | Kaggle, autor, licença, 110.527 consultas e 14 colunas; baixado e guardado sem alteração; única fonte |
-| 5 | **L**: Limpe as bases | 110.527 para 110.521 consultas; o que saiu (6 linhas impossíveis), o que foi corrigido e por quê; o original intocado; feito em Python (Pandas), em notebook |
+| 5 | **L**: Limpe as bases | 110.527 para 110.521 consultas; o que saiu (6 linhas impossíveis) e o que ficou de propósito (idade 0, idade acima de 100 e as 5.803 esperas acima do limite do IQR); as 5 colunas novas (14 para 19) e o que foi corrigido; o original intocado; feito em Python (Pandas), em notebook |
 | 6 | **A**: Analise os dados | A espera é o fator mais associado à falta (4,6% no mesmo dia contra 28,5% com antecedência); o disparo de lembrete (SMS na base) parece aumentar a falta, mas é a espera (correlação espúria); a idade (26,6% de 13 a 17 anos, 15,3% com 60 ou mais); o perfil de maior risco (13 a 29 anos e 16 dias ou mais: 40,2%). Como os números chegam ao dashboard: base tratada → script Python → página |
 | 7 | **S**: Sugira decisões | A recomendação: um agente de disparo de lembretes (Classifica, Dispara, Libera), com o grupo de maior risco (40,2% de falta, 4,9% das consultas) e as **1.083** consultas a mais em seis semanas (os dois números saem do notebook 03). Os limites, em uma linha: é associação, e por isso o agente começa em teste, com metade do grupo de risco recebendo o reforço |
 
@@ -586,8 +594,8 @@ dashboard).
 
 | Passo | Onde | O que mostrar |
 |---|---|---|
-| 1 | Visão geral, sem filtro | Os três números da barra fixa (**110.521** consultas, **22.314** faltas e **20,2%**) e, logo abaixo, a linha da espera: **4,6%** no mesmo dia, subindo até 33,0% com 31 dias ou mais (os 28,5% com antecedência são falados, como no slide **A**) |
-| 2 | Visão geral, com filtro | Um filtro ao vivo. Exemplo: em "Dias de espera", escolher "Mesmo dia": os números passam a 38.562 consultas, 1.792 faltas e 4,6%. Depois, rolar: a **espera** (linha), a **idade** (barras de desvio) e os **bairros** (pirulito), com a barra de filtros sempre à vista. "Limpar filtros" volta ao começo |
+| 1 | Visão geral, sem filtro | Os três números (**110.521** consultas, **22.314** faltas e **20,2%**) e, no primeiro gráfico, a linha da espera: **4,6%** no mesmo dia, subindo até 33,0% com 31 dias ou mais (os 28,5% com antecedência são falados, como no slide **A**) |
+| 2 | Visão geral, com filtro | Um filtro ao vivo. Exemplo: em "Dias de espera", escolher "Mesmo dia": os números passam a 38.562 consultas, 1.792 faltas e 4,6%, e os três gráficos mudam na mesma tela: a **espera** (linha), a **idade** (barras de desvio) e os **bairros** (pirulito). "Limpar filtros" volta ao começo |
 | 3 | Grupo de risco e disparo | O mapa de calor de idade x espera e o **grupo de maior risco** contornado: 5.422 consultas, **40,2%** de falta |
 | 4 | Grupo de risco e disparo | O **disparo de lembrete**: na base inteira parece aumentar a falta (27,6% contra 16,7%), mas dentro de cada faixa de espera quem recebeu falta menos ou quase igual (correlação espúria) |
 | 5 | Grupo de risco e disparo, no fim | O bloco **"O que recomendamos"**, que mostra o agente (Classifica, Dispara, Libera), o 40,2% e os 1.083, e repete o slide **S** |
@@ -611,3 +619,4 @@ Cada entrega acrescenta uma linha aqui.
 | 2026-11-23 | Plano do projeto final escrito: [plano-projeto-final.md](plano-projeto-final.md), em 5 etapas (notebook 03, números do dashboard, dashboard, documentação e conferência final) |
 | 2026-11-23 | Decisões do projeto final: dashboard em página web (Next.js/React) com os números calculados em Python, no lugar do Power BI; apresentação de 5 a 10 minutos, com slides pelo D.E.I.L.A.S (um por letra) e depois o dashboard; sem aplicação. Incluídos a seção "Projeto final: o que está decidido" e o [guia de estudo](guia-de-estudo.md), com o conteúdo dos slides |
 | 2026-11-24 | Projeto final feito: notebook 03 (grupo de maior risco: 5.422 consultas, 40,2% de falta), script e `painel.json`, dashboard publicado no GitHub Pages. A solução passou a ser uma só, o **agente de disparo de lembretes** (o overbooking saiu), com 1.083 consultas a mais em seis semanas; o "SMS" passou a "disparo de lembrete". Atualizados este documento e o texto de próximos passos do notebook 02 (só texto) |
+| 2026-11-24 | Apresentação feita, com os 7 slides e o dashboard. Depois dela: o Passo 5 do notebook 01 ganhou a conferência das esperas longas pelo IQR (5.803 acima de 37 dias, até 179, 32,0% de falta), que o slide **L** cita; é só uma checagem, nenhuma linha sai e a base tratada fica igual (mesmo hash). O dashboard ganhou o visual final (barra escura com as abas, os três gráficos lado a lado na Visão geral, sem rolar), e os prints e a descrição foram refeitos |
