@@ -453,4 +453,4 @@ notebook 03, os números do dashboard, o dashboard publicado e a documentação 
 | ~~1~~ | ~~Conferência final com os slides~~ **Feito em 2026-11-24** | Todos os números da versão final dos slides batem com a tabela dos [números oficiais](#os-números-oficiais) e com o dashboard. O IQR do slide **L** passou a sair do notebook 01 (Passo 5) |
 | ~~2~~ | ~~Execução do zero em uma cópia limpa~~ **Feito em 2026-11-24** | Os três notebooks rodaram do zero, a base tratada saiu com o mesmo hash e o `painel.json` saiu igual; 18 testes Python e 79 do dashboard passaram, e o build funcionou |
 | ~~3~~ | ~~Apresentação~~ **Feita em 2026-11-24** | Os 7 slides e o dashboard |
-| 4 | Envio ao professor (Entrega 4, versão final) | O link do repositório, com o [relatório em PDF](relatorio/relatorio-projeto-final.pdf), os [slides apresentados](slides/slides-apresentacao.pdf), o link do dashboard e as duas bases |
+| ~~4~~ | ~~Envio ao professor (Entrega 4, versão final)~~ **Feito em 2026-11-25** | O link do repositório, com o [relatório em PDF](relatorio/relatorio-projeto-final.pdf), os [slides apresentados](slides/slides-apresentacao.pdf), o link do dashboard e as duas bases |
