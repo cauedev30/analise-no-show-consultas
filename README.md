@@ -6,6 +6,9 @@ Projeto final de **Análise de Dados e BI**, com o professor Daniel Brandão.
 
 **Dashboard:** <https://cauedev30.github.io/analise-no-show-consultas/>
 
+**Relatório final (PDF):** [docs/relatorio/relatorio-projeto-final.pdf](docs/relatorio/relatorio-projeto-final.pdf) ·
+**Slides apresentados:** [docs/slides/slides-apresentacao.pdf](docs/slides/slides-apresentacao.pdf)
+
 ![Dashboard, aba Visão geral](dashboard/imagens/visao-geral.png)
 
 O projeto parte de uma base pública de consultas, limpa os dados, analisa quem falta mais e termina numa recomendação.
@@ -198,6 +201,7 @@ limpeza, as mesmas definições e os mesmos números. Nada aqui contradiz um env
 | **Entrega 2: Dados** (2026-11-10) | Fonte, autor e licença, descrição da base, dicionário das 14 colunas e os 7 pontos a tratar na limpeza | [Fonte dos dados](#fonte-dos-dados) e os 9 passos do [notebook 01](notebooks/01_limpeza.ipynb), que tratam os 7 pontos um a um |
 | **Entrega 3: dados tratados, limpeza e primeira análise** (2026-11-18) | O link deste repositório e o resumo da etapa | `dados/original/`, `dados/tratados/`, os notebooks 01 e 02 e o [processo](docs/processo.md) |
 | **Projeto final** (feito e apresentado em 2026-11-24; enviado pelo link deste repositório) | Dashboard (página web), a análise do grupo de maior risco, a recomendação e a apresentação executiva (slides e dashboard) | [Notebook 03](notebooks/03_grupo_de_risco.ipynb), [`scripts/`](scripts/), [`dashboard/`](dashboard/), o [dashboard publicado](https://cauedev30.github.io/analise-no-show-consultas/), o [guia de estudo](docs/guia-de-estudo.md) e o [plano](docs/plano-projeto-final.md) |
+| **Entrega 4: versão final** (2026-11-25) | O link deste repositório, com o relatório em PDF no modelo da disciplina, o link do dashboard e as duas bases (original e tratada) | O [relatório](docs/relatorio/relatorio-projeto-final.pdf), os [slides apresentados](docs/slides/slides-apresentacao.pdf), o [dashboard publicado](https://cauedev30.github.io/analise-no-show-consultas/), `dados/original/` e `dados/tratados/` |
 
 A conferência ponto a ponto (o que cada entrega disse e onde isso foi cumprido) e o que mudou de uma entrega para a
 outra estão nas seções [Coerência com as entregas ao professor](docs/processo.md#coerência-com-as-entregas-ao-professor)
@@ -230,7 +234,9 @@ decisões com o porquê e as perguntas que o professor pode fazer estão no [gui
 ├── docs/
 │   ├── processo.md                        # o como e o porquê de cada etapa (método D.E.I.L.A.S)
 │   ├── guia-de-estudo.md                  # resumo para a equipe estudar e o conteúdo dos slides
-│   └── plano-projeto-final.md             # o plano do projeto final, tarefa a tarefa
+│   ├── plano-projeto-final.md             # o plano do projeto final, tarefa a tarefa
+│   ├── relatorio/                         # relatório final no modelo da disciplina (PDF e docx)
+│   └── slides/slides-apresentacao.pdf     # os slides apresentados em 2026-11-24
 └── .github/workflows/publicar-dashboard.yml   # roda lint, testes e build e publica no GitHub Pages
 ```
 

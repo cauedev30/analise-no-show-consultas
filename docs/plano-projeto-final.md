@@ -153,7 +153,7 @@ os prints mostram o dashboard atual.
 | ☑ | 5.1 Conferência de coerência | Os números oficiais aparecem iguais no README, no processo, no guia, no dashboard e nos slides |
 | ☑ | 5.2 Execução do zero em uma cópia limpa do repositório | Notebooks, script, testes e dashboard rodam sem erro |
 | ☑ | 5.3 Ensaio e apresentação (slides e dashboard) | Apresentação feita em 2026-11-24 |
-| ☐ | 5.4 Envio ao professor | Link do repositório e do dashboard enviados |
+| ☐ | 5.4 Envio ao professor (Entrega 4: versão final) | Link do repositório enviado, com o relatório em PDF no modelo, os slides, o link do dashboard e as duas bases |
 
 ## Os slides
 
